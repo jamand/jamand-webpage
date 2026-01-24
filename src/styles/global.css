@@ -1,0 +1,5 @@
+@import "tailwindcss";
+/* Design and component library */
+@plugin "daisyui";
+/* Avoid tailwind stripping style to HTML generated from e.g. Markdown (MDX) */
+@plugin "@tailwindcss/typography";
