@@ -5,6 +5,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+    # add labeled to retrigger after setting 'safe-to-test'
+    types: [opened, synchronize, reopened, labeled]
 
 # Explicit minimal permissions
 permissions:
@@ -15,9 +17,20 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
+    # Security gate: Only run builds from trusted sources
+    # 1. Always run for pushes to main (trusted)
+    # 2. Run for PRs from repository collaborators (OWNER, MEMBER, COLLABORATOR)
+    # 3. Run for Renovate bot PRs from same repo (not forks) - trusted dependency updates
+    # 4. Run for external PRs only when 'safe-to-test' label is applied by a maintainer
+    if: |
+      github.event_name == 'push' ||
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association) ||
+      (github.event.pull_request.user.login == 'renovate[bot]' && github.event.pull_request.head.repo.full_name == github.repository) ||
+      contains(github.event.pull_request.labels.*.name, 'safe-to-test')
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
@@ -41,11 +54,12 @@ jobs:
       - name: Build site
         run: pnpm build
 
-      # Only upload artifacts on main branch (trusted code)
       - name: Upload build artifacts
-        if: github.ref == 'refs/heads/main'
+
         uses: actions/upload-artifact@v6
         with:
-          name: dist
+          name: dist-${{ github.sha }}
           path: dist/
-          retention-days: 7
+          # Short retention (for local debugging)
+          retention-days: 1
+          compression-level: 9
