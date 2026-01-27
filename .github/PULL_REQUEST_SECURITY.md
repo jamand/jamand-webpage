@@ -11,6 +11,7 @@ This repository uses a security-first approach for running CI on pull requests.
 ### Automated CI Runs
 
 CI will automatically run for:
+
 - ✅ All pushes to `main` branch (trusted)
 - ✅ PRs from repository OWNER, MEMBERS, and COLLABORATORS (trusted)
 - ✅ PRs from Renovate bot (trusted dependency updates, verified from same repo)
@@ -18,6 +19,7 @@ CI will automatically run for:
 ### Manual Approval Required
 
 CI will **NOT** automatically run for:
+
 - ❌ PRs from first-time contributors
 - ❌ PRs from external contributors (CONTRIBUTOR, FIRST_TIME_CONTRIBUTOR, NONE)
 
