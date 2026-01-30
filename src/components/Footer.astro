@@ -1,0 +1,16 @@
+---
+// Footer component - displays site footer with social links
+import githubIcon from '../assets/github.svg?raw';
+---
+
+<footer class="bg-base-200 py-4 text-center">
+	<div class="flex items-center justify-center gap-4">
+		<a href="https://github.com/jamand" class="link flex items-center gap-1">
+			<span class="inline-block h-5 w-5 fill-current" set:html={githubIcon} />
+			GitHub
+		</a>
+		<a href="https://linkedin.com/in/jer-amand" class="link">
+			LinkedIn
+		</a>
+	</div>
+</footer>
