@@ -1,0 +1,37 @@
+---
+// Dynamic tag page - shows all posts with a specific tag
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import BlogPostLink from '../../components/BlogPostLink.astro';
+
+export async function getStaticPaths() {
+	const allPosts = await getCollection('blog');
+	const uniqueTags = [
+		...new Set(allPosts.map((post) => post.data.tags).flat()),
+	];
+
+	return uniqueTags.map((tag) => {
+		const filteredPosts = allPosts.filter((post) =>
+			post.data.tags.includes(tag),
+		);
+		return {
+			params: { tag },
+			props: { posts: filteredPosts },
+		};
+	});
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<Layout>
+	<h1>Posts tagged with "{tag}"</h1>
+	<ul>
+		{
+			posts.map((post) => (
+				<BlogPostLink url={`/posts/${post.id}/`} title={post.data.title} />
+			))
+		}
+	</ul>
+</Layout>

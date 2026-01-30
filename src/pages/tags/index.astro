@@ -1,0 +1,21 @@
+---
+// Tag index page - lists all unique tags from blog posts
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const allPosts = await getCollection('blog');
+const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
+---
+
+<Layout>
+	<h1>Tags</h1>
+	<ul>
+		{
+			tags.map((tag) => (
+				<li>
+					<a href={`/tags/${tag}/`}>{tag}</a>
+				</li>
+			))
+		}
+	</ul>
+</Layout>

@@ -1,0 +1,20 @@
+---
+// Blog listing page - displays all posts from the blog collection
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import BlogPostLink from '../components/BlogPostLink.astro';
+
+const allPosts = await getCollection('blog');
+---
+
+<Layout>
+	<h1>Blog</h1>
+	<ul>
+		{
+			allPosts.map((post) => (
+				<BlogPostLink url={`/posts/${post.id}/`} title={post.data.title} />
+			))
+		}
+	</ul>
+	<a href="/tags/">Browse by tags</a>
+</Layout>
