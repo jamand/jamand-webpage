@@ -1,0 +1,58 @@
+---
+// Theme toggle component - cycles through system/light/dark themes with localStorage persistence
+import { Sun, Moon, SunMoon } from '@lucide/astro';
+---
+
+<button id="theme-toggle" aria-label="Toggle theme">
+	<SunMoon id="icon-system" class="h-6 w-6" />
+	<Sun id="icon-light" class="hidden h-6 w-6" />
+	<Moon id="icon-dark" class="hidden h-6 w-6" />
+</button>
+
+<script>
+	type Theme = 'system' | 'light' | 'dark';
+	const themes: Theme[] = ['system', 'light', 'dark'];
+
+	const button = document.getElementById('theme-toggle')!;
+	const iconSystem = document.getElementById('icon-system')!;
+	const iconLight = document.getElementById('icon-light')!;
+	const iconDark = document.getElementById('icon-dark')!;
+
+	function getSystemTheme(): 'light' | 'dark' {
+		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+	}
+
+	function applyTheme(theme: Theme) {
+		const effectiveTheme = theme === 'system' ? getSystemTheme() : theme;
+		document.documentElement.setAttribute('data-theme', effectiveTheme);
+
+		// Update icon visibility
+		iconSystem.classList.toggle('hidden', theme !== 'system');
+		iconLight.classList.toggle('hidden', theme !== 'light');
+		iconDark.classList.toggle('hidden', theme !== 'dark');
+	}
+
+	// Initialize from localStorage
+	const stored = localStorage.getItem('theme') as Theme | null;
+	const currentTheme: Theme = stored && themes.includes(stored) ? stored : 'system';
+	applyTheme(currentTheme);
+
+	// Cycle through themes on click
+	button.addEventListener('click', () => {
+		const stored = localStorage.getItem('theme') as Theme | null;
+		const current: Theme = stored && themes.includes(stored) ? stored : 'system';
+		const nextIndex = (themes.indexOf(current) + 1) % themes.length;
+		const nextTheme = themes[nextIndex];
+
+		localStorage.setItem('theme', nextTheme);
+		applyTheme(nextTheme);
+	});
+
+	// Listen for OS theme changes when in system mode
+	window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+		const stored = localStorage.getItem('theme');
+		if (!stored || stored === 'system') {
+			applyTheme('system');
+		}
+	});
+</script>

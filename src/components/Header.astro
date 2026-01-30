@@ -1,0 +1,18 @@
+---
+// Header component - site header with navigation
+import ThemeToggle from './ThemeToggle.astro';
+---
+
+<header class="navbar bg-base-200 px-4">
+	<div class="flex-1">
+		<a href="/" class="text-xl font-bold">Jérémy Amand</a>
+	</div>
+	<nav class="flex-none">
+		<ul class="menu menu-horizontal gap-1 px-1">
+			<li><a href="/">Home</a></li>
+			<li><a href="/about/">About</a></li>
+			<li><a href="/blog/">Blog</a></li>
+			<li><ThemeToggle /></li>
+		</ul>
+	</nav>
+</header>
