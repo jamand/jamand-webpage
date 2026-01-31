@@ -17,9 +17,12 @@ const { title = 'Jérémy Amand' } = Astro.props;
 		<meta charset="UTF-8" />
 		<script is:inline>
 			const stored = localStorage.getItem('theme');
-			const theme = stored === 'light' || stored === 'dark'
-				? stored
-				: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+			const theme =
+				stored === 'light' || stored === 'dark'
+					? stored
+					: window.matchMedia('(prefers-color-scheme: dark)').matches
+						? 'dark'
+						: 'light';
 			document.documentElement.setAttribute('data-theme', theme);
 		</script>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
