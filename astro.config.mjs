@@ -7,13 +7,17 @@ import mdx from '@astrojs/mdx';
 
 import tailwindcss from '@tailwindcss/vite';
 
+import sitemap from '@astrojs/sitemap';
+
+import expressiveCode from 'astro-expressive-code';
+
 // https://astro.build/config
 export default defineConfig({
-	integrations: [react(), mdx()],
-	site: process.env.SITE_URL || 'http://localhost:4321',
-	base: process.env.BASE_PATH || '/',
+    integrations: [react(), expressiveCode(), mdx(), sitemap()],
+    site: process.env.SITE_URL || 'http://localhost:4321',
+    base: process.env.BASE_PATH || '/',
 
-	vite: {
-		plugins: [tailwindcss()],
-	},
+    vite: {
+        plugins: [tailwindcss()],
+    },
 });
