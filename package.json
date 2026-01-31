@@ -6,7 +6,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "eslint src/",
+    "test:a11y": "pa11y"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -24,9 +26,14 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
     "@tailwindcss/typography": "^0.5.19",
+    "@typescript-eslint/parser": "^8.54.0",
     "cspell": "^9.6.2",
     "daisyui": "^5.5.14",
+    "eslint": "^9.39.2",
+    "eslint-plugin-astro": "^1.5.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "lefthook": "^2.0.16",
+    "pa11y": "^9.0.1",
     "prettier": "3.8.1",
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.7.2",
@@ -34,7 +41,8 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "lefthook"
+      "lefthook",
+      "puppeteer"
     ]
   }
 }

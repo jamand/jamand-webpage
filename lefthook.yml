@@ -12,3 +12,7 @@ pre-commit:
     - name: spellcheck
       glob: 'src/blog/*.{md,mdx}'
       run: pnpm cspell --no-progress {staged_files}
+
+    - name: eslint
+      glob: '*.{js,ts,jsx,tsx,astro}'
+      run: pnpm eslint {staged_files}
