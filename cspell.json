@@ -1,0 +1,28 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "Amand",
+    "Jérémy",
+    "astro",
+    "astrojs",
+    "bioinformatics",
+    "daisyui",
+    "frontmatter",
+    "lucide",
+    "tailwindcss"
+  ],
+  "ignorePaths": ["node_modules", "dist", ".astro", "pnpm-lock.yaml"],
+  "enableFiletypes": ["mdx", "md"],
+  "overrides": [
+    {
+      "filename": "src/blog/**/*.{md,mdx}",
+      "languageSettings": [
+        {
+          "languageId": "markdown",
+          "ignoreRegExpList": ["/^---[\\s\\S]*?^---/m"]
+        }
+      ]
+    }
+  ]
+}
