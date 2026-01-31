@@ -3,3 +3,9 @@
 @plugin 'daisyui';
 /* Avoid tailwind stripping style to HTML generated from e.g. Markdown (MDX) */
 @plugin '@tailwindcss/typography';
+
+/* Accessible focus indicators */
+:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}

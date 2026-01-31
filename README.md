@@ -10,6 +10,14 @@ Personal portfolio website built with modern web technologies, showcasing projec
 - **[DaisyUI](https://daisyui.com)** - Component library
 - **[MDX](https://mdxjs.com)** - Blog content with components
 
+### Development Tools
+
+- **[ESLint](https://eslint.org)** - Linting (common issues)
+- **[Prettier](https://prettier.io)** - Code formatting
+- **[Lefthook](https://github.com/evilmartians/lefthook)** - Git hooks
+- **[cspell](https://cspell.org)** - Spell checking for blog posts
+- **[pa11y](https://pa11y.org)** - Accessibility testing
+
 ## Project Structure
 
 ```text
@@ -17,6 +25,7 @@ Personal portfolio website built with modern web technologies, showcasing projec
 ├── public/            # Static assets
 ├── src/
 │   ├── assets/        # Images, fonts, etc.
+│   ├── blog/          # Blog posts (MDX)
 │   ├── components/    # Reusable components
 │   ├── layouts/       # Page layouts
 │   ├── pages/         # File-based routing
@@ -34,8 +43,17 @@ All commands are run from the root of the project:
 | `pnpm dev`             | Start local dev server at `localhost:4321`       |
 | `pnpm build`           | Build production site to `./dist/`               |
 | `pnpm preview`         | Preview build locally before deploying           |
+| `pnpm lint`            | Run ESLint with accessibility checks             |
+| `pnpm test:a11y <url>` | Run pa11y accessibility audit on a URL           |
 | `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+
+### Pre-commit Hooks
+
+On commit, Lefthook automatically runs:
+
+- **Prettier** - Formats staged files (auto-fixes)
+- **ESLint** - Checks `.js`, `.ts`, `.astro` files for issues
+- **cspell** - Spell checks blog posts in `src/blog/`
 
 ## License
 
