@@ -1,0 +1,14 @@
+# Lefthook configuration
+# https://lefthook.dev/configuration/
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: prettier
+      glob: '*.{js,ts,jsx,tsx,astro,md,mdx,json,css,yml}'
+      run: pnpm prettier --write {staged_files}
+      stage_fixed: true
+
+    - name: spellcheck
+      glob: 'src/blog/*.{md,mdx}'
+      run: pnpm cspell --no-progress {staged_files}
