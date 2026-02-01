@@ -7,14 +7,32 @@ const { frontmatter } = Astro.props;
 
 <Layout title={frontmatter.title} description={frontmatter.description}>
 	<article>
-		<h1>{frontmatter.title}</h1>
-		<p>
-			<time datetime={frontmatter.pubDate.toISOString().split('T')[0]}>
-				{frontmatter.pubDate.toLocaleDateString()}
-			</time>
-		</p>
-		<p><em>{frontmatter.description}</em></p>
-		<p>Written by: {frontmatter.author}</p>
+		<header
+			class="not-prose mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
+		>
+			<h1 class="m-0 text-3xl font-bold sm:text-4xl">{frontmatter.title}</h1>
+			<dl class="stats stats-horizontal shadow">
+				<div class="stat px-4 py-2">
+					<dt class="stat-title">Published</dt>
+					<dd class="stat-value text-base">
+						<time datetime={frontmatter.pubDate.toISOString().split('T')[0]}>
+							{
+								frontmatter.pubDate.toLocaleDateString('en-GB', {
+									day: 'numeric',
+									month: 'short',
+									year: 'numeric',
+								})
+							}
+						</time>
+					</dd>
+				</div>
+				<div class="stat px-4 py-2">
+					<dt class="stat-title">Author</dt>
+					<dd class="stat-value text-base">{frontmatter.author}</dd>
+				</div>
+			</dl>
+		</header>
+
 		<img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />
 		<slot />
 	</article>
