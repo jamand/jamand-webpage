@@ -1,0 +1,49 @@
+---
+import { Languages } from '@lucide/astro';
+import { supportedLangs, type Lang } from '../i18n/translations';
+import { useTranslations, getAlternateLocaleUrl } from '../i18n/utils';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const currentUrl = Astro.url;
+
+const languages = supportedLangs.map((l) => ({
+	code: l,
+	label: t(`lang.${l}`),
+	href: getAlternateLocaleUrl(currentUrl, l),
+	isCurrent: l === lang,
+}));
+---
+
+<details class="dropdown dropdown-end">
+	<summary class="btn btn-ghost btn-sm gap-1" aria-label={t('lang.switch')}>
+		<Languages class="h-5 w-5" />
+		<span class="hidden sm:inline">{lang.toUpperCase()}</span>
+	</summary>
+	<ul
+		class="menu dropdown-content bg-base-200 rounded-box z-50 mt-2 w-36 p-2 shadow-lg"
+	>
+		{
+			languages.map((language) => (
+				<li>
+					<a
+						href={language.href}
+						class:list={[
+							'flex justify-between',
+							{ active: language.isCurrent },
+						]}
+						aria-current={language.isCurrent ? 'page' : undefined}
+						aria-label={language.label}
+					>
+						<span lang={language.code}>{language.label}</span>
+						{language.isCurrent && <span class="status" aria-hidden="true" />}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</details>
