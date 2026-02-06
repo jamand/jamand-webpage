@@ -1,20 +1,29 @@
 ---
-// Blog listing page - displays all posts from the blog collection
-import { getCollection } from 'astro:content';
+// Blog listing page - displays all posts from the blog collection (English)
 import Layout from '../layouts/Layout.astro';
 import BlogPostLink from '../components/BlogPostLink.astro';
+import { getPostsWithLanguages, getPostUrl } from '../i18n/blog-utils';
+import { useTranslations } from '../i18n/utils';
 
-const allPosts = await getCollection('blog');
+const lang = 'en';
+const t = useTranslations(lang);
+const postsWithLanguages = await getPostsWithLanguages(lang);
 ---
 
-<Layout>
-	<h1>Blog</h1>
+<Layout lang={lang} description={t('meta.blog')}>
+	<h1>{t('blog.title')}</h1>
 	<ul>
 		{
-			allPosts.map((post) => (
-				<BlogPostLink url={`/posts/${post.id}/`} title={post.data.title} />
+			postsWithLanguages.map(({ post, availableLanguages }) => (
+				<BlogPostLink
+					url={getPostUrl(post)}
+					title={post.data.title}
+					pubDate={post.data.pubDate}
+					lang={lang}
+					availableLanguages={availableLanguages}
+				/>
 			))
 		}
 	</ul>
-	<a href="/tags/">Browse by tags</a>
+	<a href="/tags/">{t('common.browseByTags')}</a>
 </Layout>

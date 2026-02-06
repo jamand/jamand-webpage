@@ -1,0 +1,14 @@
+---
+// Homepage (German)
+import Layout from '../../layouts/Layout.astro';
+import { getLocalizedPath, useTranslations } from '../../i18n/utils';
+
+const lang = 'de';
+const t = useTranslations(lang);
+---
+
+<Layout lang={lang} description={t('meta.home')}>
+	<h1>Willkommen</h1>
+	<p>Dies ist meine persönliche Webseite.</p>
+	<a href={getLocalizedPath('/blog/', lang)} class="link">Meinen Blog lesen</a>
+</Layout>

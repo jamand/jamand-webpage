@@ -1,15 +1,15 @@
 ---
-// Dynamic tag page - shows all English posts with a specific tag
-import Layout from '../../layouts/Layout.astro';
-import BlogPostLink from '../../components/BlogPostLink.astro';
+// Dynamic tag page - shows all German posts with a specific tag
+import Layout from '../../../layouts/Layout.astro';
+import BlogPostLink from '../../../components/BlogPostLink.astro';
 import {
 	getPostUrl,
 	type AvailableLanguage,
 	type BlogPost,
-} from '../../i18n/blog-utils';
-import { useTranslations } from '../../i18n/utils';
+} from '../../../i18n/blog-utils';
+import { useTranslations } from '../../../i18n/utils';
 
-const lang = 'en';
+const lang = 'de';
 const t = useTranslations(lang);
 
 interface PostWithLanguages {
@@ -19,15 +19,15 @@ interface PostWithLanguages {
 
 export async function getStaticPaths() {
 	const { getPostsByLang, getAvailableLanguages } =
-		await import('../../i18n/blog-utils');
-	const englishPosts = await getPostsByLang('en');
+		await import('../../../i18n/blog-utils');
+	const germanPosts = await getPostsByLang('de');
 	const uniqueTags = [
-		...new Set(englishPosts.map((post) => post.data.tags).flat()),
+		...new Set(germanPosts.map((post) => post.data.tags).flat()),
 	];
 
 	return Promise.all(
 		uniqueTags.map(async (tag) => {
-			const filteredPosts = englishPosts.filter((post) =>
+			const filteredPosts = germanPosts.filter((post) =>
 				post.data.tags.includes(tag),
 			);
 			const postsWithLanguages = await Promise.all(

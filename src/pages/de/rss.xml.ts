@@ -1,14 +1,14 @@
-// RSS feed generator - provides an RSS feed of English blog posts
+// RSS feed generator - provides an RSS feed of German blog posts
 import rss from '@astrojs/rss';
-import { getPostsByLang, getPostUrl } from '../i18n/blog-utils';
-import { getImageMimeType } from '../utils';
+import { getPostsByLang, getPostUrl } from '../../i18n/blog-utils';
+import { getImageMimeType } from '../../utils';
 import type { APIContext } from 'astro';
 
 export async function GET({ site }: APIContext) {
-	const posts = await getPostsByLang('en');
+	const posts = await getPostsByLang('de');
 	return rss({
 		title: 'Jérémy Amand | Blog',
-		description: 'My personal blog',
+		description: 'Mein persönlicher Blog',
 		site: site!,
 		items: posts.map((post) => ({
 			title: post.data.title,
@@ -21,6 +21,6 @@ export async function GET({ site }: APIContext) {
 				type: getImageMimeType(post.data.image.url),
 			},
 		})),
-		customData: `<language>en-us</language>`,
+		customData: `<language>de</language>`,
 	});
 }

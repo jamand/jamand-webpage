@@ -1,0 +1,33 @@
+---
+// Blog listing page - displays all posts from the blog collection (German)
+import Layout from '../../layouts/Layout.astro';
+import BlogPostLink from '../../components/BlogPostLink.astro';
+import { getPostsWithLanguages, getPostUrl } from '../../i18n/blog-utils';
+import { useTranslations, getLocalizedPath } from '../../i18n/utils';
+
+const lang = 'de';
+const t = useTranslations(lang);
+const postsWithLanguages = await getPostsWithLanguages(lang);
+---
+
+<Layout lang={lang} description={t('meta.blog')}>
+	<h1>{t('blog.title')}</h1>
+	{
+		postsWithLanguages.length > 0 ? (
+			<ul>
+				{postsWithLanguages.map(({ post, availableLanguages }) => (
+					<BlogPostLink
+						url={getPostUrl(post)}
+						title={post.data.title}
+						pubDate={post.data.pubDate}
+						lang={lang}
+						availableLanguages={availableLanguages}
+					/>
+				))}
+			</ul>
+		) : (
+			<p>Noch keine deutschen Beiträge verfügbar.</p>
+		)
+	}
+	<a href={getLocalizedPath('/tags/', lang)}>{t('common.browseByTags')}</a>
+</Layout>

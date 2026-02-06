@@ -1,8 +1,13 @@
 ---
+// About page
 import Layout from '../layouts/Layout.astro';
+import { useTranslations } from '../i18n/utils';
+
+const lang = 'en';
+const t = useTranslations(lang);
 ---
 
-<Layout>
+<Layout lang={lang} description={t('meta.about')}>
 	<h1>About Me</h1>
 	<p>
 		Welcome to my personal website. This is where I share my thoughts and

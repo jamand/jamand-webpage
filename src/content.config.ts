@@ -1,6 +1,8 @@
 import { glob } from 'astro/loaders';
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
+import { supportedLangs, defaultLang } from './i18n/translations';
+
 // Define a `loader` and `schema` for each collection
 const blog = defineCollection({
 	loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/blog' }),
@@ -14,6 +16,9 @@ const blog = defineCollection({
 			alt: z.string(),
 		}),
 		tags: z.array(z.string()),
+		lang: z.enum(supportedLangs).default(defaultLang),
+		// Link to translation (use the slug of the other language version)
+		translationSlug: z.string().optional(),
 	}),
 });
 // Export a single `collections` object to register your collection(s)

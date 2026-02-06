@@ -1,0 +1,16 @@
+---
+// About page (German)
+import Layout from '../../layouts/Layout.astro';
+import { useTranslations } from '../../i18n/utils';
+
+const lang = 'de';
+const t = useTranslations(lang);
+---
+
+<Layout lang={lang} description={t('meta.about')}>
+	<h1>Über mich</h1>
+	<p>
+		Willkommen auf meiner persönlichen Webseite. Hier teile ich meine Gedanken
+		und Projekte.
+	</p>
+</Layout>

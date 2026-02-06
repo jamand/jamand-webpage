@@ -1,6 +1,45 @@
 ---
 // BlogPostLink component - displays a single blog post link in a list
-const { title, url } = Astro.props;
+import type { AvailableLanguage } from '../i18n/blog-utils';
+import { getLangName, getDateLocale } from '../i18n/utils';
+import type { Lang } from '../i18n/translations';
+
+interface Props {
+	title: string;
+	url: string;
+	pubDate: Date;
+	lang: Lang; // Used for date formatting
+	availableLanguages: AvailableLanguage[];
+}
+
+const { title, url, pubDate, lang, availableLanguages } = Astro.props;
+
+const formattedDate = pubDate.toLocaleDateString(getDateLocale(lang), {
+	day: 'numeric',
+	month: 'short',
+	year: 'numeric',
+});
 ---
 
-<li><a href={url}>{title}</a></li>
+<li class="flex items-center gap-2">
+	<time
+		datetime={pubDate.toISOString().split('T')[0]}
+		class="text-sm opacity-60"
+	>
+		{formattedDate}
+	</time>
+	<a href={url}>{title}</a>
+	<span class="flex gap-1">
+		{
+			availableLanguages.map(({ lang: langCode, url: langUrl }) => (
+				<a
+					href={langUrl}
+					aria-label={getLangName(langCode)}
+					class="badge badge-outline badge-sm no-underline"
+				>
+					{langCode.toUpperCase()}
+				</a>
+			))
+		}
+	</span>
+</li>

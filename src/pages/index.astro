@@ -1,9 +1,13 @@
 ---
 // Homepage
 import Layout from '../layouts/Layout.astro';
+import { useTranslations } from '../i18n/utils';
+
+const lang = 'en';
+const t = useTranslations(lang);
 ---
 
-<Layout>
+<Layout lang={lang} description={t('meta.home')}>
 	<h1>Welcome</h1>
 	<p>This is my personal website.</p>
 	<a href="/blog/" class="link">Read my blog</a>

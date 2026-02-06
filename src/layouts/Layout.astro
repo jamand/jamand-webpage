@@ -3,17 +3,23 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Prose from '../components/Prose.astro';
+import { defaultLang, supportedLangs, type Lang } from '../i18n/translations';
+import { useTranslations, getAlternateLocaleUrl } from '../i18n/utils';
 
 interface Props {
 	title?: string;
 	description?: string;
+	lang?: Lang;
 }
 
-const { title = 'Jérémy Amand', description } = Astro.props;
+const { title = 'Jérémy Amand', description, lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const currentUrl = Astro.url;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<script is:inline>
@@ -29,6 +35,30 @@ const { title = 'Jérémy Amand', description } = Astro.props;
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
+		{
+			supportedLangs.map((l) => (
+				<link
+					rel="alternate"
+					hreflang={l}
+					href={new URL(getAlternateLocaleUrl(currentUrl, l), Astro.site).href}
+				/>
+			))
+		}
+		<link
+			rel="alternate"
+			hreflang="x-default"
+			href={new URL(getAlternateLocaleUrl(currentUrl, defaultLang), Astro.site)
+				.href}
+		/>
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title="Jérémy Amand | Blog"
+			href={new URL(
+				lang === defaultLang ? '/rss.xml' : `/${lang}/rss.xml`,
+				Astro.site,
+			).href}
+		/>
 		<meta name="generator" content={Astro.generator} />
 		{description && <meta name="description" content={description} />}
 		<title>{title}</title>
@@ -38,14 +68,16 @@ const { title = 'Jérémy Amand', description } = Astro.props;
 			href="#main-content"
 			class="bg-base-100 text-base-content sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded focus:px-4 focus:py-2"
 		>
-			Skip to main content
+			{t('common.skipToContent')}
 		</a>
-		<Header />
+		<Header lang={lang} />
 		<main
 			id="main-content"
-			class="prose container mx-auto max-w-4xl flex-1 px-4 py-8"
+			class="container mx-auto max-w-4xl flex-1 px-4 py-8"
 		>
-			<slot />
+			<Prose>
+				<slot />
+			</Prose>
 		</main>
 		<Footer />
 	</body>
