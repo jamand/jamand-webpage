@@ -1,65 +1,39 @@
-name: CI
+name: Main Branch CI
 
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
-    # add labeled to retrigger after setting 'safe-to-test'
-    types: [opened, synchronize, reopened, labeled]
 
 # Explicit minimal permissions
 permissions:
   contents: read
 
 jobs:
+  lint:
+    uses: ./.github/workflows/lint.yml
+
+  typecheck:
+    uses: ./.github/workflows/typecheck.yml
+
+  test:
+    uses: ./.github/workflows/test.yml
+
   build:
+    uses: ./.github/workflows/build.yml
+
+  # Summary job to check all required checks passed
+  all-checks-passed:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    # Security gate: Only run builds from trusted sources
-    # 1. Always run for pushes to main (trusted)
-    # 2. Run for PRs from repository collaborators (OWNER, MEMBER, COLLABORATOR)
-    # 3. Run for Renovate bot PRs from same repo (not forks) - trusted dependency updates
-    # 4. Run for external PRs only when 'safe-to-test' label is applied by a maintainer
-    if: |
-      github.event_name == 'push' ||
-      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association) ||
-      (github.event.pull_request.user.login == 'renovate[bot]' && github.event.pull_request.head.repo.full_name == github.repository) ||
-      contains(github.event.pull_request.labels.*.name, 'safe-to-test')
-
+    needs: [lint, typecheck, test, build]
+    if: always()
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 1
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '24'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Run TypeScript check
-        run: pnpm astro check
-
-      - name: Build site
-        run: pnpm build
-
-      - name: Upload build artifacts
-
-        uses: actions/upload-artifact@v6
-        with:
-          name: dist-${{ github.sha }}
-          path: dist/
-          # Short retention (for local debugging)
-          retention-days: 1
-          compression-level: 9
+      - name: Check all jobs succeeded
+        run: |
+          if [[ "${{ needs.lint.result }}" != "success" ]] || \
+             [[ "${{ needs.typecheck.result }}" != "success" ]] || \
+             [[ "${{ needs.test.result }}" != "success" ]] || \
+             [[ "${{ needs.build.result }}" != "success" ]]; then
+            echo "One or more checks failed"
+            exit 1
+          fi
+          echo "All checks passed!"

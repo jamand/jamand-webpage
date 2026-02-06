@@ -1,0 +1,70 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches: [main]
+    # add labeled to retrigger after setting 'safe-to-test'
+    types: [opened, synchronize, reopened, labeled]
+
+# Explicit minimal permissions
+permissions:
+  contents: read
+
+jobs:
+  # Security gate: Only run checks from trusted sources
+  security-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    outputs:
+      should-run: ${{ steps.check.outputs.result }}
+    steps:
+      - name: Check if PR is from trusted source
+        id: check
+        run: |
+          # 1. Always run for PRs from repository collaborators (OWNER, MEMBER, COLLABORATOR)
+          # 2. Run for Renovate bot PRs from same repo (not forks) - trusted dependency updates
+          # 3. Run for external PRs only when 'safe-to-test' label is applied by a maintainer
+          if [[ "${{ contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association) }}" == "true" ]] || \
+             [[ "${{ github.event.pull_request.user.login == 'renovate[bot]' && github.event.pull_request.head.repo.full_name == github.repository }}" == "true" ]] || \
+             [[ "${{ contains(github.event.pull_request.labels.*.name, 'safe-to-test') }}" == "true" ]]; then
+            echo "result=true" >> $GITHUB_OUTPUT
+          else
+            echo "result=false" >> $GITHUB_OUTPUT
+          fi
+
+  lint:
+    needs: security-check
+    if: needs.security-check.outputs.should-run == 'true'
+    uses: ./.github/workflows/lint.yml
+
+  typecheck:
+    needs: security-check
+    if: needs.security-check.outputs.should-run == 'true'
+    uses: ./.github/workflows/typecheck.yml
+
+  test:
+    needs: security-check
+    if: needs.security-check.outputs.should-run == 'true'
+    uses: ./.github/workflows/test.yml
+
+  build:
+    needs: security-check
+    if: needs.security-check.outputs.should-run == 'true'
+    uses: ./.github/workflows/build.yml
+
+  # Summary job to check all required checks passed
+  all-checks-passed:
+    runs-on: ubuntu-latest
+    needs: [lint, typecheck, test, build]
+    if: always()
+    steps:
+      - name: Check all jobs succeeded
+        run: |
+          if [[ "${{ needs.lint.result }}" != "success" ]] || \
+             [[ "${{ needs.typecheck.result }}" != "success" ]] || \
+             [[ "${{ needs.test.result }}" != "success" ]] || \
+             [[ "${{ needs.build.result }}" != "success" ]]; then
+            echo "One or more checks failed"
+            exit 1
+          fi
+          echo "All checks passed!"

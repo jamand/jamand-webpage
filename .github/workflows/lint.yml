@@ -1,0 +1,41 @@
+name: Lint
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check formatting with Prettier
+        run: pnpm prettier --check "**/*.{js,ts,jsx,tsx,astro,md,mdx,json,css,yml}"
+
+      - name: Run ESLint
+        run: pnpm lint
+
+      - name: Run spellcheck
+        run: pnpm cspell "src/blog/**/*.{md,mdx}" --no-progress
