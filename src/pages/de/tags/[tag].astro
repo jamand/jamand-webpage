@@ -1,0 +1,66 @@
+---
+// Dynamic tag page - shows all German posts with a specific tag
+import Layout from '../../../layouts/Layout.astro';
+import BlogPostLink from '../../../components/BlogPostLink.astro';
+import {
+	getPostUrl,
+	type AvailableLanguage,
+	type BlogPost,
+} from '../../../i18n/blog-utils';
+import { useTranslations } from '../../../i18n/utils';
+
+const lang = 'de';
+const t = useTranslations(lang);
+
+interface PostWithLanguages {
+	post: BlogPost;
+	availableLanguages: AvailableLanguage[];
+}
+
+export async function getStaticPaths() {
+	const { getPostsByLang, getAvailableLanguages } =
+		await import('../../../i18n/blog-utils');
+	const germanPosts = await getPostsByLang('de');
+	const uniqueTags = [
+		...new Set(germanPosts.map((post) => post.data.tags).flat()),
+	];
+
+	return Promise.all(
+		uniqueTags.map(async (tag) => {
+			const filteredPosts = germanPosts.filter((post) =>
+				post.data.tags.includes(tag),
+			);
+			const postsWithLanguages = await Promise.all(
+				filteredPosts.map(async (post) => ({
+					post,
+					availableLanguages: await getAvailableLanguages(post),
+				})),
+			);
+			return {
+				params: { tag },
+				props: { posts: postsWithLanguages },
+			};
+		}),
+	);
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props as { posts: PostWithLanguages[] };
+---
+
+<Layout lang={lang}>
+	<h1>{t('blog.postsTaggedWith')} "{tag}"</h1>
+	<ul>
+		{
+			posts.map(({ post, availableLanguages }) => (
+				<BlogPostLink
+					url={getPostUrl(post)}
+					title={post.data.title}
+					pubDate={post.data.pubDate}
+					lang={lang}
+					availableLanguages={availableLanguages}
+				/>
+			))
+		}
+	</ul>
+</Layout>

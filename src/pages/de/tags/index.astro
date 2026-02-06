@@ -1,0 +1,28 @@
+---
+// Tag index page - lists all unique tags from German blog posts
+import Layout from '../../../layouts/Layout.astro';
+import { getPostsByLang } from '../../../i18n/blog-utils';
+import { useTranslations, getLocalizedPath } from '../../../i18n/utils';
+
+const lang = 'de';
+const t = useTranslations(lang);
+const germanPosts = await getPostsByLang(lang);
+const tags = [...new Set(germanPosts.map((post) => post.data.tags).flat())];
+---
+
+<Layout lang={lang} description={t('meta.tags')}>
+	<h1>{t('blog.tags')}</h1>
+	{
+		tags.length > 0 ? (
+			<ul>
+				{tags.map((tag) => (
+					<li>
+						<a href={getLocalizedPath(`/tags/${tag}/`, lang)}>{tag}</a>
+					</li>
+				))}
+			</ul>
+		) : (
+			<p>Noch keine Tags verfügbar.</p>
+		)
+	}
+</Layout>

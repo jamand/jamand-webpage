@@ -1,0 +1,26 @@
+---
+// Dynamic blog post page - renders individual posts from the blog collection (German)
+import { getCollection, render } from 'astro:content';
+import MarkdownPostLayout from '../../../layouts/MarkdownPostLayout.astro';
+import { getPostWithTranslation } from '../../../i18n/blog-utils';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	// Only generate paths for German posts
+	const germanPosts = posts.filter((post) => post.data.lang === 'de');
+
+	return germanPosts.map((post) => ({
+		// Remove de/ folder prefix from URL slug
+		params: { slug: post.id.replace(/^de\//, '') },
+		props: { post },
+	}));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { translation } = await getPostWithTranslation(post);
+---
+
+<MarkdownPostLayout frontmatter={post.data} translation={translation}>
+	<Content />
+</MarkdownPostLayout>
