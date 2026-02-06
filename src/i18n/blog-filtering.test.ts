@@ -12,7 +12,8 @@ describe('Blog Post Filtering and Sorting', () => {
 		body: '',
 		collection: 'blog',
 		data: {
-			title: `Post ${id}`, slug: 'test-slug',
+			title: `Post ${id}`,
+			slug: 'test-slug',
 			pubDate,
 			description: 'Description',
 			author: 'Author',

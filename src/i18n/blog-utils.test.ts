@@ -16,7 +16,8 @@ function createMockPost(overrides: Partial<BlogPost> = {}): BlogPost {
 		body: '',
 		collection: 'blog',
 		data: {
-			title: 'Test Post', slug: 'test-slug',
+			title: 'Test Post',
+			slug: 'test-slug',
 			pubDate: new Date('2026-01-01'),
 			description: 'A test post',
 			author: 'Test Author',
@@ -38,9 +39,12 @@ describe('blog-utils', () => {
 		it('should return true when post has translation slug', () => {
 			const post = createMockPost({
 				data: {
-					title: 'Test', slug: 'test-slug',
+					title: 'Test',
+					slug: 'test-slug',
 					pubDate: new Date(),
-					description: 'Test', author: 'Test', image: { url: '/img.jpg', alt: 'Alt' },
+					description: 'Test',
+					author: 'Test',
+					image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'en',
 					translationSlug: 'de/test-post.md',
 					tags: [],
@@ -57,9 +61,12 @@ describe('blog-utils', () => {
 		it('should return false when translation slug is empty string', () => {
 			const post = createMockPost({
 				data: {
-					title: 'Test', slug: 'test-slug',
+					title: 'Test',
+					slug: 'test-slug',
 					pubDate: new Date(),
-					description: 'Test', author: 'Test', image: { url: '/img.jpg', alt: 'Alt' },
+					description: 'Test',
+					author: 'Test',
+					image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'en',
 					translationSlug: '',
 					tags: [],
@@ -74,9 +81,12 @@ describe('blog-utils', () => {
 			const post = createMockPost({
 				id: 'my-first-post.md',
 				data: {
-					title: 'Test', slug: 'my-first-post',
+					title: 'Test',
+					slug: 'my-first-post',
 					pubDate: new Date(),
-					description: 'Test', author: 'Test', image: { url: '/img.jpg', alt: 'Alt' },
+					description: 'Test',
+					author: 'Test',
+					image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'en',
 					tags: [],
 				},
@@ -88,9 +98,12 @@ describe('blog-utils', () => {
 			const post = createMockPost({
 				id: 'de/mein-erster-post.md',
 				data: {
-					title: 'Test', slug: 'mein-erster-post',
+					title: 'Test',
+					slug: 'mein-erster-post',
 					pubDate: new Date(),
-					description: 'Test', author: 'Test', image: { url: '/img.jpg', alt: 'Alt' },
+					description: 'Test',
+					author: 'Test',
+					image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'de',
 					tags: [],
 				},
@@ -102,9 +115,12 @@ describe('blog-utils', () => {
 			const post = createMockPost({
 				id: 'de/nested/path/post.md',
 				data: {
-					title: 'Test', slug: 'custom-slug',
+					title: 'Test',
+					slug: 'custom-slug',
 					pubDate: new Date(),
-					description: 'Test', author: 'Test', image: { url: '/img.jpg', alt: 'Alt' },
+					description: 'Test',
+					author: 'Test',
+					image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'de',
 					tags: [],
 				},
@@ -116,9 +132,12 @@ describe('blog-utils', () => {
 			const post = createMockPost({
 				id: 'standalone-post.md',
 				data: {
-					title: 'Test', slug: '20240127-hello-world',
+					title: 'Test',
+					slug: '20240127-hello-world',
 					pubDate: new Date(),
-					description: 'Test', author: 'Test', image: { url: '/img.jpg', alt: 'Alt' },
+					description: 'Test',
+					author: 'Test',
+					image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'en',
 					tags: [],
 				},

@@ -89,11 +89,5 @@
   "platformAutomerge": false,  // Don't use GitHub's automerge (use Renovate's)
 
   // Require all CI checks to pass before automerge
-  "requiredStatusChecks": [
-    "lint",
-    "typecheck",
-    "test",
-    "build",
-    "all-checks-passed"
-  ]
+  "requiredStatusChecks": ["lint", "typecheck", "test", "build"]
 }

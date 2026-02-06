@@ -13,7 +13,8 @@ describe('RSS Feed Generation', () => {
 		body: '',
 		collection: 'blog',
 		data: {
-			title: `Test Post ${id}`, slug: 'test-slug',
+			title: `Test Post ${id}`,
+			slug: 'test-slug',
 			pubDate,
 			description: 'Test description',
 			author: 'Test Author',
@@ -36,7 +37,7 @@ describe('RSS Feed Generation', () => {
 				title: post.data.title,
 				pubDate: post.data.pubDate,
 				description: post.data.description,
-				link: `/posts/${post.id.replace(".md", "")}/`,
+				link: `/posts/${post.id.replace('.md', '')}/`,
 				enclosure: {
 					url: new URL(post.data.image.url, site).href,
 					length: 0,
