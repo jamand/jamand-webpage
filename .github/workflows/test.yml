@@ -31,13 +31,20 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # Placeholder for future tests
-      # Uncomment and configure when tests are added:
-      # - name: Run unit tests
-      #   run: pnpm test
-      #
-      # - name: Run accessibility tests
-      #   run: pnpm test:a11y
+      - name: Run unit tests
+        run: pnpm test:run
 
-      - name: No tests configured
-        run: echo "No tests configured yet. Add test commands above when ready."
+      - name: Build site for accessibility testing
+        run: pnpm build
+        env:
+          SITE_URL: http://localhost:4321
+
+      - name: Start preview server
+        run: pnpm preview &
+
+      - name: Wait for preview server to be ready
+        run: pnpm wait-on http://localhost:4321
+
+      - name: Run accessibility tests
+        run: pnpm test:a11y
+        continue-on-error: true
