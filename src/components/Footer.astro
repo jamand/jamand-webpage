@@ -1,6 +1,20 @@
 ---
 // Footer component - displays site footer with social links
 import githubIcon from '../assets/github.svg?raw';
+import { getLocalizedPath, useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/translations';
+
+interface Props {
+	lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = useTranslations(lang);
+
+const isImprintConfigured =
+	import.meta.env.IMPRINT_NAME &&
+	import.meta.env.IMPRINT_ADDRESS &&
+	import.meta.env.IMPRINT_CITY;
 ---
 
 <footer class="bg-base-200 py-4 text-center">
@@ -9,6 +23,15 @@ import githubIcon from '../assets/github.svg?raw';
 			<span class="inline-block h-5 w-5 fill-current" set:html={githubIcon} />
 			GitHub
 		</a>
-		<a href="https://linkedin.com/in/jer-amand" class="link"> LinkedIn </a>
+		<a href="https://linkedin.com/in/jer-amand" class="link">LinkedIn</a>
+		{
+			isImprintConfigured ? (
+				<a href={getLocalizedPath('/impressum/', lang)} class="link">
+					{t('imprint.title')}
+				</a>
+			) : (
+				false
+			)
+		}
 	</div>
 </footer>

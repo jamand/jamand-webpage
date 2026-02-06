@@ -35,6 +35,7 @@ export const translations = {
 		'meta.blog':
 			'Articles and thoughts on software development and technology.',
 		'meta.tags': 'Browse blog posts by topic and category.',
+		'meta.imprint': 'Legal information and contact details.',
 
 		// Blog
 		'blog.title': 'Blog',
@@ -52,6 +53,13 @@ export const translations = {
 		'lang.switch': 'Switch language',
 		'lang.en': '🇬🇧 English',
 		'lang.de': '🇩🇪 Deutsch',
+
+		// Imprint (legal requirement)
+		'imprint.title': 'Imprint',
+		'imprint.responsible': 'Responsible for content',
+		'imprint.contact': 'Contact',
+		'imprint.notConfigured':
+			'Imprint information is not configured for this environment.',
 	},
 	de: {
 		// Navigation
@@ -72,6 +80,7 @@ export const translations = {
 			'Erfahren Sie mehr über Jérémy Amand, seinen Hintergrund und seine Interessen.',
 		'meta.blog': 'Artikel und Gedanken zu Softwareentwicklung und Technologie.',
 		'meta.tags': 'Blogbeiträge nach Thema und Kategorie durchsuchen.',
+		'meta.imprint': 'Rechtliche Informationen und Kontaktdaten.',
 
 		// Blog
 		'blog.title': 'Blog',
@@ -89,6 +98,13 @@ export const translations = {
 		'lang.switch': 'Sprache wechseln',
 		'lang.en': '🇬🇧 English',
 		'lang.de': '🇩🇪 Deutsch',
+
+		// Imprint (legal requirement)
+		'imprint.title': 'Impressum',
+		'imprint.responsible': 'Verantwortlich für den Inhalt',
+		'imprint.contact': 'Kontakt',
+		'imprint.notConfigured':
+			'Impressumsinformationen sind für diese Umgebung nicht konfiguriert.',
 	},
 } as const;
 
