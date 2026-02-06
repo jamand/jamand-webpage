@@ -6,6 +6,7 @@ import { supportedLangs, defaultLang } from './i18n/translations';
 // Export schema for testing
 export const blogSchema = z.object({
 	title: z.string(),
+	slug: z.string(), // URL-friendly slug for the post
 	pubDate: z.date(),
 	description: z.string(),
 	author: z.string(),

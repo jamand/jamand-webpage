@@ -13,11 +13,10 @@ const { hasTranslation, getPostUrl } = await import('./blog-utils');
 function createMockPost(overrides: Partial<BlogPost> = {}): BlogPost {
 	return {
 		id: 'test-post.md',
-		slug: 'test-post',
 		body: '',
 		collection: 'blog',
 		data: {
-			title: 'Test Post',
+			title: 'Test Post', slug: 'test-slug',
 			pubDate: new Date('2026-01-01'),
 			description: 'A test post',
 			author: 'Test Author',
@@ -39,9 +38,9 @@ describe('blog-utils', () => {
 		it('should return true when post has translation slug', () => {
 			const post = createMockPost({
 				data: {
-					title: 'Test',
+					title: 'Test', slug: 'test-slug',
 					pubDate: new Date(),
-					description: 'Test',
+					description: 'Test', author: 'Test', image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'en',
 					translationSlug: 'de/test-post.md',
 					tags: [],
@@ -58,9 +57,9 @@ describe('blog-utils', () => {
 		it('should return false when translation slug is empty string', () => {
 			const post = createMockPost({
 				data: {
-					title: 'Test',
+					title: 'Test', slug: 'test-slug',
 					pubDate: new Date(),
-					description: 'Test',
+					description: 'Test', author: 'Test', image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'en',
 					translationSlug: '',
 					tags: [],
@@ -75,57 +74,56 @@ describe('blog-utils', () => {
 			const post = createMockPost({
 				id: 'my-first-post.md',
 				data: {
-					title: 'Test',
+					title: 'Test', slug: 'my-first-post',
 					pubDate: new Date(),
-					description: 'Test',
+					description: 'Test', author: 'Test', image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'en',
 					tags: [],
 				},
 			});
-			expect(getPostUrl(post)).toBe('/posts/my-first-post.md/');
+			expect(getPostUrl(post)).toBe('/posts/my-first-post/');
 		});
 
 		it('should return URL with language prefix for non-default language', () => {
 			const post = createMockPost({
 				id: 'de/mein-erster-post.md',
 				data: {
-					title: 'Test',
+					title: 'Test', slug: 'mein-erster-post',
 					pubDate: new Date(),
-					description: 'Test',
+					description: 'Test', author: 'Test', image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'de',
 					tags: [],
 				},
 			});
-			expect(getPostUrl(post)).toBe('/de/posts/mein-erster-post.md/');
+			expect(getPostUrl(post)).toBe('/de/posts/mein-erster-post/');
 		});
 
-		it('should remove language folder prefix from slug', () => {
+		it('should use slug from frontmatter for URL generation', () => {
 			const post = createMockPost({
 				id: 'de/nested/path/post.md',
 				data: {
-					title: 'Test',
+					title: 'Test', slug: 'custom-slug',
 					pubDate: new Date(),
-					description: 'Test',
+					description: 'Test', author: 'Test', image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'de',
 					tags: [],
 				},
 			});
-			// Should remove "de/" prefix
-			expect(getPostUrl(post)).toBe('/de/posts/nested/path/post.md/');
+			expect(getPostUrl(post)).toBe('/de/posts/custom-slug/');
 		});
 
-		it('should handle posts without language prefix in slug', () => {
+		it('should handle any slug format', () => {
 			const post = createMockPost({
 				id: 'standalone-post.md',
 				data: {
-					title: 'Test',
+					title: 'Test', slug: '20240127-hello-world',
 					pubDate: new Date(),
-					description: 'Test',
+					description: 'Test', author: 'Test', image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'en',
 					tags: [],
 				},
 			});
-			expect(getPostUrl(post)).toBe('/posts/standalone-post.md/');
+			expect(getPostUrl(post)).toBe('/posts/20240127-hello-world/');
 		});
 	});
 });

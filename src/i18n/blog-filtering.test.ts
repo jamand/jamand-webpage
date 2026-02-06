@@ -9,11 +9,10 @@ describe('Blog Post Filtering and Sorting', () => {
 		pubDate: Date,
 	): BlogPost => ({
 		id,
-		slug: id.replace(/^[a-z]{2}\//, '').replace('.md', ''),
 		body: '',
 		collection: 'blog',
 		data: {
-			title: `Post ${id}`,
+			title: `Post ${id}`, slug: 'test-slug',
 			pubDate,
 			description: 'Description',
 			author: 'Author',
