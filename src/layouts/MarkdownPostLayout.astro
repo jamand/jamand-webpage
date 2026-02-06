@@ -1,11 +1,30 @@
 ---
 // Layout for individual blog posts rendered from markdown/mdx
 import Layout from './Layout.astro';
+import { defaultLang, type Lang } from '../i18n/translations';
+import {
+	useTranslations,
+	getDateLocale,
+	getLangFlag,
+	getLangName,
+} from '../i18n/utils';
+import { getPostUrl, type BlogPost } from '../i18n/blog-utils';
 
-const { frontmatter } = Astro.props;
+interface Props {
+	frontmatter: BlogPost['data'];
+	translation?: BlogPost;
+}
+
+const { frontmatter, translation } = Astro.props;
+const lang = (frontmatter.lang || defaultLang) as Lang;
+const t = useTranslations(lang);
 ---
 
-<Layout title={frontmatter.title} description={frontmatter.description}>
+<Layout
+	title={frontmatter.title}
+	description={frontmatter.description}
+	lang={lang}
+>
 	<article>
 		<header
 			class="not-prose mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
@@ -13,11 +32,11 @@ const { frontmatter } = Astro.props;
 			<h1 class="m-0 text-3xl font-bold sm:text-4xl">{frontmatter.title}</h1>
 			<dl class="stats stats-horizontal shadow">
 				<div class="stat px-4 py-2">
-					<dt class="stat-title">Published</dt>
+					<dt class="stat-title">{t('blog.publishedOn')}</dt>
 					<dd class="stat-value text-base">
 						<time datetime={frontmatter.pubDate.toISOString().split('T')[0]}>
 							{
-								frontmatter.pubDate.toLocaleDateString('en-GB', {
+								frontmatter.pubDate.toLocaleDateString(getDateLocale(lang), {
 									day: 'numeric',
 									month: 'short',
 									year: 'numeric',
@@ -27,9 +46,26 @@ const { frontmatter } = Astro.props;
 					</dd>
 				</div>
 				<div class="stat px-4 py-2">
-					<dt class="stat-title">Author</dt>
+					<dt class="stat-title">{t('blog.author')}</dt>
 					<dd class="stat-value text-base">{frontmatter.author}</dd>
 				</div>
+				{
+					translation && (
+						<div class="stat px-4 py-2">
+							<dt class="stat-title">{t('blog.availableIn')}</dt>
+							<dd class="stat-value text-base">
+								<a
+									href={getPostUrl(translation)}
+									class="text-2xl no-underline opacity-90 transition-opacity hover:opacity-100"
+									title={getLangName(translation.data.lang as Lang)}
+									aria-label={getLangName(translation.data.lang as Lang)}
+								>
+									{getLangFlag(translation.data.lang as Lang)}
+								</a>
+							</dd>
+						</div>
+					)
+				}
 			</dl>
 		</header>
 

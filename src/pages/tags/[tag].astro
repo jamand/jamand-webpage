@@ -1,36 +1,65 @@
 ---
-// Dynamic tag page - shows all posts with a specific tag
-import { getCollection } from 'astro:content';
+// Dynamic tag page - shows all English posts with a specific tag
 import Layout from '../../layouts/Layout.astro';
 import BlogPostLink from '../../components/BlogPostLink.astro';
+import {
+	getPostUrl,
+	type AvailableLanguage,
+	type BlogPost,
+} from '../../i18n/blog-utils';
+import { useTranslations } from '../../i18n/utils';
+
+const lang = 'en';
+const t = useTranslations(lang);
+
+interface PostWithLanguages {
+	post: BlogPost;
+	availableLanguages: AvailableLanguage[];
+}
 
 export async function getStaticPaths() {
-	const allPosts = await getCollection('blog');
+	const { getPostsByLang, getAvailableLanguages } =
+		await import('../../i18n/blog-utils');
+	const englishPosts = await getPostsByLang('en');
 	const uniqueTags = [
-		...new Set(allPosts.map((post) => post.data.tags).flat()),
+		...new Set(englishPosts.map((post) => post.data.tags).flat()),
 	];
 
-	return uniqueTags.map((tag) => {
-		const filteredPosts = allPosts.filter((post) =>
-			post.data.tags.includes(tag),
-		);
-		return {
-			params: { tag },
-			props: { posts: filteredPosts },
-		};
-	});
+	return Promise.all(
+		uniqueTags.map(async (tag) => {
+			const filteredPosts = englishPosts.filter((post) =>
+				post.data.tags.includes(tag),
+			);
+			const postsWithLanguages = await Promise.all(
+				filteredPosts.map(async (post) => ({
+					post,
+					availableLanguages: await getAvailableLanguages(post),
+				})),
+			);
+			return {
+				params: { tag },
+				props: { posts: postsWithLanguages },
+			};
+		}),
+	);
 }
 
 const { tag } = Astro.params;
-const { posts } = Astro.props;
+const { posts } = Astro.props as { posts: PostWithLanguages[] };
 ---
 
-<Layout>
-	<h1>Posts tagged with "{tag}"</h1>
+<Layout lang={lang}>
+	<h1>{t('blog.postsTaggedWith')} "{tag}"</h1>
 	<ul>
 		{
-			posts.map((post) => (
-				<BlogPostLink url={`/posts/${post.id}/`} title={post.data.title} />
+			posts.map(({ post, availableLanguages }) => (
+				<BlogPostLink
+					url={getPostUrl(post)}
+					title={post.data.title}
+					pubDate={post.data.pubDate}
+					lang={lang}
+					availableLanguages={availableLanguages}
+				/>
 			))
 		}
 	</ul>
