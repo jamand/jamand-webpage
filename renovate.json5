@@ -1,0 +1,91 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  // Inherit recommended defaults from Renovate
+  "extends": ["config:recommended"],
+
+  // Grouping strategies to reduce PR noise
+  "packageRules": [
+    {
+      "description": "Group Astro ecosystem updates",
+      "groupName": "Astro",
+      "matchPackagePatterns": ["^astro", "^@astrojs/"]
+    },
+    {
+      "description": "Group React ecosystem updates",
+      "groupName": "React",
+      "matchPackagePatterns": ["^react", "^@types/react"]
+    },
+    {
+      "description": "Group Tailwind ecosystem updates",
+      "groupName": "Tailwind CSS",
+      "matchPackagePatterns": ["^tailwindcss", "^@tailwindcss/", "^daisyui"]
+    },
+    {
+      "description": "Group linters and formatters",
+      "groupName": "Linters",
+      "matchPackagePatterns": [
+        "^eslint",
+        "^@typescript-eslint/",
+        "^prettier",
+        "^cspell",
+        "^@cspell/"
+      ]
+    },
+    {
+      "description": "Group TypeScript and build tools",
+      "groupName": "Build tools",
+      "matchPackageNames": ["typescript", "vite"]
+    },
+    {
+      "description": "Group testing tools",
+      "groupName": "Testing",
+      "matchPackagePatterns": ["^pa11y", "^puppeteer"]
+    },
+    {
+      "description": "Group all patch and minor updates together (excludes major framework updates)",
+      "groupName": "Dependencies (non-major)",
+      "matchUpdateTypes": ["patch", "minor"],
+      "matchPackagePatterns": ["*"],
+      // Don't include major frameworks in this catch-all group
+      "excludePackagePatterns": [
+        "^astro",
+        "^@astrojs/",
+        "^react",
+        "^@types/react",
+        "^tailwindcss",
+        "^@tailwindcss/",
+        "^daisyui"
+      ]
+    },
+    {
+      "description": "Automerge only patch-level updates (bug fixes)",
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
+    },
+    {
+      "description": "Don't automerge minor and major updates (require manual review)",
+      "matchUpdateTypes": ["minor", "major"],
+      "automerge": false
+    }
+  ],
+
+  // Run daily at 3am to check for updates
+  "schedule": ["before 3am"],
+  "timezone": "Europe/Berlin",
+
+  // Automerge configuration (only applies to patch updates due to packageRules above)
+  "automerge": false,  // Disabled by default, enabled only for patch updates
+  "automergeType": "pr",  // Create PR and merge automatically
+  "automergeStrategy": "squash",  // Squash commits when merging
+  "platformAutomerge": false,  // Don't use GitHub's automerge (use Renovate's)
+
+  // Require all CI checks to pass before automerge
+  "requiredStatusChecks": [
+    "lint",
+    "typecheck",
+    "test",
+    "build",
+    "all-checks-passed"
+  ]
+}
