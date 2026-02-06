@@ -11,11 +11,48 @@ import sitemap from '@astrojs/sitemap';
 
 import expressiveCode from 'astro-expressive-code';
 
+import rehypeExternalLinks from 'rehype-external-links';
+
+import { defaultLang, supportedLangs, localeMap } from './src/i18n/translations';
+
 // https://astro.build/config
 export default defineConfig({
-    integrations: [react(), expressiveCode(), mdx(), sitemap()],
+    integrations: [
+        react(),
+        expressiveCode(),
+        mdx(),
+        sitemap({
+            i18n: {
+                defaultLocale: defaultLang,
+                locales: localeMap,
+            },
+        }),
+    ],
     site: process.env.SITE_URL || 'http://localhost:4321',
     base: process.env.BASE_PATH || '/',
+
+    i18n: {
+        locales: [...supportedLangs],
+        defaultLocale: defaultLang,
+        routing: {
+            prefixDefaultLocale: false,
+        },
+    },
+
+    markdown: {
+        rehypePlugins: [
+            [
+                rehypeExternalLinks,
+                {
+                    content: { type: 'text', value: ' 🔗' }
+                }
+            ]
+         ],
+    },
+
+    prefetch: {
+        prefetchAll: true
+    },
 
     vite: {
         plugins: [tailwindcss()],
