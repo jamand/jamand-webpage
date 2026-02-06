@@ -8,26 +8,56 @@ import { useTranslations, getLocalizedPath } from '../../i18n/utils';
 const lang = 'de';
 const t = useTranslations(lang);
 const postsWithLanguages = await getPostsWithLanguages(lang);
+
+const tagCounts = new Map<string, number>();
+postsWithLanguages.forEach(({ post }) => {
+	post.data.tags.forEach((tag) => {
+		tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+	});
+});
+const sortedTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
 ---
 
 <Layout lang={lang} description={t('meta.blog')}>
-	<h1>{t('blog.title')}</h1>
-	{
-		postsWithLanguages.length > 0 ? (
-			<ul>
-				{postsWithLanguages.map(({ post, availableLanguages }) => (
-					<BlogPostLink
-						url={getPostUrl(post)}
-						title={post.data.title}
-						pubDate={post.data.pubDate}
-						lang={lang}
-						availableLanguages={availableLanguages}
-					/>
-				))}
-			</ul>
-		) : (
-			<p>Noch keine deutschen Beiträge verfügbar.</p>
-		)
-	}
-	<a href={getLocalizedPath('/tags/', lang)}>{t('common.browseByTags')}</a>
+	<div class="not-prose flex flex-col gap-8 lg:flex-row">
+		<div class="min-w-0 flex-1">
+			<h1 class="mb-4 text-3xl font-bold">{t('blog.title')}</h1>
+			{
+				postsWithLanguages.length > 0 ? (
+					<ul class="space-y-2">
+						{postsWithLanguages.map(({ post, availableLanguages }) => (
+							<BlogPostLink
+								url={getPostUrl(post)}
+								title={post.data.title}
+								pubDate={post.data.pubDate}
+								lang={lang}
+								availableLanguages={availableLanguages}
+							/>
+						))}
+					</ul>
+				) : (
+					<p>Noch keine deutschen Beiträge verfügbar.</p>
+				)
+			}
+		</div>
+
+		{
+			sortedTags.length > 0 && (
+				<aside class="shrink-0 lg:w-48">
+					<h2 class="mb-3 text-lg font-semibold">{t('common.browseByTags')}</h2>
+					<div class="flex flex-wrap gap-2">
+						{sortedTags.map(([tag, count]) => (
+							<a
+								href={getLocalizedPath(`/tags/${tag}/`, lang)}
+								class="badge badge-outline gap-1 no-underline"
+							>
+								{tag}
+								<span class="badge badge-sm">{count}</span>
+							</a>
+						))}
+					</div>
+				</aside>
+			)
+		}
+	</div>
 </Layout>

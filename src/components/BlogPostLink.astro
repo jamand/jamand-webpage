@@ -15,7 +15,7 @@ interface Props {
 const { title, url, pubDate, lang, availableLanguages } = Astro.props;
 
 const formattedDate = pubDate.toLocaleDateString(getDateLocale(lang), {
-	day: 'numeric',
+	day: '2-digit',
 	month: 'short',
 	year: 'numeric',
 });
@@ -24,7 +24,7 @@ const formattedDate = pubDate.toLocaleDateString(getDateLocale(lang), {
 <li class="flex items-center gap-2">
 	<time
 		datetime={pubDate.toISOString().split('T')[0]}
-		class="text-sm opacity-80"
+		class="inline-block w-28 shrink-0 text-sm tabular-nums opacity-80"
 	>
 		{formattedDate}
 	</time>

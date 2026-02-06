@@ -8,7 +8,9 @@ export type BlogPost = CollectionEntry<'blog'>;
  */
 export async function getPostsByLang(lang: Lang): Promise<BlogPost[]> {
 	const allPosts = await getCollection('blog');
-	return allPosts.filter((post) => post.data.lang === lang);
+	return allPosts
+		.filter((post) => post.data.lang === lang)
+		.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
 /**
