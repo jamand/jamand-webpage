@@ -38,9 +38,17 @@
       "matchPackageNames": ["typescript", "vite"]
     },
     {
-      "description": "Group testing tools",
+      "description": "Group testing tools and libraries",
       "groupName": "Testing",
-      "matchPackagePatterns": ["^pa11y", "^puppeteer"]
+      "matchPackagePatterns": [
+        "^vitest",
+        "^@vitest/",
+        "^@testing-library/",
+        "^pa11y",
+        "^puppeteer",
+        "^happy-dom",
+        "^wait-on"
+      ]
     },
     {
       "description": "Group all patch and minor updates together (excludes major framework updates)",
@@ -81,11 +89,5 @@
   "platformAutomerge": false,  // Don't use GitHub's automerge (use Renovate's)
 
   // Require all CI checks to pass before automerge
-  "requiredStatusChecks": [
-    "lint",
-    "typecheck",
-    "test",
-    "build",
-    "all-checks-passed"
-  ]
+  "requiredStatusChecks": ["lint", "typecheck", "test", "build"]
 }

@@ -106,8 +106,7 @@ export async function getAvailableLanguages(
  */
 export function getPostUrl(post: BlogPost): string {
 	const lang = post.data.lang;
-	// Remove language folder prefix (e.g., "de/") from the slug for URL
-	const slug = post.id.replace(/^[a-z]{2}\//, '');
+	const slug = post.data.slug;
 
 	if (lang === defaultLang) {
 		return `/posts/${slug}/`;

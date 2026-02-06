@@ -8,7 +8,11 @@
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint src/",
-    "test:a11y": "pa11y"
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:a11y": "pa11y-ci --sitemap http://localhost:4321/sitemap-index.xml"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -30,19 +34,27 @@
     "@astrojs/check": "^0.9.6",
     "@cspell/dict-de-de": "^4.1.2",
     "@tailwindcss/typography": "^0.5.19",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@typescript-eslint/parser": "^8.54.0",
+    "@vitest/ui": "^4.0.18",
     "cspell": "^9.6.2",
     "daisyui": "^5.5.14",
     "eslint": "^9.39.2",
     "eslint-plugin-astro": "^1.5.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
+    "happy-dom": "^20.5.0",
     "lefthook": "^2.0.16",
     "pa11y": "^9.0.1",
+    "pa11y-ci": "^4.0.1",
     "prettier": "3.8.1",
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.7.2",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.54.0"
+    "typescript-eslint": "^8.54.0",
+    "vitest": "^4.0.18",
+    "wait-on": "^9.0.3"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
