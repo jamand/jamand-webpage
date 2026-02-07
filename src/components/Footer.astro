@@ -1,8 +1,10 @@
 ---
 // Footer component - displays site footer with social links
 import githubIcon from '../assets/github.svg?raw';
+import astroIcon from '../assets/astro.svg?raw';
 import { getLocalizedPath, useTranslations } from '../i18n/utils';
 import type { Lang } from '../i18n/translations';
+import ContentWidth from './ContentWidth.astro';
 
 interface Props {
 	lang?: Lang;
@@ -17,21 +19,33 @@ const isImprintConfigured =
 	import.meta.env.IMPRINT_CITY;
 ---
 
-<footer class="bg-base-200 py-4 text-center">
-	<div class="flex items-center justify-center gap-4">
-		<a href="https://github.com/jamand" class="link flex items-center gap-1">
-			<span class="inline-block h-5 w-5 fill-current" set:html={githubIcon} />
-			GitHub
-		</a>
-		<a href="https://linkedin.com/in/jer-amand" class="link">LinkedIn</a>
-		{
-			isImprintConfigured ? (
-				<a href={getLocalizedPath('/impressum/', lang)} class="link">
-					{t('imprint.title')}
-				</a>
-			) : (
-				false
-			)
-		}
-	</div>
+<footer class="footer sm:footer-horizontal bg-base-200 text-base-content p-6">
+	<ContentWidth
+		extraClasses="flex flex-col items-center gap-4 sm:flex-row sm:justify-between"
+	>
+		<nav class="flex items-center gap-4">
+			<a href="https://github.com/jamand" class="link flex items-center gap-1">
+				<span class="inline-block h-5 w-5 fill-current" set:html={githubIcon} />
+				GitHub
+			</a>
+			<a href="https://linkedin.com/in/jer-amand" class="link">LinkedIn</a>
+			{
+				isImprintConfigured ? (
+					<a href={getLocalizedPath('/impressum/', lang)} class="link">
+						{t('imprint.title')}
+					</a>
+				) : (
+					false
+				)
+			}
+		</nav>
+		<aside class="inline-flex items-center gap-1 text-sm opacity-60">
+			Built from scratch with
+			<span
+				class="inline-block h-3.5 w-3.5 fill-current"
+				set:html={astroIcon}
+			/>
+			<a href="https://astro.build" class="link">Astro</a>
+		</aside>
+	</ContentWidth>
 </footer>
