@@ -1,6 +1,7 @@
 ---
 // Header component - site header with navigation
 import ThemeToggle from './ThemeToggle.astro';
+import ContentWidth from './ContentWidth.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import { defaultLang, type Lang } from '../i18n/translations';
 import { useTranslations, getLocalizedPath } from '../i18n/utils';
@@ -18,25 +19,33 @@ const navLinks = [
 ];
 ---
 
-<header class="navbar bg-base-200 px-4">
-	<div class="flex-1">
-		<a href={getLocalizedPath('/', lang)} class="text-xl font-bold"
-			>Jérémy Amand</a
-		>
-	</div>
-	<nav class="flex-none">
-		<ul class="menu menu-horizontal gap-1 px-1">
-			{
-				navLinks.map((link) => (
-					<li>
-						<a href={link.href}>{link.label}</a>
-					</li>
-				))
-			}
-		</ul>
-	</nav>
-	<div class="ml-1 flex items-center gap-1">
-		<LanguageSwitcher lang={lang} />
-		<ThemeToggle />
-	</div>
+<header class="navbar bg-base-200 shadow-sm">
+	<ContentWidth>
+		<nav class="flex items-center">
+			<div class="relative flex-1">
+				<a
+					href="#main-content"
+					class="bg-base-100 text-base-content sr-only focus:not-sr-only focus:absolute focus:top-0 focus:bottom-0 focus:left-0 focus:z-50 focus:flex focus:items-center focus:rounded focus:px-1"
+				>
+					{t('common.skipToContent')}
+				</a>
+				<a href={getLocalizedPath('/', lang)} class="text-xl font-bold"
+					>Jérémy Amand</a
+				>
+			</div>
+			<ul class="menu menu-horizontal gap-1 px-1">
+				{
+					navLinks.map((link) => (
+						<li>
+							<a href={link.href}>{link.label}</a>
+						</li>
+					))
+				}
+			</ul>
+			<div class="ml-1 flex items-center gap-1">
+				<LanguageSwitcher lang={lang} />
+				<ThemeToggle />
+			</div>
+		</nav>
+	</ContentWidth>
 </header>

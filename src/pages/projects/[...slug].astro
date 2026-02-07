@@ -1,0 +1,27 @@
+---
+// Dynamic project page - renders individual projects from the projects collection (English)
+import { render } from 'astro:content';
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+import { getAllProjectSlugsForLang } from '../../i18n/project-utils';
+
+const lang = 'en';
+
+export async function getStaticPaths() {
+	const entries = await getAllProjectSlugsForLang('en');
+	return entries.map((entry) => ({
+		params: { slug: entry.slug },
+		props: { project: entry.project, isFallback: entry.isFallback },
+	}));
+}
+
+const { project, isFallback } = Astro.props;
+const { Content } = await render(project);
+---
+
+<ProjectLayout
+	frontmatter={project.data}
+	isFallback={isFallback}
+	pageLang={lang}
+>
+	<Content />
+</ProjectLayout>

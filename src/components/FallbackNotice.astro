@@ -1,0 +1,23 @@
+---
+import { Info } from '@lucide/astro';
+import { useTranslations } from '../i18n/utils';
+import type { Lang, TranslationKey } from '../i18n/translations';
+
+interface Props {
+	pageLang: Lang;
+	contentLang: Lang;
+}
+
+const { pageLang, contentLang } = Astro.props;
+const t = useTranslations(pageLang);
+
+const pageLangName = t(`lang.name.${pageLang}` as TranslationKey);
+const contentLangName = t(`lang.name.${contentLang}` as TranslationKey);
+const noticeText = t('fallback.notice').replace('{lang}', pageLangName);
+const viewingText = t('fallback.viewingIn').replace('{lang}', contentLangName);
+---
+
+<div role="alert" class="alert alert-info alert-soft not-prose mb-6">
+	<Info class="h-5 w-5 shrink-0" />
+	<span>{noticeText} {viewingText}</span>
+</div>

@@ -1,13 +1,13 @@
 ---
-// Tag index page - lists all unique tags from German blog posts
+// Tag index page - lists all unique tags (German, with fallback)
 import Layout from '../../../layouts/Layout.astro';
-import { getPostsByLang } from '../../../i18n/blog-utils';
+import { getPostsWithFallback } from '../../../i18n/blog-utils';
 import { useTranslations, getLocalizedPath } from '../../../i18n/utils';
 
 const lang = 'de';
 const t = useTranslations(lang);
-const germanPosts = await getPostsByLang(lang);
-const tags = [...new Set(germanPosts.map((post) => post.data.tags).flat())];
+const allPosts = await getPostsWithFallback(lang);
+const tags = [...new Set(allPosts.flatMap((item) => item.post.data.tags))];
 ---
 
 <Layout lang={lang} description={t('meta.tags')}>
@@ -22,7 +22,7 @@ const tags = [...new Set(germanPosts.map((post) => post.data.tags).flat())];
 				))}
 			</ul>
 		) : (
-			<p>Noch keine Tags verfügbar.</p>
+			<p>{t('blog.noTags')}</p>
 		)
 	}
 </Layout>

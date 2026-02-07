@@ -25,6 +25,7 @@ describe('RSS Feed Generation', () => {
 			tags: ['test'],
 			lang,
 			postId: id.replace(/\.(md|mdx)$/, ''),
+			published: true,
 		},
 	});
 

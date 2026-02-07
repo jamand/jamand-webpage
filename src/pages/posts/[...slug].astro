@@ -1,25 +1,32 @@
 ---
 // Dynamic blog post page - renders individual posts from the blog collection (English)
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
 import MarkdownPostLayout from '../../layouts/MarkdownPostLayout.astro';
-import { getPostWithTranslation } from '../../i18n/blog-utils';
+import {
+	getAllPostSlugsForLang,
+	getPostWithTranslation,
+} from '../../i18n/blog-utils';
+
+const lang = 'en';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	// Only generate paths for English posts
-	const englishPosts = posts.filter((post) => post.data.lang === 'en');
-
-	return englishPosts.map((post) => ({
-		params: { slug: post.data.slug },
-		props: { post },
+	const entries = await getAllPostSlugsForLang('en');
+	return entries.map((entry) => ({
+		params: { slug: entry.slug },
+		props: { post: entry.post, isFallback: entry.isFallback },
 	}));
 }
 
-const { post } = Astro.props;
+const { post, isFallback } = Astro.props;
 const { Content } = await render(post);
 const { translation } = await getPostWithTranslation(post);
 ---
 
-<MarkdownPostLayout frontmatter={post.data} translation={translation}>
+<MarkdownPostLayout
+	frontmatter={post.data}
+	translation={translation}
+	isFallback={isFallback}
+	pageLang={lang}
+>
 	<Content />
 </MarkdownPostLayout>

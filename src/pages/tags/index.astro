@@ -1,24 +1,28 @@
 ---
-// Tag index page - lists all unique tags from English blog posts
+// Tag index page - lists all unique tags (English, with fallback)
 import Layout from '../../layouts/Layout.astro';
-import { getPostsByLang } from '../../i18n/blog-utils';
+import { getPostsWithFallback } from '../../i18n/blog-utils';
 import { useTranslations } from '../../i18n/utils';
 
 const lang = 'en';
 const t = useTranslations(lang);
-const englishPosts = await getPostsByLang(lang);
-const tags = [...new Set(englishPosts.map((post) => post.data.tags).flat())];
+const allPosts = await getPostsWithFallback(lang);
+const tags = [...new Set(allPosts.flatMap((item) => item.post.data.tags))];
 ---
 
 <Layout lang={lang} description={t('meta.tags')}>
 	<h1>{t('blog.tags')}</h1>
-	<ul>
-		{
-			tags.map((tag) => (
-				<li>
-					<a href={`/tags/${tag}/`}>{tag}</a>
-				</li>
-			))
-		}
-	</ul>
+	{
+		tags.length > 0 ? (
+			<ul>
+				{tags.map((tag) => (
+					<li>
+						<a href={`/tags/${tag}/`}>{tag}</a>
+					</li>
+				))}
+			</ul>
+		) : (
+			<p>{t('blog.noTags')}</p>
+		)
+	}
 </Layout>

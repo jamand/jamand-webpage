@@ -1,0 +1,68 @@
+---
+// Layout for individual project pages rendered from markdown/mdx
+import Layout from './Layout.astro';
+import { defaultLang, type Lang } from '../i18n/translations';
+import { useTranslations } from '../i18n/utils';
+import FallbackNotice from '../components/FallbackNotice.astro';
+import type { z } from 'astro/zod';
+import type { projectSchema } from '../content.config';
+
+type ProjectData = z.infer<typeof projectSchema>;
+
+interface Props {
+	frontmatter: ProjectData;
+	isFallback?: boolean;
+	pageLang?: Lang;
+}
+
+const { frontmatter, isFallback = false, pageLang } = Astro.props;
+const lang = pageLang || ((frontmatter.lang || defaultLang) as Lang);
+const t = useTranslations(lang);
+---
+
+<Layout
+	title={frontmatter.title}
+	description={frontmatter.description}
+	lang={lang}
+>
+	<article>
+		{
+			isFallback && pageLang && (
+				<FallbackNotice
+					pageLang={pageLang}
+					contentLang={frontmatter.lang as Lang}
+				/>
+			)
+		}
+		<header class="not-prose mb-8">
+			<h1 class="text-3xl font-bold sm:text-4xl">{frontmatter.title}</h1>
+			<p class="mt-2 opacity-80">{frontmatter.description}</p>
+			<div class="mt-4 flex flex-wrap gap-2">
+				{
+					frontmatter.tags.map((tag) => (
+						<span class="badge badge-outline">{tag}</span>
+					))
+				}
+			</div>
+			{
+				frontmatter.url && (
+					<a
+						href={frontmatter.url}
+						class="link mt-4 inline-block"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{t('project.viewOnGitHub')} ↗
+					</a>
+				)
+			}
+		</header>
+
+		<img
+			src={frontmatter.image.url}
+			alt={frontmatter.image.alt}
+			class="mb-8 rounded-lg"
+		/>
+		<slot />
+	</article>
+</Layout>

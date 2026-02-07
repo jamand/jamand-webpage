@@ -3,7 +3,22 @@ import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { supportedLangs, defaultLang } from './i18n/translations';
 
-// Export schema for testing
+// Export schemas for testing
+export const projectSchema = z.object({
+	title: z.string(),
+	slug: z.string(),
+	description: z.string(),
+	image: z.object({
+		url: z.string(),
+		alt: z.string(),
+	}),
+	tags: z.array(z.string()),
+	url: z.string().optional(), // External project URL (e.g. GitHub repo)
+	lang: z.enum(supportedLangs).default(defaultLang),
+	projectId: z.string(), // Shared across translations
+	sortOrder: z.number().default(0), // Lower = shown first
+});
+
 export const blogSchema = z.object({
 	title: z.string(),
 	slug: z.string(), // URL-friendly slug for the post
@@ -18,6 +33,7 @@ export const blogSchema = z.object({
 	lang: z.enum(supportedLangs).default(defaultLang),
 	// Unique identifier shared across all translations of this post
 	postId: z.string(),
+	published: z.boolean().default(true),
 });
 
 // Define a `loader` and `schema` for each collection
@@ -33,5 +49,16 @@ const blog = defineCollection({
 	schema: blogSchema,
 });
 
+const projects = defineCollection({
+	loader: glob({
+		pattern: '**/[^_]*.{md,mdx}',
+		base: './src/projects',
+		generateId: ({ entry }) => {
+			return entry;
+		},
+	}),
+	schema: projectSchema,
+});
+
 // Export a single `collections` object to register your collection(s)
-export const collections = { blog };
+export const collections = { blog, projects };
