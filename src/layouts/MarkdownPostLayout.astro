@@ -9,14 +9,17 @@ import {
 	getLangName,
 } from '../i18n/utils';
 import { getPostUrl, type BlogPost } from '../i18n/blog-utils';
+import FallbackNotice from '../components/FallbackNotice.astro';
 
 interface Props {
 	frontmatter: BlogPost['data'];
 	translation?: BlogPost;
+	isFallback?: boolean;
+	pageLang?: Lang;
 }
 
-const { frontmatter, translation } = Astro.props;
-const lang = (frontmatter.lang || defaultLang) as Lang;
+const { frontmatter, translation, isFallback = false, pageLang } = Astro.props;
+const lang = pageLang || ((frontmatter.lang || defaultLang) as Lang);
 const t = useTranslations(lang);
 ---
 
@@ -26,6 +29,14 @@ const t = useTranslations(lang);
 	lang={lang}
 >
 	<article>
+		{
+			isFallback && pageLang && (
+				<FallbackNotice
+					pageLang={pageLang}
+					contentLang={frontmatter.lang as Lang}
+				/>
+			)
+		}
 		<header
 			class="not-prose mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
 		>

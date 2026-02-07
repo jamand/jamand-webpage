@@ -21,6 +21,7 @@ describe('Blog Post Filtering and Sorting', () => {
 			tags: [],
 			lang,
 			postId: id.replace(/\.(md|mdx)$/, ''),
+			published: true,
 		},
 	});
 

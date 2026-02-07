@@ -37,6 +37,18 @@ export const translations = {
 		'meta.tags': 'Browse blog posts by topic and category.',
 		'meta.imprint': 'Legal information and contact details.',
 
+		// Home page
+		'home.greeting': "👋 Hi, I'm Jérémy.",
+		'home.tagline': 'Software Developer & Cloud Enthusiast',
+		'home.intro':
+			'I build software at the intersection of cloud computing, bioinformatics, and digital sovereignty. Welcome to my corner of the web where I share projects, ideas, and things I learn along the way.',
+		'home.aboutMe': 'About me',
+		'home.projects': 'Projects',
+		'home.recentPosts': 'Recent Posts',
+		'home.viewAllPosts': 'View all posts',
+		'home.noPosts': 'No posts yet — stay tuned!',
+		'home.techStack': 'Tech Stack',
+
 		// Blog
 		'blog.title': 'Blog',
 		'blog.publishedOn': 'Published',
@@ -44,6 +56,10 @@ export const translations = {
 		'blog.availableIn': 'Translation',
 		'blog.postsTaggedWith': 'Posts tagged with',
 		'blog.tags': 'Tags',
+		'blog.noTags': 'No tags available yet.',
+
+		// Projects
+		'project.viewOnGitHub': 'View on GitHub',
 
 		// 404
 		'404.title': '404 - Page Not Found',
@@ -53,6 +69,12 @@ export const translations = {
 		'lang.switch': 'Switch language',
 		'lang.en': '🇬🇧 English',
 		'lang.de': '🇩🇪 Deutsch',
+		'lang.name.en': 'English',
+		'lang.name.de': 'German',
+
+		// Fallback notice
+		'fallback.notice': 'This content is not yet available in {lang}.',
+		'fallback.viewingIn': 'You are viewing the {lang} version.',
 
 		// Imprint (legal requirement)
 		'imprint.title': 'Imprint',
@@ -82,6 +104,18 @@ export const translations = {
 		'meta.tags': 'Blogbeiträge nach Thema und Kategorie durchsuchen.',
 		'meta.imprint': 'Rechtliche Informationen und Kontaktdaten.',
 
+		// Home page
+		'home.greeting': '👋 Hallo, ich bin Jérémy.',
+		'home.tagline': 'Softwareentwickler & Cloud-Enthusiast',
+		'home.intro':
+			'Ich entwickle Software an der Schnittstelle von Cloud Computing, Bioinformatik und digitaler Souveränität. Willkommen auf meiner Webseite, auf der ich Projekte, Ideen und Gelerntes teile.',
+		'home.aboutMe': 'Über mich',
+		'home.projects': 'Projekte',
+		'home.recentPosts': 'Neueste Beiträge',
+		'home.viewAllPosts': 'Alle Beiträge ansehen',
+		'home.noPosts': 'Noch keine Beiträge — bald mehr!',
+		'home.techStack': 'Technologien',
+
 		// Blog
 		'blog.title': 'Blog',
 		'blog.publishedOn': 'Veröffentlicht',
@@ -89,6 +123,10 @@ export const translations = {
 		'blog.availableIn': 'Übersetzung',
 		'blog.postsTaggedWith': 'Beiträge mit Tag',
 		'blog.tags': 'Tags',
+		'blog.noTags': 'Noch keine Tags verfügbar.',
+
+		// Projects
+		'project.viewOnGitHub': 'Auf GitHub ansehen',
 
 		// 404
 		'404.title': '404 - Seite nicht gefunden',
@@ -98,6 +136,12 @@ export const translations = {
 		'lang.switch': 'Sprache wechseln',
 		'lang.en': '🇬🇧 English',
 		'lang.de': '🇩🇪 Deutsch',
+		'lang.name.en': 'Englisch',
+		'lang.name.de': 'Deutsch',
+
+		// Fallback notice
+		'fallback.notice': 'Dieser Inhalt ist noch nicht auf {lang} verfügbar.',
+		'fallback.viewingIn': 'Sie sehen die Version auf {lang}.',
 
 		// Imprint (legal requirement)
 		'imprint.title': 'Impressum',

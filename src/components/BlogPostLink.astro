@@ -10,9 +10,17 @@ interface Props {
 	pubDate: Date;
 	lang: Lang; // Used for date formatting
 	availableLanguages: AvailableLanguage[];
+	isFallback?: boolean;
 }
 
-const { title, url, pubDate, lang, availableLanguages } = Astro.props;
+const {
+	title,
+	url,
+	pubDate,
+	lang,
+	availableLanguages,
+	isFallback = false,
+} = Astro.props;
 
 const formattedDate = pubDate.toLocaleDateString(getDateLocale(lang), {
 	day: '2-digit',
@@ -21,14 +29,16 @@ const formattedDate = pubDate.toLocaleDateString(getDateLocale(lang), {
 });
 ---
 
-<li class="flex items-center gap-2">
+<li
+	class:list={['flex items-center gap-2', { 'italic opacity-90': isFallback }]}
+>
 	<time
 		datetime={pubDate.toISOString().split('T')[0]}
 		class="inline-block w-28 shrink-0 text-sm tabular-nums opacity-80"
 	>
 		{formattedDate}
 	</time>
-	<a href={url}>{title}</a>
+	<a class="link link-underline" href={url}>{title}</a>
 	<span class="flex gap-1">
 		{
 			availableLanguages.map(({ lang: langCode, url: langUrl }) => (
