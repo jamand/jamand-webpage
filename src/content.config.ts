@@ -16,13 +16,20 @@ export const blogSchema = z.object({
 	}),
 	tags: z.array(z.string()),
 	lang: z.enum(supportedLangs).default(defaultLang),
-	// Link to translation (use the slug of the other language version)
-	translationSlug: z.string().optional(),
+	// Unique identifier shared across all translations of this post
+	postId: z.string(),
 });
 
 // Define a `loader` and `schema` for each collection
 const blog = defineCollection({
-	loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/blog' }),
+	loader: glob({
+		pattern: '**/[^_]*.{md,mdx}',
+		base: './src/blog',
+		// Generate ID from file path to ensure uniqueness across languages
+		generateId: ({ entry }) => {
+			return entry;
+		},
+	}),
 	schema: blogSchema,
 });
 

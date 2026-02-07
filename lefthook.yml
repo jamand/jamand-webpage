@@ -5,7 +5,7 @@ pre-commit:
   parallel: true
   jobs:
     - name: prettier
-      glob: '*.{js,ts,jsx,tsx,astro,md,mdx,json,css,yml}'
+      glob: '**/*.{js,ts,jsx,tsx,astro,md,mdx,json,css,yml}'
       run: pnpm prettier --write {staged_files}
       stage_fixed: true
 
@@ -14,5 +14,9 @@ pre-commit:
       run: pnpm cspell --no-progress {staged_files}
 
     - name: eslint
-      glob: '*.{js,ts,jsx,tsx,astro}'
+      glob: '**/*.{js,ts,jsx,tsx,astro}'
       run: pnpm eslint {staged_files}
+
+    - name: typecheck
+      glob: '**/*.{js,ts,jsx,tsx,astro}'
+      run: pnpm astro check

@@ -2,8 +2,9 @@ import { describe, it, expect, vi } from 'vitest';
 import type { BlogPost } from './blog-utils';
 
 // Mock astro:content to avoid server-only module error
+const mockGetCollection = vi.fn();
 vi.mock('astro:content', () => ({
-	getCollection: vi.fn(),
+	getCollection: mockGetCollection,
 }));
 
 // Import after mocking
@@ -26,7 +27,7 @@ function createMockPost(overrides: Partial<BlogPost> = {}): BlogPost {
 				alt: 'Test image',
 			},
 			lang: 'en',
-			translationSlug: undefined,
+			postId: 'test-post',
 			tags: [],
 			...overrides.data,
 		},
@@ -36,7 +37,7 @@ function createMockPost(overrides: Partial<BlogPost> = {}): BlogPost {
 
 describe('blog-utils', () => {
 	describe('hasTranslation', () => {
-		it('should return true when post has translation slug', () => {
+		it('should return true when post has a translation', async () => {
 			const post = createMockPost({
 				data: {
 					title: 'Test',
@@ -46,19 +47,34 @@ describe('blog-utils', () => {
 					author: 'Test',
 					image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'en',
-					translationSlug: 'de/test-post.md',
+					postId: 'test-post',
 					tags: [],
 				},
 			});
-			expect(hasTranslation(post)).toBe(true);
+			const translation = createMockPost({
+				data: {
+					title: 'Test DE',
+					slug: 'test-slug-de',
+					pubDate: new Date(),
+					description: 'Test',
+					author: 'Test',
+					image: { url: '/img.jpg', alt: 'Alt' },
+					lang: 'de',
+					postId: 'test-post',
+					tags: [],
+				},
+			});
+			mockGetCollection.mockResolvedValue([post, translation]);
+			expect(await hasTranslation(post)).toBe(true);
 		});
 
-		it('should return false when post has no translation slug', () => {
+		it('should return false when post has no translation', async () => {
 			const post = createMockPost();
-			expect(hasTranslation(post)).toBe(false);
+			mockGetCollection.mockResolvedValue([post]);
+			expect(await hasTranslation(post)).toBe(false);
 		});
 
-		it('should return false when translation slug is empty string', () => {
+		it('should return false when only post with same postId has same language', async () => {
 			const post = createMockPost({
 				data: {
 					title: 'Test',
@@ -68,11 +84,12 @@ describe('blog-utils', () => {
 					author: 'Test',
 					image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'en',
-					translationSlug: '',
+					postId: 'test-post',
 					tags: [],
 				},
 			});
-			expect(hasTranslation(post)).toBe(false);
+			mockGetCollection.mockResolvedValue([post]);
+			expect(await hasTranslation(post)).toBe(false);
 		});
 	});
 
@@ -88,6 +105,7 @@ describe('blog-utils', () => {
 					author: 'Test',
 					image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'en',
+					postId: 'my-first-post',
 					tags: [],
 				},
 			});
@@ -105,6 +123,7 @@ describe('blog-utils', () => {
 					author: 'Test',
 					image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'de',
+					postId: 'mein-erster-post',
 					tags: [],
 				},
 			});
@@ -122,6 +141,7 @@ describe('blog-utils', () => {
 					author: 'Test',
 					image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'de',
+					postId: 'nested-post',
 					tags: [],
 				},
 			});
@@ -139,6 +159,7 @@ describe('blog-utils', () => {
 					author: 'Test',
 					image: { url: '/img.jpg', alt: 'Alt' },
 					lang: 'en',
+					postId: '20240127-hello-world',
 					tags: [],
 				},
 			});

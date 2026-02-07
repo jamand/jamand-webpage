@@ -20,12 +20,11 @@ export async function getPostWithTranslation(post: BlogPost): Promise<{
 	post: BlogPost;
 	translation?: BlogPost;
 }> {
-	if (!post.data.translationSlug) {
-		return { post };
-	}
-
 	const allPosts = await getCollection('blog');
-	const translation = allPosts.find((p) => p.id === post.data.translationSlug);
+	// Find a post with the same postId but different language
+	const translation = allPosts.find(
+		(p) => p.data.postId === post.data.postId && p.data.lang !== post.data.lang,
+	);
 
 	return { post, translation };
 }
@@ -33,8 +32,11 @@ export async function getPostWithTranslation(post: BlogPost): Promise<{
 /**
  * Check if a post has a translation available
  */
-export function hasTranslation(post: BlogPost): boolean {
-	return !!post.data.translationSlug;
+export async function hasTranslation(post: BlogPost): Promise<boolean> {
+	const allPosts = await getCollection('blog');
+	return allPosts.some(
+		(p) => p.data.postId === post.data.postId && p.data.lang !== post.data.lang,
+	);
 }
 
 export type AvailableLanguage = {
@@ -59,17 +61,18 @@ export async function getPostsWithLanguages(lang: Lang): Promise<
 			{ lang: post.data.lang as Lang, url: getPostUrl(post) },
 		];
 
-		const translationSlug = post.data.translationSlug;
-		const translation = translationSlug
-			? allPosts.find((p) => p.id === translationSlug)
-			: undefined;
+		// Find all translations with the same postId but different language
+		const translations = allPosts.filter(
+			(p) =>
+				p.data.postId === post.data.postId && p.data.lang !== post.data.lang,
+		);
 
-		if (translation) {
+		translations.forEach((translation) => {
 			availableLanguages.push({
 				lang: translation.data.lang as Lang,
 				url: getPostUrl(translation),
 			});
-		}
+		});
 
 		return { post, availableLanguages };
 	});
@@ -85,18 +88,18 @@ export async function getAvailableLanguages(
 		{ lang: post.data.lang as Lang, url: getPostUrl(post) },
 	];
 
-	if (post.data.translationSlug) {
-		const allPosts = await getCollection('blog');
-		const translation = allPosts.find(
-			(p) => p.id === post.data.translationSlug,
-		);
-		if (translation) {
-			languages.push({
-				lang: translation.data.lang as Lang,
-				url: getPostUrl(translation),
-			});
-		}
-	}
+	const allPosts = await getCollection('blog');
+	// Find all translations with the same postId but different language
+	const translations = allPosts.filter(
+		(p) => p.data.postId === post.data.postId && p.data.lang !== post.data.lang,
+	);
+
+	translations.forEach((translation) => {
+		languages.push({
+			lang: translation.data.lang as Lang,
+			url: getPostUrl(translation),
+		});
+	});
 
 	return languages;
 }

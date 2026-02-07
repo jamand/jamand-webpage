@@ -20,6 +20,7 @@ describe('Blog Post Filtering and Sorting', () => {
 			image: { url: '/img.jpg', alt: 'Alt' },
 			tags: [],
 			lang,
+			postId: id.replace(/\.(md|mdx)$/, ''),
 		},
 	});
 

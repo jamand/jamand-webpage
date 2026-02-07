@@ -10,8 +10,7 @@ export async function getStaticPaths() {
 	const germanPosts = posts.filter((post) => post.data.lang === 'de');
 
 	return germanPosts.map((post) => ({
-		// Remove de/ folder prefix from URL slug
-		params: { slug: post.id.replace(/^de\//, '') },
+		params: { slug: post.data.slug },
 		props: { post },
 	}));
 }

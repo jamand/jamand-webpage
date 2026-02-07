@@ -10,7 +10,7 @@ export async function getStaticPaths() {
 	const englishPosts = posts.filter((post) => post.data.lang === 'en');
 
 	return englishPosts.map((post) => ({
-		params: { slug: post.id },
+		params: { slug: post.data.slug },
 		props: { post },
 	}));
 }
