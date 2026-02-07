@@ -1,14 +1,126 @@
 ---
 // Homepage
 import Layout from '../layouts/Layout.astro';
-import { useTranslations } from '../i18n/utils';
+import BlogPostLink from '../components/BlogPostLink.astro';
+import { getPostsWithFallback, getPostUrlForLang } from '../i18n/blog-utils';
+import {
+	getProjectsByLangWithFallback,
+	getProjectUrl,
+} from '../i18n/project-utils';
+import { useTranslations, getLocalizedPath } from '../i18n/utils';
 
 const lang = 'en';
 const t = useTranslations(lang);
+
+const allPosts = await getPostsWithFallback(lang);
+const recentPosts = allPosts.slice(0, 3);
+
+const projects = await getProjectsByLangWithFallback(lang);
+
+const techStack = [
+	'Kubernetes',
+	'Go',
+	'Terraform',
+	'Docker',
+	'TypeScript',
+	'Python',
+	'Linux',
+	'Bash',
+	'Git',
+];
 ---
 
 <Layout lang={lang} description={t('meta.home')}>
-	<h1>Welcome</h1>
-	<p>This is my personal website.</p>
-	<a href="/blog/" class="link">Read my blog</a>
+	<div class="not-prose space-y-16">
+		{/* Hero / Intro */}
+		<section>
+			<h1 class="text-4xl font-bold">{t('home.greeting')}</h1>
+			<p class="mt-2 text-xl opacity-80">{t('home.tagline')}</p>
+			<p class="mt-4 max-w-2xl text-lg">{t('home.intro')}</p>
+			<div class="mt-6 flex gap-3">
+				<a href={getLocalizedPath('/about/', lang)} class="btn btn-primary"
+					>{t('home.aboutMe')}</a
+				>
+				<a
+					href={getLocalizedPath('/blog/', lang)}
+					class="btn btn-outline btn-primary">{t('nav.blog')}</a
+				>
+			</div>
+		</section>
+
+		{/* Projects */}
+		<section>
+			<h2 class="mb-6 text-2xl font-bold">{t('home.projects')}</h2>
+			<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+				{
+					projects.map(({ project }) => (
+						<a
+							href={getProjectUrl(project, lang)}
+							class="card bg-base-100 no-underline shadow-sm transition-shadow hover:shadow-lg"
+						>
+							<figure class="h-40 overflow-hidden">
+								<img
+									src={project.data.image.url}
+									alt={project.data.image.alt}
+									class="h-full w-full object-cover"
+								/>
+							</figure>
+							<div class="card-body">
+								<h3 class="card-title text-lg">{project.data.title}</h3>
+								<p class="text-sm opacity-80">{project.data.description}</p>
+								<div class="card-actions mt-2 justify-end">
+									{project.data.tags.map((tag) => (
+										<span class="badge badge-outline badge-sm">{tag}</span>
+									))}
+								</div>
+							</div>
+						</a>
+					))
+				}
+			</div>
+		</section>
+
+		{/* Recent Blog Posts */}
+		<section>
+			<h2 class="mb-6 text-2xl font-bold">{t('home.recentPosts')}</h2>
+			{
+				recentPosts.length > 0 ? (
+					<>
+						<ul class="space-y-2">
+							{recentPosts.map((item) => (
+								<BlogPostLink
+									url={getPostUrlForLang(item.post, lang)}
+									title={item.post.data.title}
+									pubDate={item.post.data.pubDate}
+									lang={lang}
+									availableLanguages={item.availableLanguages}
+									isFallback={item.isFallback}
+								/>
+							))}
+						</ul>
+						<a
+							href={getLocalizedPath('/blog/', lang)}
+							class="link mt-4 inline-block"
+						>
+							{t('home.viewAllPosts')}
+						</a>
+					</>
+				) : (
+					<p class="opacity-80">{t('home.noPosts')}</p>
+				)
+			}
+		</section>
+
+		{/* Tech Stack */}
+		<section>
+			<h2 class="mb-6 text-2xl font-bold">{t('home.techStack')}</h2>
+			<div class="flex flex-wrap gap-2">
+				{
+					techStack.map((tech) => (
+						<span class="badge badge-outline badge-lg">{tech}</span>
+					))
+				}
+			</div>
+		</section>
+	</div>
 </Layout>
