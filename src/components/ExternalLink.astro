@@ -1,0 +1,11 @@
+---
+// External link component - adds ↗ indicator for links leaving the site
+
+type Props = astroHTML.JSX.AnchorHTMLAttributes & {
+	showArrow?: boolean;
+};
+
+const { showArrow = true, ...attrs } = Astro.props;
+---
+
+<a {...attrs}><slot />{showArrow && ' ↗'}</a>

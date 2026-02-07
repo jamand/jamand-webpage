@@ -5,6 +5,7 @@ import astroIcon from '../assets/astro.svg?raw';
 import { getLocalizedPath, useTranslations } from '../i18n/utils';
 import type { Lang } from '../i18n/translations';
 import ContentWidth from './ContentWidth.astro';
+import ExternalLink from './ExternalLink.astro';
 
 interface Props {
 	lang?: Lang;
@@ -24,11 +25,19 @@ const isImprintConfigured =
 		extraClasses="flex flex-col items-center gap-4 sm:flex-row sm:justify-between"
 	>
 		<nav class="flex items-center gap-4">
-			<a href="https://github.com/jamand" class="link flex items-center gap-1">
+			<ExternalLink
+				href="https://github.com/jamand"
+				class="link flex items-center gap-1"
+				showArrow={false}
+			>
 				<span class="inline-block h-5 w-5 fill-current" set:html={githubIcon} />
 				GitHub
-			</a>
-			<a href="https://linkedin.com/in/jer-amand" class="link">LinkedIn</a>
+			</ExternalLink>
+			<ExternalLink
+				href="https://linkedin.com/in/jer-amand"
+				class="link"
+				showArrow={false}>LinkedIn</ExternalLink
+			>
 			{
 				isImprintConfigured ? (
 					<a href={getLocalizedPath('/impressum/', lang)} class="link">
@@ -45,7 +54,9 @@ const isImprintConfigured =
 				class="inline-block h-3.5 w-3.5 fill-current"
 				set:html={astroIcon}
 			/>
-			<a href="https://astro.build" class="link">Astro</a>
+			<ExternalLink href="https://astro.build" class="link" showArrow={false}
+				>Astro</ExternalLink
+			>
 		</aside>
 	</ContentWidth>
 </footer>

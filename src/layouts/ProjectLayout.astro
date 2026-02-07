@@ -4,6 +4,7 @@ import Layout from './Layout.astro';
 import { defaultLang, type Lang } from '../i18n/translations';
 import { useTranslations } from '../i18n/utils';
 import FallbackNotice from '../components/FallbackNotice.astro';
+import ExternalLink from '../components/ExternalLink.astro';
 import type { z } from 'astro/zod';
 import type { projectSchema } from '../content.config';
 
@@ -46,14 +47,9 @@ const t = useTranslations(lang);
 			</div>
 			{
 				frontmatter.url && (
-					<a
-						href={frontmatter.url}
-						class="link mt-4 inline-block"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						{t('project.viewOnGitHub')} ↗
-					</a>
+					<ExternalLink href={frontmatter.url} class="link mt-4 inline-block">
+						{t('project.viewOnGitHub')}
+					</ExternalLink>
 				)
 			}
 		</header>
