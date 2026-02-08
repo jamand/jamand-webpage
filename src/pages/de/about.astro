@@ -1,10 +1,51 @@
 ---
 // About page (German)
 import Layout from '../../layouts/Layout.astro';
+import Timeline from '../../components/Timeline.astro';
+import type { TimelineEntry } from '../../components/Timeline.astro';
 import { useTranslations } from '../../i18n/utils';
 
 const lang = 'de';
 const t = useTranslations(lang);
+
+const timeline: TimelineEntry[] = [
+	{
+		type: 'work',
+		period: '2024 – heute',
+		title: 'Cloud Engineer',
+		org: 'STACKIT GmbH & Co KG, DE',
+	},
+	{
+		type: 'work',
+		period: '2022 – 2024',
+		title: 'Wissenschaftlicher Mitarbeiter',
+		org: 'Universität des Saarlandes, DE',
+	},
+	{
+		type: 'work',
+		period: '2021 – 2022',
+		title: 'Softwareentwickler',
+		org: 'DIaLOGIKa GmbH, DE',
+	},
+	{
+		type: 'work',
+		period: '2019 – 2021',
+		title: 'Softwareentwickler',
+		org: 'Leoworx Ortungssysteme GmbH, DE',
+	},
+	{
+		type: 'edu',
+		period: '2017 – 2020',
+		title: 'M.Sc. Bioinformatik',
+		org: 'Universität des Saarlandes, DE',
+	},
+	{
+		type: 'edu',
+		period: '2014 – 2017',
+		title: 'B.Sc. Bioinformatik',
+		org: 'Universität des Saarlandes, DE',
+	},
+];
 ---
 
 <Layout lang={lang} description={t('meta.about')}>
@@ -13,4 +54,8 @@ const t = useTranslations(lang);
 		Willkommen auf meiner persönlichen Webseite. Hier teile ich meine Gedanken
 		und Projekte.
 	</p>
+
+	<div class="not-prose mt-12">
+		<Timeline entries={timeline} />
+	</div>
 </Layout>
