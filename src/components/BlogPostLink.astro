@@ -30,26 +30,33 @@ const formattedDate = pubDate.toLocaleDateString(getDateLocale(lang), {
 ---
 
 <li
-	class:list={['flex items-center gap-2', { 'italic opacity-90': isFallback }]}
+	class:list={[
+		'hover:bg-base-200 list-none rounded-lg p-3 transition-colors',
+		{ 'italic opacity-90': isFallback },
+	]}
 >
-	<time
-		datetime={pubDate.toISOString().split('T')[0]}
-		class="inline-block w-28 shrink-0 text-sm tabular-nums opacity-80"
-	>
-		{formattedDate}
-	</time>
-	<a class="link link-underline" href={url}>{title}</a>
-	<span class="flex gap-1">
-		{
-			availableLanguages.map(({ lang: langCode, url: langUrl }) => (
-				<a
-					href={langUrl}
-					aria-label={getLangName(langCode)}
-					class="badge badge-outline badge-sm no-underline"
-				>
-					{langCode.toUpperCase()}
-				</a>
-			))
-		}
-	</span>
+	<div class="flex items-center gap-3">
+		<time
+			datetime={pubDate.toISOString().split('T')[0]}
+			class="shrink-0 text-sm tabular-nums opacity-60"
+		>
+			{formattedDate}
+		</time>
+		<a href={url} class="flex-1 font-medium no-underline hover:underline"
+			>{title}</a
+		>
+		<span class="flex shrink-0 gap-1">
+			{
+				availableLanguages.map(({ lang: langCode, url: langUrl }) => (
+					<a
+						href={langUrl}
+						aria-label={getLangName(langCode)}
+						class="badge badge-outline badge-sm no-underline"
+					>
+						{langCode.toUpperCase()}
+					</a>
+				))
+			}
+		</span>
+	</div>
 </li>
