@@ -22,7 +22,7 @@ const sortedTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
 	<div class="not-prose flex flex-col gap-8 lg:flex-row">
 		<div class="min-w-0 flex-1">
 			<h1 class="mb-4 text-3xl font-bold">{t('blog.title')}</h1>
-			<ul class="space-y-2">
+			<ul class="space-y-1">
 				{
 					postsWithFallback.map((item) => (
 						<BlogPostLink

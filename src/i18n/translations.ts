@@ -48,6 +48,14 @@ export const translations = {
 		'home.viewAllPosts': 'View all posts',
 		'home.noPosts': 'No posts yet — stay tuned!',
 		'home.techStack': 'Tech Stack',
+		'home.techStack.languages': 'Languages',
+		'home.techStack.infrastructure': 'Infrastructure',
+		'home.techStack.tools': 'Tools',
+		'home.techStack.certifications': 'Certifications',
+
+		// About page
+		'about.experience': 'Experience',
+		'about.education': 'Education',
 
 		// Blog
 		'blog.title': 'Blog',
@@ -115,6 +123,14 @@ export const translations = {
 		'home.viewAllPosts': 'Alle Beiträge ansehen',
 		'home.noPosts': 'Noch keine Beiträge — bald mehr!',
 		'home.techStack': 'Technologien',
+		'home.techStack.languages': 'Sprachen',
+		'home.techStack.infrastructure': 'Infrastruktur',
+		'home.techStack.tools': 'Tools',
+		'home.techStack.certifications': 'Zertifizierungen',
+
+		// About page
+		'about.experience': 'Berufserfahrung',
+		'about.education': 'Ausbildung',
 
 		// Blog
 		'blog.title': 'Blog',
