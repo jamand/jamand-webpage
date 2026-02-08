@@ -61,6 +61,13 @@ const currentUrl = Astro.url;
 		/>
 		<meta name="generator" content={Astro.generator} />
 		{description && <meta name="description" content={description} />}
+		<noscript>
+			<style>
+				theme-toggle {
+					display: none;
+				}
+			</style>
+		</noscript>
 		<title>{title}</title>
 	</head>
 	<body class="flex min-h-screen flex-col">
