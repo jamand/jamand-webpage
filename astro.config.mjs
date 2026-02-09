@@ -31,6 +31,12 @@ export default defineConfig({
     site: process.env.SITE_URL || 'http://localhost:4321',
     base: process.env.BASE_PATH || '/',
 
+    // Inline CSS into HTML to eliminate render-blocking stylesheet requests.
+    // Tradeoff: CSS is not cached across pages (~19KB per page, ~4-5KB gzipped).
+    build: {
+        inlineStylesheets: 'always',
+    },
+
     i18n: {
         locales: [...supportedLangs],
         defaultLocale: defaultLang,
