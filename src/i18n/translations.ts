@@ -65,6 +65,9 @@ export const translations = {
 		'blog.postsTaggedWith': 'Posts tagged with',
 		'blog.tags': 'Tags',
 		'blog.noTags': 'No tags available yet.',
+		'blog.articleCount': '{count} articles',
+		'blog.articleCountSingular': '1 article',
+		'blog.latestPost': 'Latest post:',
 
 		// Projects
 		'project.viewOnGitHub': 'View on GitHub',
@@ -140,6 +143,9 @@ export const translations = {
 		'blog.postsTaggedWith': 'Beiträge mit Tag',
 		'blog.tags': 'Tags',
 		'blog.noTags': 'Noch keine Tags verfügbar.',
+		'blog.articleCount': '{count} Artikel',
+		'blog.articleCountSingular': '1 Artikel',
+		'blog.latestPost': 'Neuester Beitrag:',
 
 		// Projects
 		'project.viewOnGitHub': 'Auf GitHub ansehen',

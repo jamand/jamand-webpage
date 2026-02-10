@@ -2,6 +2,7 @@
 // Dynamic tag page - shows all posts with a specific tag (German, with fallback)
 import Layout from '../../../layouts/Layout.astro';
 import BlogPostLink from '../../../components/BlogPostLink.astro';
+import BlogStats from '../../../components/BlogStats.astro';
 import {
 	getPostUrlForLang,
 	type PostWithFallbackInfo,
@@ -31,7 +32,8 @@ const { posts } = Astro.props as { posts: PostWithFallbackInfo[] };
 ---
 
 <Layout lang={lang}>
-	<h1>{t('blog.postsTaggedWith')} "{tag}"</h1>
+	<h1>{t('blog.postsTaggedWith')} #{tag}</h1>
+	<BlogStats posts={posts} lang={lang} />
 	<ul>
 		{
 			posts.map((item) => (

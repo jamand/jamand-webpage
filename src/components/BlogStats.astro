@@ -1,0 +1,32 @@
+---
+import type { Lang } from '../i18n/translations';
+import type { PostWithFallbackInfo } from '../i18n/blog-utils';
+import { useTranslations, getDateLocale } from '../i18n/utils';
+
+interface Props {
+	posts: PostWithFallbackInfo[];
+	lang: Lang;
+}
+
+const { posts, lang } = Astro.props;
+const t = useTranslations(lang);
+
+const articleCount = posts.length;
+const latestPost = posts[0];
+const latestDate = latestPost?.post.data.pubDate.toLocaleDateString(
+	getDateLocale(lang),
+	{ month: 'short', day: 'numeric', year: 'numeric' },
+);
+---
+
+{
+	latestPost && (
+		<p class="not-prose mb-6 text-sm opacity-60">
+			{articleCount === 1
+				? t('blog.articleCountSingular')
+				: t('blog.articleCount').replace('{count}', String(articleCount))}
+			{' · '}
+			{t('blog.latestPost')} {latestDate}
+		</p>
+	)
+}
