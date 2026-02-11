@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 }
 
 const { post, isFallback } = Astro.props;
-const { Content } = await render(post);
+const { Content, remarkPluginFrontmatter } = await render(post);
 const { translation } = await getPostWithTranslation(post);
 ---
 
@@ -27,6 +27,7 @@ const { translation } = await getPostWithTranslation(post);
 	translation={translation}
 	isFallback={isFallback}
 	pageLang={lang}
+	readingTime={remarkPluginFrontmatter.readingTime}
 >
 	<Content />
 </MarkdownPostLayout>

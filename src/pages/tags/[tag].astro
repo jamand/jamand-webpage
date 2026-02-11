@@ -34,7 +34,7 @@ const { posts } = Astro.props as { posts: PostWithFallbackInfo[] };
 <Layout lang={lang}>
 	<h1>{t('blog.postsTaggedWith')} #{tag}</h1>
 	<BlogStats posts={posts} lang={lang} />
-	<ul>
+	<ul class="not-prose space-y-1">
 		{
 			posts.map((item) => (
 				<BlogPostLink

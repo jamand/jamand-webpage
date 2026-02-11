@@ -68,6 +68,7 @@ export const translations = {
 		'blog.articleCount': '{count} articles',
 		'blog.articleCountSingular': '1 article',
 		'blog.latestPost': 'Latest post:',
+		'blog.minRead': '{min} min read',
 
 		// Projects
 		'project.viewOnGitHub': 'View on GitHub',
@@ -146,6 +147,7 @@ export const translations = {
 		'blog.articleCount': '{count} Artikel',
 		'blog.articleCountSingular': '1 Artikel',
 		'blog.latestPost': 'Neuester Beitrag:',
+		'blog.minRead': '{min} Min.',
 
 		// Projects
 		'project.viewOnGitHub': 'Auf GitHub ansehen',

@@ -15,7 +15,7 @@ const articleCount = posts.length;
 const latestPost = posts[0];
 const latestDate = latestPost?.post.data.pubDate.toLocaleDateString(
 	getDateLocale(lang),
-	{ month: 'short', day: 'numeric', year: 'numeric' },
+	{ month: 'short', day: '2-digit', year: 'numeric' },
 );
 ---
 

@@ -16,9 +16,16 @@ interface Props {
 	translation?: BlogPost;
 	isFallback?: boolean;
 	pageLang?: Lang;
+	readingTime?: number;
 }
 
-const { frontmatter, translation, isFallback = false, pageLang } = Astro.props;
+const {
+	frontmatter,
+	translation,
+	isFallback = false,
+	pageLang,
+	readingTime,
+} = Astro.props;
 const lang = pageLang || ((frontmatter.lang || defaultLang) as Lang);
 const t = useTranslations(lang);
 ---
@@ -38,9 +45,18 @@ const t = useTranslations(lang);
 			)
 		}
 		<header
-			class="not-prose mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
+			class="not-prose mb-8 flex flex-wrap items-start justify-between gap-4"
 		>
-			<h1 class="m-0 text-3xl font-bold sm:text-4xl">{frontmatter.title}</h1>
+			<div class="min-w-0">
+				<h1 class="m-0 text-3xl font-bold sm:text-4xl">{frontmatter.title}</h1>
+				{
+					readingTime && (
+						<p class="mt-2 text-sm opacity-60">
+							{t('blog.minRead').replace('{min}', String(readingTime))}
+						</p>
+					)
+				}
+			</div>
 			<dl class="stats stats-horizontal shadow">
 				<div class="stat px-4 py-2">
 					<dt class="stat-title">{t('blog.publishedOn')}</dt>

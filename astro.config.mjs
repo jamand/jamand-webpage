@@ -13,6 +13,8 @@ import expressiveCode from 'astro-expressive-code';
 
 import rehypeExternalLinks from 'rehype-external-links';
 
+import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs';
+
 import { defaultLang, supportedLangs, localeMap } from './src/i18n/translations';
 
 // https://astro.build/config
@@ -46,6 +48,7 @@ export default defineConfig({
     },
 
     markdown: {
+        remarkPlugins: [remarkReadingTime],
         rehypePlugins: [
             [
                 rehypeExternalLinks,
