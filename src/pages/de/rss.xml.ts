@@ -10,17 +10,22 @@ export async function GET({ site }: APIContext) {
 		title: 'Jérémy Amand | Blog',
 		description: 'Mein persönlicher Blog',
 		site: site!,
-		items: posts.map((post) => ({
-			title: post.data.title,
-			pubDate: post.data.pubDate,
-			description: post.data.description,
-			link: getPostUrl(post),
-			enclosure: {
-				url: new URL(post.data.image.url, site).href,
-				length: 0,
-				type: getImageMimeType(post.data.image.url),
-			},
-		})),
+		items: posts.map((post) => {
+			const imageUrl = post.data.image.src?.src || post.data.image.url;
+			return {
+				title: post.data.title,
+				pubDate: post.data.pubDate,
+				description: post.data.description,
+				link: getPostUrl(post),
+				...(imageUrl && {
+					enclosure: {
+						url: new URL(imageUrl, site).href,
+						length: 0,
+						type: getImageMimeType(imageUrl),
+					},
+				}),
+			};
+		}),
 		customData: `<language>de</language>`,
 	});
 }
