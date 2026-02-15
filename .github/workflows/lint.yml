@@ -38,4 +38,4 @@ jobs:
         run: pnpm lint
 
       - name: Run spellcheck
-        run: pnpm cspell "src/blog/**/*.{md,mdx}" --no-progress
+        run: pnpm cspell --no-progress "src/blog/**/*.{md,mdx}" "src/projects/**/*.{md,mdx}" "src/pages/**/*.astro"

@@ -12,7 +12,11 @@ const {
 	getProjectUrl,
 } = await import('./project-utils');
 
-function createMockProject(overrides: Partial<Project> = {}): Project {
+function createMockProject(
+	overrides: Partial<Omit<Project, 'data'>> & {
+		data?: Partial<Project['data']>;
+	} = {},
+): Project {
 	return {
 		id: 'test-project.mdx',
 		body: '',
@@ -26,6 +30,8 @@ function createMockProject(overrides: Partial<Project> = {}): Project {
 			lang: 'en',
 			projectId: 'test-project',
 			sortOrder: 0,
+			status: 'active',
+			hideImage: false,
 			...overrides.data,
 		},
 		...overrides,

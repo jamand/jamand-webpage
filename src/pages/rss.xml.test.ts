@@ -26,7 +26,7 @@ describe('RSS Feed Generation', () => {
 			lang,
 			postId: id.replace(/\.(md|mdx)$/, ''),
 			published: true,
-		},
+		} as BlogPost['data'],
 	});
 
 	describe('RSS item structure', () => {
@@ -34,33 +34,40 @@ describe('RSS Feed Generation', () => {
 			const post = createMockPost('test-post.md', new Date('2024-01-15'), 'en');
 			const site = 'https://example.com';
 
-			// Simulate RSS item creation
+			// Simulate RSS item creation (mirrors rss.xml.ts logic)
+			const imageUrl = post.data.image.src?.src || post.data.image.url;
 			const rssItem = {
 				title: post.data.title,
 				pubDate: post.data.pubDate,
 				description: post.data.description,
 				link: `/posts/${post.id.replace('.md', '')}/`,
-				enclosure: {
-					url: new URL(post.data.image.url, site).href,
-					length: 0,
-					type: getImageMimeType(post.data.image.url),
-				},
+				...(imageUrl && {
+					enclosure: {
+						url: new URL(imageUrl, site).href,
+						length: 0,
+						type: getImageMimeType(imageUrl),
+					},
+				}),
 			};
 
 			expect(rssItem.title).toBe('Test Post test-post.md');
 			expect(rssItem.pubDate).toEqual(new Date('2024-01-15'));
 			expect(rssItem.description).toBe('Test description');
 			expect(rssItem.link).toBe('/posts/test-post/');
-			expect(rssItem.enclosure.url).toBe('https://example.com/images/test.png');
-			expect(rssItem.enclosure.type).toBe('image/png');
+			expect(rssItem.enclosure?.url).toBe(
+				'https://example.com/images/test.png',
+			);
+			expect(rssItem.enclosure?.type).toBe('image/png');
 		});
 
 		it('should correctly resolve image URLs with site base', () => {
 			const post = createMockPost('test.md', new Date(), 'en');
 			const site = 'https://example.com';
 
-			const imageUrl = new URL(post.data.image.url, site).href;
-			expect(imageUrl).toBe('https://example.com/images/test.png');
+			const imageUrl = post.data.image.src?.src || post.data.image.url;
+			expect(new URL(imageUrl!, site).href).toBe(
+				'https://example.com/images/test.png',
+			);
 		});
 
 		it('should handle different image formats in enclosure', () => {

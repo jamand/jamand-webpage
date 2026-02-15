@@ -1,0 +1,306 @@
+---
+// ImageGallery - Carousel with clickable lightbox (progressive enhancement)
+// JS enabled: <dialog>.showModal() — clean, no history entries, smooth carousel
+// JS disabled: CSS :target fallback — works but adds hash to URL
+import { Image } from 'astro:assets';
+import { ChevronLeft, ChevronRight, X } from '@lucide/astro';
+
+interface Props {
+	id?: string;
+	maxHeight?: string; // CSS value, e.g. "400px", "60vh"
+	images: {
+		src: ImageMetadata;
+		alt: string;
+		caption?: string;
+	}[];
+}
+
+const { id = 'gallery', images, maxHeight } = Astro.props;
+const hasMultiple = images.length > 1;
+---
+
+<div class="not-prose image-gallery" data-gallery-id={id}>
+	{/* Carousel */}
+	<div class="overflow-hidden">
+		<div
+			class="carousel w-full"
+			style={maxHeight ? `height: ${maxHeight}` : undefined}
+		>
+			{
+				images.map((image, i) => {
+					const prev = i === 0 ? images.length - 1 : i - 1;
+					const next = i === images.length - 1 ? 0 : i + 1;
+					return (
+						<div id={`${id}-slide-${i}`} class="carousel-item relative w-full">
+							<a
+								href={`#${id}-lightbox-${i}`}
+								class={`lightbox-trigger cursor-zoom-in ${maxHeight ? 'block h-full w-full' : 'w-full'}`}
+								data-index={i}
+							>
+								<figure
+									class={maxHeight ? 'flex h-full w-full flex-col' : undefined}
+								>
+									<div
+										class={
+											maxHeight
+												? 'flex min-h-0 flex-1 items-center justify-center overflow-hidden'
+												: undefined
+										}
+									>
+										<Image
+											src={image.src}
+											alt={image.alt}
+											class={`${maxHeight ? 'max-w-full' : 'w-full'} rounded-md`}
+											style={
+												maxHeight ? 'max-height: 100%; width: auto;' : undefined
+											}
+										/>
+									</div>
+									{image.caption && (
+										<figcaption class="text-base-content/60 shrink-0 px-2 pt-2 text-center text-sm">
+											{image.caption}
+										</figcaption>
+									)}
+								</figure>
+							</a>
+							{hasMultiple && (
+								<div class="absolute top-1/2 right-4 left-4 flex -translate-y-1/2 justify-between">
+									<a
+										href={`#${id}-slide-${prev}`}
+										class="carousel-btn btn btn-circle btn-sm opacity-70 hover:opacity-100"
+										data-target={`${id}-slide-${prev}`}
+										aria-label="Previous slide"
+									>
+										<ChevronLeft size={18} />
+									</a>
+									<a
+										href={`#${id}-slide-${next}`}
+										class="carousel-btn btn btn-circle btn-sm opacity-70 hover:opacity-100"
+										data-target={`${id}-slide-${next}`}
+										aria-label="Next slide"
+									>
+										<ChevronRight size={18} />
+									</a>
+								</div>
+							)}
+						</div>
+					);
+				})
+			}
+		</div>
+	</div>
+
+	{/* CSS :target lightbox (no-JS fallback) */}
+	{
+		images.map((image, i) => {
+			const prev = i === 0 ? images.length - 1 : i - 1;
+			const next = i === images.length - 1 ? 0 : i + 1;
+			return (
+				<div id={`${id}-lightbox-${i}`} class="lightbox">
+					<a
+						href={`#${id}-slide-${i}`}
+						class="lightbox-close"
+						aria-label="Close"
+					>
+						<X size={24} />
+					</a>
+					{hasMultiple && (
+						<>
+							<a
+								href={`#${id}-lightbox-${prev}`}
+								class="lightbox-nav lightbox-prev"
+								aria-label="Previous image"
+							>
+								<ChevronLeft size={28} />
+							</a>
+							<a
+								href={`#${id}-lightbox-${next}`}
+								class="lightbox-nav lightbox-next"
+								aria-label="Next image"
+							>
+								<ChevronRight size={28} />
+							</a>
+						</>
+					)}
+					<figure class="flex flex-col items-center">
+						<a href={`#${id}-slide-${i}`} aria-label="Close">
+							<Image
+								src={image.src}
+								alt={image.alt}
+								class="max-h-[85vh] max-w-[90vw] rounded-lg object-contain"
+							/>
+						</a>
+						{image.caption && (
+							<figcaption class="lightbox-caption">{image.caption}</figcaption>
+						)}
+					</figure>
+				</div>
+			);
+		})
+	}
+
+	{/* <dialog> lightbox (JS-enhanced) */}
+	{
+		images.map((image, i) => {
+			const prev = i === 0 ? images.length - 1 : i - 1;
+			const next = i === images.length - 1 ? 0 : i + 1;
+			return (
+				<dialog class="lightbox-dialog modal" data-index={i}>
+					<div class="modal-box max-h-[95vh] w-fit max-w-[95vw] overflow-hidden p-0">
+						<form method="dialog">
+							<button
+								class="btn btn-circle btn-ghost btn-sm absolute top-2 right-2 z-10"
+								aria-label="Close"
+							>
+								<X size={18} />
+							</button>
+						</form>
+						<form method="dialog">
+							<button
+								class="block w-full cursor-pointer border-none bg-transparent p-0"
+								aria-label="Close"
+							>
+								<Image
+									src={image.src}
+									alt={image.alt}
+									class="max-h-[85vh] w-auto rounded object-contain"
+								/>
+							</button>
+						</form>
+						{/* max-w-0 min-w-full: forces the <p> to match the modal-box width despite w-fit on the parent */}
+						{image.caption && (
+							<p class="bg-base-200 max-h-24 max-w-0 min-w-full overflow-y-auto px-4 py-2 text-center text-sm">
+								{image.caption}
+							</p>
+						)}
+					</div>
+					{hasMultiple && (
+						<>
+							<button
+								class="dialog-nav btn btn-circle btn-sm absolute top-1/2 left-4 z-10 -translate-y-1/2"
+								data-target-dialog={prev}
+								aria-label="Previous image"
+							>
+								<ChevronLeft size={18} />
+							</button>
+							<button
+								class="dialog-nav btn btn-circle btn-sm absolute top-1/2 right-4 z-10 -translate-y-1/2"
+								data-target-dialog={next}
+								aria-label="Next image"
+							>
+								<ChevronRight size={18} />
+							</button>
+						</>
+					)}
+					<form method="dialog" class="modal-backdrop">
+						<button>close</button>
+					</form>
+				</dialog>
+			);
+		})
+	}
+</div>
+
+<style>
+	/* CSS :target lightbox (no-JS fallback) */
+	.lightbox {
+		display: none;
+		position: fixed;
+		inset: 0;
+		z-index: 50;
+		background: rgba(0, 0, 0, 0.9);
+		align-items: center;
+		justify-content: center;
+	}
+	.lightbox:target {
+		display: flex;
+	}
+	.lightbox-close {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		color: white;
+		text-decoration: none;
+	}
+	.lightbox-nav {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		color: white;
+		text-decoration: none;
+	}
+	.lightbox-prev {
+		left: 1rem;
+	}
+	.lightbox-next {
+		right: 1rem;
+	}
+	.lightbox-caption {
+		color: white;
+		font-size: 0.875rem;
+		margin-top: 0.5rem;
+		max-width: 90vw;
+		max-height: 6rem;
+		overflow-y: auto;
+	}
+</style>
+
+<script>
+	document.querySelectorAll('.image-gallery').forEach((gallery) => {
+		// Lightbox: use <dialog> instead of :target
+		gallery.querySelectorAll('.lightbox-trigger').forEach((trigger) => {
+			trigger.addEventListener('click', (e) => {
+				e.preventDefault();
+				const index = (trigger as HTMLElement).dataset.index;
+				const dialog = gallery.querySelector(
+					`dialog.lightbox-dialog[data-index="${index}"]`,
+				) as HTMLDialogElement;
+				dialog?.showModal();
+			});
+		});
+
+		// Dialog lightbox: prev/next navigation
+		gallery.querySelectorAll('.dialog-nav').forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const targetIndex = (btn as HTMLElement).dataset.targetDialog;
+				const currentDialog = btn.closest('dialog') as HTMLDialogElement;
+				const targetDialog = gallery.querySelector(
+					`dialog.lightbox-dialog[data-index="${targetIndex}"]`,
+				) as HTMLDialogElement;
+				currentDialog?.close();
+				targetDialog?.showModal();
+				targetDialog?.focus();
+			});
+		});
+
+		// Dialog lightbox: keyboard navigation
+		gallery.querySelectorAll('dialog.lightbox-dialog').forEach((dialog) => {
+			dialog.addEventListener('keydown', (e) => {
+				const key = (e as KeyboardEvent).key;
+				if (key === 'ArrowLeft' || key === 'ArrowRight') {
+					e.preventDefault();
+					const btn = dialog.querySelector(
+						key === 'ArrowLeft'
+							? '.dialog-nav:first-of-type'
+							: '.dialog-nav:last-of-type',
+					) as HTMLButtonElement;
+					btn?.click();
+				}
+			});
+		});
+
+		// Carousel: scroll horizontally without anchor navigation
+		gallery.querySelectorAll('.carousel-btn').forEach((btn) => {
+			btn.addEventListener('click', (e) => {
+				e.preventDefault();
+				const targetId = (btn as HTMLElement).dataset.target;
+				const target = document.getElementById(targetId!);
+				target?.scrollIntoView({
+					behavior: 'smooth',
+					block: 'nearest',
+					inline: 'start',
+				});
+			});
+		});
+	});
+</script>

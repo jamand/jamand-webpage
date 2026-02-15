@@ -13,6 +13,7 @@ interface Props {
 
 const { lang = 'en' } = Astro.props;
 const t = useTranslations(lang);
+const year = new Date().getFullYear();
 
 const isImprintConfigured =
 	import.meta.env.IMPRINT_NAME &&
@@ -21,7 +22,7 @@ const isImprintConfigured =
 ---
 
 <footer
-	class="border-base-300 bg-base-200 text-base-content border-t p-10 text-base"
+	class="border-base-300 bg-base-200 text-base-content relative border-t p-6 text-base"
 >
 	<ContentWidth
 		extraClasses="flex flex-col items-center gap-4 sm:flex-row sm:justify-between"
@@ -50,15 +51,54 @@ const isImprintConfigured =
 				)
 			}
 		</nav>
-		<aside class="inline-flex items-center gap-1 text-sm opacity-60">
-			Built from scratch with
-			<span
-				class="inline-block h-3.5 w-3.5 fill-current"
-				set:html={astroIcon}
-			/>
-			<ExternalLink href="https://astro.build" class="link" showArrow={false}
-				>Astro</ExternalLink
-			>
-		</aside>
+		<div
+			class="flex flex-col items-center gap-1 text-sm opacity-60 sm:items-end"
+		>
+			<aside class="inline-flex items-center gap-1">
+				Built from scratch with
+				<span
+					class="inline-block h-3.5 w-3.5 fill-current"
+					set:html={astroIcon}
+				/>
+				<ExternalLink href="https://astro.build" class="link" showArrow={false}
+					>Astro</ExternalLink
+				>
+			</aside>
+			<span>© {year} Jérémy Amand</span>
+		</div>
 	</ContentWidth>
+	<div class="rainbow-strip" aria-hidden="true">
+		<span style="--c:#e40303"></span>
+		<span style="--c:#ff8c00"></span>
+		<span style="--c:#ffed00"></span>
+		<span style="--c:#008026"></span>
+		<span style="--c:#24408e"></span>
+		<span style="--c:#732982"></span>
+	</div>
 </footer>
+
+<style>
+	.rainbow-strip {
+		display: flex;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+	.rainbow-strip span {
+		flex: 1;
+		height: 3px;
+		background: var(--c);
+		transform-origin: bottom;
+		transition:
+			transform 0.3s ease,
+			box-shadow 0.3s ease;
+	}
+	.rainbow-strip:hover span {
+		transform: scaleY(1.25);
+	}
+	.rainbow-strip span:hover {
+		transform: scaleY(2);
+		box-shadow: 0 0 14px var(--c);
+	}
+</style>

@@ -3,6 +3,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ScrollToTop from '../components/ScrollToTop.astro';
 import Prose from '../components/Prose.astro';
 import ContentWidth from '../components/ContentWidth.astro';
 import { defaultLang, supportedLangs, type Lang } from '../i18n/translations';
@@ -70,7 +71,7 @@ const currentUrl = Astro.url;
 		</noscript>
 		<title>{title}</title>
 	</head>
-	<body class="flex min-h-screen flex-col">
+	<body id="top" class="flex min-h-screen flex-col">
 		<Header lang={lang} />
 		<main id="main-content" class="flex-1 py-8">
 			<ContentWidth>
@@ -80,5 +81,6 @@ const currentUrl = Astro.url;
 			</ContentWidth>
 		</main>
 		<Footer lang={lang} />
+		<ScrollToTop />
 	</body>
 </html>

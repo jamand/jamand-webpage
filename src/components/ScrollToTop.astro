@@ -1,0 +1,57 @@
+---
+import { ArrowUp } from '@lucide/astro';
+---
+
+<a
+	href="#top"
+	id="scroll-to-top"
+	class="btn btn-circle btn-soft fixed right-6 bottom-6 z-40 shadow-lg transition-opacity duration-300"
+	aria-label="Scroll to top"
+>
+	<ArrowUp size={20} />
+</a>
+
+<script>
+	const btn = document.getElementById('scroll-to-top')!;
+	let lastY = window.scrollY;
+	let visible = false;
+	let hideTimer: ReturnType<typeof setTimeout>;
+
+	function show() {
+		if (!visible) {
+			visible = true;
+			btn.style.opacity = '1';
+			btn.style.pointerEvents = 'auto';
+		}
+		clearTimeout(hideTimer);
+		hideTimer = setTimeout(hide, 2000);
+	}
+
+	function hide() {
+		visible = false;
+		btn.style.opacity = '0';
+		btn.style.pointerEvents = 'none';
+	}
+
+	function update() {
+		const y = window.scrollY;
+		if (y < lastY && y > 300) {
+			show();
+		} else if (y > lastY) {
+			clearTimeout(hideTimer);
+			hide();
+		}
+		lastY = y;
+	}
+
+	// Start hidden (JS enhances from always-visible to scroll-aware)
+	hide();
+
+	window.addEventListener('scroll', update, { passive: true });
+	btn.addEventListener('click', (e) => {
+		e.preventDefault();
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+		clearTimeout(hideTimer);
+		hide();
+	});
+</script>
