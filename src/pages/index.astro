@@ -1,5 +1,6 @@
 ---
 // Homepage
+import ContentImage from '../components/ContentImage.astro';
 import Layout from '../layouts/Layout.astro';
 import BlogPostLink from '../components/BlogPostLink.astro';
 import { getPostsWithFallback, getPostUrlForLang } from '../i18n/blog-utils';
@@ -60,10 +61,12 @@ const techStack = [
 							class="card border-base-300 bg-base-100 border no-underline shadow-sm transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
 						>
 							<figure class="h-48 overflow-hidden">
-								<img
-									src={project.data.image.url}
+								<ContentImage
+									src={project.data.image.src}
+									url={project.data.image.url}
 									alt={project.data.image.alt}
 									class="h-full w-full object-cover transition-transform duration-200 hover:scale-105"
+									loading="eager"
 								/>
 							</figure>
 							<div class="card-body">

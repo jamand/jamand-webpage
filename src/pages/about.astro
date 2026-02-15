@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro';
 import Timeline from '../components/Timeline.astro';
 import type { TimelineEntry } from '../components/Timeline.astro';
 import { useTranslations } from '../i18n/utils';
+import ExternalLink from '../components/ExternalLink.astro';
 
 const lang = 'en';
 const t = useTranslations(lang);
@@ -51,10 +52,33 @@ const timeline: TimelineEntry[] = [
 <Layout lang={lang} description={t('meta.about')}>
 	<h1>About Me</h1>
 	<p>
-		Welcome to my personal website. This is where I share my thoughts and
-		projects.
+		Hello, I'm Jérémy. Welcome to my personal website. This is where I share my
+		thoughts and projects. I'm originally from Luxembourg but currently living
+		in Saarland, Germany. I have a degree in Bioinformatics but have ever since
+		been working in IT.
+	</p>
+	<p>
+		Currently I work at <ExternalLink href="https://stackit.com/en" class="link"
+			>STACKIT</ExternalLink
+		>, a genuinely European sovereign cloud provider gaining momentum. I'm a
+		Cloud Engineer in the SKE team, which provides a managed Kubernetes service
+		based on
+		<ExternalLink href="https://gardener.cloud" class="link"
+			>Gardener</ExternalLink
+		>.
+	</p>
+	<p>
+		In my free time I like to cook, although keeping things organized is a bit
+		of a challenge. I like to casually play games where you don't have to read a
+		whole wiki before starting and now and then I go running and cycling.
 	</p>
 
+	<h2>Short CV</h2>
+	This represents a short overview of my professional career, I invite you to also
+	check my
+	<ExternalLink href="https://www.linkedin.com/in/jer-amand/" class="link"
+		>LinkedIn profile</ExternalLink
+	>.
 	<div class="not-prose mt-12">
 		<Timeline entries={timeline} />
 	</div>

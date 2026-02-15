@@ -111,6 +111,22 @@ export async function getPostsWithFallback(
 }
 
 /**
+ * Get the previous and next posts adjacent to the given post (sorted by date, newest first).
+ * "Previous" = older post, "Next" = newer post.
+ */
+export async function getAdjacentPosts(
+	post: BlogPost,
+	lang: Lang,
+): Promise<{ prev?: BlogPost; next?: BlogPost }> {
+	const posts = await getPostsWithFallback(lang);
+	const index = posts.findIndex((p) => p.post.data.postId === post.data.postId);
+	return {
+		prev: posts[index + 1]?.post,
+		next: posts[index - 1]?.post,
+	};
+}
+
+/**
  * Get all post slugs for a language (including fallback) for getStaticPaths()
  */
 export async function getAllPostSlugsForLang(lang: Lang): Promise<

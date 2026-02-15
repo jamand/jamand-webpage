@@ -13,7 +13,14 @@ import expressiveCode from 'astro-expressive-code';
 
 import rehypeExternalLinks from 'rehype-external-links';
 
+import rehypeSlug from 'rehype-slug';
+
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import { toString as hastToString } from 'hast-util-to-string';
+
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs';
+
+import remarkToc from 'remark-toc';
 
 import { defaultLang, supportedLangs, localeMap } from './src/i18n/translations';
 
@@ -48,12 +55,25 @@ export default defineConfig({
     },
 
     markdown: {
-        remarkPlugins: [remarkReadingTime],
+        remarkPlugins: [remarkReadingTime, [remarkToc, { heading: 'Table of Contents|Inhaltsverzeichnis' }]],
         rehypePlugins: [
             [
                 rehypeExternalLinks,
                 {
                     content: { type: 'text', value: ' ↗' }
+                }
+            ],
+            rehypeSlug,
+            [
+                rehypeAutolinkHeadings,
+                {
+                    behavior: 'prepend',
+                    properties: (/** @type {any} */ heading) => ({
+                        className: ['heading-anchor'],
+                        tabIndex: -1,
+                        ariaLabel: `Link to section: ${hastToString(heading)}`,
+                    }),
+                    content: [],
                 }
             ]
          ],
