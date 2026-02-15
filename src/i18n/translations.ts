@@ -41,7 +41,7 @@ export const translations = {
 		'home.greeting': "👋 Hi, I'm Jérémy.",
 		'home.tagline': 'Software Developer & Cloud Enthusiast',
 		'home.intro':
-			'I build software at the intersection of cloud computing, bioinformatics, and digital sovereignty. Welcome to my corner of the web where I share projects, ideas, and things I learn along the way.',
+			'I build cloud native software, all things Kubernetes, and digital sovereignty. Bioinformatics background. Welcome to my corner of the web where I share projects, ideas, and things I learn along the way.',
 		'home.aboutMe': 'About me',
 		'home.projects': 'Projects',
 		'home.recentPosts': 'Recent Posts',
@@ -67,11 +67,22 @@ export const translations = {
 		'blog.noTags': 'No tags available yet.',
 		'blog.articleCount': '{count} articles',
 		'blog.articleCountSingular': '1 article',
-		'blog.latestPost': 'Latest post:',
+		'blog.latestPost': 'Latest post: ',
 		'blog.minRead': '{min} min read',
+		'blog.copyLink': 'Copy link',
+		'blog.share': 'Share',
+		'blog.previousPost': 'Previous',
+		'blog.nextPost': 'Next',
 
 		// Projects
 		'project.viewOnGitHub': 'View on GitHub',
+		'project.status.active': 'Active',
+		'project.status.completed': 'Completed',
+		'project.status.on-hold': 'On Hold',
+		'project.status.planned': 'Planned',
+
+		// Image
+		'image.photoBy': 'Photo by',
 
 		// 404
 		'404.title': '404 - Page Not Found',
@@ -120,7 +131,7 @@ export const translations = {
 		'home.greeting': '👋 Hallo, ich bin Jérémy.',
 		'home.tagline': 'Softwareentwickler & Cloud-Enthusiast',
 		'home.intro':
-			'Ich entwickle Software an der Schnittstelle von Cloud Computing, Bioinformatik und digitaler Souveränität. Willkommen auf meiner Webseite, auf der ich Projekte, Ideen und Gelerntes teile.',
+			'Ich entwickle Cloud-native Software, alles rund um Kubernetes und digitaler Souveränität. Hintergrund in Bioinformatik. Willkommen auf meiner Webseite, auf der ich Projekte, Ideen und Gelerntes teile.',
 		'home.aboutMe': 'Über mich',
 		'home.projects': 'Projekte',
 		'home.recentPosts': 'Neueste Beiträge',
@@ -146,11 +157,22 @@ export const translations = {
 		'blog.noTags': 'Noch keine Tags verfügbar.',
 		'blog.articleCount': '{count} Artikel',
 		'blog.articleCountSingular': '1 Artikel',
-		'blog.latestPost': 'Neuester Beitrag:',
+		'blog.latestPost': 'Neuester Beitrag: ',
 		'blog.minRead': '{min} Min.',
+		'blog.copyLink': 'Link kopieren',
+		'blog.share': 'Teilen',
+		'blog.previousPost': 'Zurück',
+		'blog.nextPost': 'Weiter',
 
 		// Projects
 		'project.viewOnGitHub': 'Auf GitHub ansehen',
+		'project.status.active': 'Aktiv',
+		'project.status.completed': 'Abgeschlossen',
+		'project.status.on-hold': 'Pausiert',
+		'project.status.planned': 'Geplant',
+
+		// Image
+		'image.photoBy': 'Foto von',
 
 		// 404
 		'404.title': '404 - Seite nicht gefunden',
