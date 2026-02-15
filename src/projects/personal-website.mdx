@@ -1,15 +1,100 @@
 ---
 title: 'Personal Website'
 slug: personal-website
-description: 'This very site — built with Astro, Tailwind CSS, and DaisyUI. Multilingual, accessible, and statically generated.'
+description: 'This very site — built with Astro, Tailwind CSS, and DaisyUI. My playground: multilingual, and statically generated.'
 image:
-  url: 'https://docs.astro.build/assets/rose.webp'
-  alt: 'The Astro logo on a dark background with a pink glow.'
+  src: ../assets/screenshots/website-light.webp
+  alt: 'Homepage in light theme'
 tags: ['Astro', 'Tailwind CSS', 'TypeScript', 'DaisyUI']
 url: 'https://github.com/jamand/jamand-webpage'
+hideImage: true
 lang: en
 projectId: personal-website
 sortOrder: 1
+status: active
 ---
 
-More details about this project coming soon.
+import { Image } from 'astro:assets';
+import ImageGallery from '../components/ImageGallery.astro';
+import lightScreenshot from '../assets/screenshots/website-light.webp';
+import darkScreenshot from '../assets/screenshots/website-dark.webp';
+
+<figure
+	class="diff aspect-4/3 overflow-hidden rounded-lg shadow-xl"
+	tabindex="0"
+>
+	<div class="diff-item-1" role="img" tabindex="0">
+		<Image alt="Website in light theme" loading="eager" src={lightScreenshot} />
+	</div>
+	<div class="diff-item-2" role="img">
+		<Image alt="Website in dark theme" loading="eager" src={darkScreenshot} />
+	</div>
+	<div class="diff-resizer"></div>
+</figure>
+
+## Table of Contents
+
+## Summary
+
+This website is **not built from a template**. I wanted to compose my site from scratch, **learning by doing**.
+My background is mostly backend and cloud engineering work, so putting together a frontend was a learning opportunity.
+Of course I still wanted to add my own background to it: in the content, by adding pipelines, automating the testing
+and deployment and other best practices.
+
+[Astro](https://astro.build) caught my attention as a modern static site generator mostly for new docs pages.
+I like the possibility to plug in frontend frameworks where needed in the island architecture. Adding multilingual
+pages worked seamlessly.
+Combined with **Tailwind CSS** and **DaisyUI** I got quick results that I hope are visually appealing as created from
+someone without a strong design background.
+
+## What makes it interesting
+
+### Multilingual with smart fallback
+
+Every page exists in **English and German**. But instead of hiding content when a translation is missing,
+the site uses a _fallback chain_: it tries the requested language first, then falls back to English. I took inspiration from [Starlight](https://starlight.astro.build), a
+documentation page template by Astro which also has this fallback to English.
+
+### `Noscript` fallback for navigation components
+
+There are valid reasons for turning off Javascript and a page should not break for things were it's not absolutely necessary.
+A few components, like the _Theme toggle_, the _Scroll to Top_ or the _Image Gallery_ use Javascript to work or to work
+more smoothly. The theme button is hidden when Javascript is turned off (no way to write into the localStorage) but still
+respects the system default, the Scroll to Top uses a navigation anchor (but no dynamic hiding) and the Image Gallery also
+resorts to anchor-based navigation in the URL.
+
+## Deployment & CI/CD
+
+Quality checks start _before code is pushed_: [**Lefthook**](https://github.com/evilmartians/lefthook) runs linting and
+formatting on every commit
+as a pre-commit hook, catching issues early to avoid unnecessary pipeline runs and frustration.
+
+**GitHub Actions** then runs the full quality gate on every pull request:
+
+- **Linting** (ESLint with accessibility rules)
+- **Type checking** (`astro check` + TypeScript)
+- **Unit tests** (Vitest)
+- **Build verification**
+
+The site ships using **GitHub Pages**.
+Additionally I build a **multi-stage Docker image**: Node.js builds the static files, then only the output is copied into an
+`nginx:alpine` container. The result is a small, self-contained image with **gzip compression**, **security headers**,
+and **immutable asset caching** baked into the nginx config. The images are then pushed to GitHub Container Registry.
+
+## Screenshots
+
+<ImageGallery
+	maxHeight="70vh"
+	images={[
+		{
+			src: lightScreenshot,
+			alt: 'Homepage in light theme',
+			caption: 'Light theme',
+		},
+		{
+			src: darkScreenshot,
+			alt: 'Homepage in dark theme',
+			caption: 'Dark theme',
+		},
+	]}
+/>

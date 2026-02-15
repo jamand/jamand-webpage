@@ -3,12 +3,12 @@
 import Layout from './Layout.astro';
 import { defaultLang, type Lang } from '../i18n/translations';
 import { useTranslations } from '../i18n/utils';
+import ContentImage from '../components/ContentImage.astro';
 import FallbackNotice from '../components/FallbackNotice.astro';
 import ExternalLink from '../components/ExternalLink.astro';
-import type { z } from 'astro/zod';
-import type { projectSchema } from '../content.config';
+import type { CollectionEntry } from 'astro:content';
 
-type ProjectData = z.infer<typeof projectSchema>;
+type ProjectData = CollectionEntry<'projects'>['data'];
 
 interface Props {
 	frontmatter: ProjectData;
@@ -19,6 +19,13 @@ interface Props {
 const { frontmatter, isFallback = false, pageLang } = Astro.props;
 const lang = pageLang || ((frontmatter.lang || defaultLang) as Lang);
 const t = useTranslations(lang);
+
+const statusStyles: Record<string, string> = {
+	active: 'badge-success',
+	completed: 'badge-info',
+	'on-hold': 'badge-warning',
+	planned: 'badge-neutral',
+};
 ---
 
 <Layout
@@ -36,7 +43,16 @@ const t = useTranslations(lang);
 			)
 		}
 		<header class="not-prose mb-8">
-			<h1 class="text-3xl font-bold sm:text-4xl">{frontmatter.title}</h1>
+			<div class="flex items-center gap-3">
+				<h1 class="text-3xl font-bold sm:text-4xl">{frontmatter.title}</h1>
+				<span class={`badge ${statusStyles[frontmatter.status]}`}>
+					{
+						t(
+							`project.status.${frontmatter.status}` as `project.status.${typeof frontmatter.status}`,
+						)
+					}
+				</span>
+			</div>
 			<p class="mt-2 opacity-80">{frontmatter.description}</p>
 			<div class="mt-4 flex flex-wrap gap-2">
 				{
@@ -54,11 +70,20 @@ const t = useTranslations(lang);
 			}
 		</header>
 
-		<img
-			src={frontmatter.image.url}
-			alt={frontmatter.image.alt}
-			class="mb-8 rounded-lg"
-		/>
+		{
+			!frontmatter.hideImage && (
+				<ContentImage
+					src={frontmatter.image.src}
+					url={frontmatter.image.url}
+					alt={frontmatter.image.alt}
+					caption={frontmatter.image.caption}
+					author={frontmatter.image.author}
+					authorUrl={frontmatter.image.authorUrl}
+					lang={lang}
+					class="mb-8 rounded-lg"
+				/>
+			)
+		}
 		<slot />
 	</article>
 </Layout>

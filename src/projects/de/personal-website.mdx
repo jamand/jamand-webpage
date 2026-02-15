@@ -1,15 +1,119 @@
 ---
 title: 'Persönliche Webseite'
 slug: personal-website
-description: 'Diese Webseite — gebaut mit Astro, Tailwind CSS und DaisyUI. Mehrsprachig, barrierefrei und statisch generiert.'
+description: 'Diese Webseite — gebaut mit Astro, Tailwind CSS und DaisyUI. Mein Experimentierkasten: Mehrsprachig und statisch generiert.'
 image:
-  url: 'https://docs.astro.build/assets/rose.webp'
-  alt: 'Das Astro-Logo auf dunklem Hintergrund mit rosa Leuchten.'
+  src: ../../assets/screenshots/website-light.webp
+  alt: 'Homepage in hellem Theme'
 tags: ['Astro', 'Tailwind CSS', 'TypeScript', 'DaisyUI']
 url: 'https://github.com/jamand/jamand-webpage'
+hideImage: true
 lang: de
 projectId: personal-website
 sortOrder: 1
+status: active
 ---
 
-Mehr Details zu diesem Projekt folgen bald.
+import { Image } from 'astro:assets';
+import ImageGallery from '../../components/ImageGallery.astro';
+import lightScreenshot from '../../assets/screenshots/website-light.webp';
+import darkScreenshot from '../../assets/screenshots/website-dark.webp';
+
+<figure
+	class="diff aspect-4/3 overflow-hidden rounded-lg shadow-xl"
+	tabindex="0"
+>
+	<div class="diff-item-1" role="img" tabindex="0">
+		<Image
+			alt="Webseite in hellem Design"
+			loading="eager"
+			src={lightScreenshot}
+		/>
+	</div>
+	<div class="diff-item-2" role="img">
+		<Image
+			alt="Webseite in dunklem Design"
+			loading="eager"
+			src={darkScreenshot}
+		/>
+	</div>
+	<div class="diff-resizer"></div>
+</figure>
+
+## Inhaltsverzeichnis
+
+## Zusammenfassung
+
+Diese Webseite ist **nicht aus einem Template entstanden**. Ich wollte etwas
+von Null auf erstellen, **learning by doing**. Mein beruflicher Hintergrund
+liegt vor allem in der Backend-Entwicklung und im Cloud Engineering, ein
+Frontend zusammenzustellen war also eine Gelegenheit, Neues zu lernen.
+Natürlich wollte ich dann noch meine Kenntnisse einbringen: im Inhalt, in den
+Pipelines, in der Automation von Tests, im Deployment und in den anderen
+Best practices.
+
+[Astro](https://astro.build) ist mir bei der Erstellung statischer Webseiten schon
+öfter über den Weg gelaufen. Ich finde die Möglichkeit Frontend-Frameworks wo
+man es braucht in der Insel-Architektur einzubauen interessant. Das Einbauen
+mehrsprachiger Inhalte war auch sehr einfach.
+Kombiniert mit **Tailwind CSS** und **DaisyUI** hoffe ich schnell ein paar auch
+visuell ansprechende Ergebnisse erschaffen zu haben (für jemanden ohne
+Design-Hintergrund).
+
+## Was das Projekt interessant macht
+
+### Mehrsprachig mit intelligentem Fallback
+
+Jede Seite existiert auf **Deutsch und auf Englisch**. Aber statt Inhalte wie
+Blogposts zu verbergen, wenn es dort keine Übersetzung gibt, nutzt die Seite
+einen _Fallback_: Erst wird versucht die eigentliche Sprache zu laden, dann
+Englisch als Fallback.
+Ich habe mich hier von [Starlight](https://starlight.astro.build) inspirieren
+lassen, einem Template für Dokumentationsseiten für Astro.
+
+### `Noscript` Fallback für Navigationselemente
+
+Es gibt valide Gründe Javascript auszuschalten und eine Webseite sollte auch
+so funktionieren, außer es ist unbedingt nötig Javascript für den Inhalt zu
+brauchen. Einige Komponenten, wie der _Theme toggle_, der _Nach oben scrollen_-Knopf,
+oder die _Bildergalerie_ nutzen Javascript um zu funktionieren oder um komfortabler
+zu funktionieren. Ist Javascript ausgeschaltet wird der Themen-Knopf ausgeblendet,
+aber die Betriebssystemeinstellungen werden berücksichtigt. Der Knopf für das
+Hochscrollen funktioniert immer über einen Anker, kann aber nicht dynamisch ausgeblendet
+werden. Die Bildergalerie funktioniert auch, nutzt aber auch Anker in der URL.
+
+## Deployment & CI/CD
+
+Qualitätschecks finden statt _bevor der Code gepusht wird_: [**Lefthook**](https://github.com/evilmartians/lefthook)
+führt Linting und Formatierung auf jedem Commit als pre-commit Hook durch und
+findet Probleme bevor es die Pipelines tun, was Frustration vermeidet.
+
+**GitHub Actions** führt dann mehrere Qualitätschecks auf jedem Pull Request durch:
+
+- **Linting** (ESLint with accessibility rules)
+- **Type Checks** (`astro check` + TypeScript)
+- **Unit tests** (Vitest)
+- **Build**
+
+Die Seite wird über **GitHub Pages** ausgerollt. Zusätzlich wird ein **multi-stage Docker image**
+gebaut: Node.js generiert mit Astro die statischen Dateien, die dann in einen
+`nginx:alpine` Container kopiert werden. Dies generiert einen kleinen, in sich
+vollständigen Container mit **gzip-Kompression**, **Security-Headers** und **Immutable Asset Caching**,
+welche in Nginx konfiguriert werden. Die Images werden in GitHub Container Registry gepusht.
+
+## Screenshots
+
+<ImageGallery
+	images={[
+		{
+			src: lightScreenshot,
+			alt: 'Webseite in hellem Design',
+			caption: 'Webseite in hellem Design',
+		},
+		{
+			src: darkScreenshot,
+			alt: 'Webseite in dunklem Design',
+			caption: 'Webseite in dunklem Design',
+		},
+	]}
+/>
