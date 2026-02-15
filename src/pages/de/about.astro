@@ -4,6 +4,7 @@ import Layout from '../../layouts/Layout.astro';
 import Timeline from '../../components/Timeline.astro';
 import type { TimelineEntry } from '../../components/Timeline.astro';
 import { useTranslations } from '../../i18n/utils';
+import ExternalLink from '../../components/ExternalLink.astro';
 
 const lang = 'de';
 const t = useTranslations(lang);
@@ -51,10 +52,35 @@ const timeline: TimelineEntry[] = [
 <Layout lang={lang} description={t('meta.about')}>
 	<h1>Über mich</h1>
 	<p>
-		Willkommen auf meiner persönlichen Webseite. Hier teile ich meine Gedanken
-		und Projekte.
+		Hallo, ich heiße Jérémy. Willkommen auf meiner persönlichen Seite! Hier
+		teile ich ein paar Gedanken und Projekte. Ich komme ursprünglich aus
+		Luxemburg und wohne aktuell im Saarland, in Deutschland. Ich habe einen
+		Abschluss in Bioinformatik, habe aber seitdem in der IT gearbeitet.
+	</p>
+	<p>
+		Aktuell arbeite ich bei <ExternalLink
+			href="https://stackit.com/de"
+			class="link">STACKIT</ExternalLink
+		>, einem wirklich europäischen, souveränen Cloudanbieter mit starkem
+		Momentum. Ich arbeite als Cloud Engineer im SKE-Team, welches den Managed
+		Kubernetes-Service basierend auf <ExternalLink
+			href="https://gardener.cloud"
+			class="link">Gardener</ExternalLink
+		> bereitstellt.
+	</p>
+	<p>
+		In meiner Freizeit koche ich gerne, auch wenn es manchmal kompliziert ist,
+		dabei organisiert zu bleiben. Ich zocke gerne, wenn es die Zeit zulässt,
+		aber dann Spiele bei denen man nicht zuerst ein ganzes Wiki durchlesen muss.
+		Hin und wieder gehe ich auch laufen oder fahre Fahrrad.
 	</p>
 
+	<h2>Kurzer Lebenslauf</h2>
+	Dies ist eine Kurzfassung meiner beruflichen Laufbahn, die ausführlichen Informationen
+	sind auf meinem <ExternalLink
+		href="https://www.linkedin.com/in/jer-amand/"
+		class="link">LinkedIn-Profil</ExternalLink
+	> zu finden.
 	<div class="not-prose mt-12">
 		<Timeline entries={timeline} />
 	</div>
