@@ -10,7 +10,10 @@ pre-commit:
       stage_fixed: true
 
     - name: spellcheck
-      glob: 'src/blog/*.{md,mdx}'
+      glob:
+        - 'src/blog/**/*.{md,mdx}'
+        - 'src/projects/**/*.{md,mdx}'
+        - 'src/pages/**/*.astro'
       run: pnpm cspell --no-progress {staged_files}
 
     - name: eslint

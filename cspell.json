@@ -5,23 +5,34 @@
   "words": [
     "Amand",
     "Amazonbot",
+    "Blogposts",
     "Bytespider",
+    "Cloudanbieter",
+    "Hochscrollen",
     "Jérémy",
+    "STACKIT",
     "astro",
     "astrojs",
     "bioinformatics",
     "daisyui",
     "frontmatter",
+    "giscus",
+    "unsplash",
     "hreflang",
     "lucide",
+    "nginx",
     "tailwindcss"
   ],
   "ignorePaths": ["node_modules", "dist", ".astro", "pnpm-lock.yaml"],
-  "enableFiletypes": ["mdx", "md"],
-  "files": ["src/blog/**/*.{md,mdx}"],
+  "enableFiletypes": ["mdx", "md", "astro"],
+  "files": [
+    "src/blog/**/*.{md,mdx}",
+    "src/projects/**/*.{md,mdx}",
+    "src/pages/**/*.astro"
+  ],
   "overrides": [
     {
-      "filename": "src/blog/**/*.{md,mdx}",
+      "filename": "**/*.{md,mdx}",
       "languageSettings": [
         {
           "languageId": "markdown",
@@ -31,6 +42,23 @@
     },
     {
       "filename": "src/blog/de/**/*.{md,mdx}",
+      "language": "de,en"
+    },
+    {
+      "filename": "src/projects/de/**/*.{md,mdx}",
+      "language": "de,en"
+    },
+    {
+      "filename": "src/pages/**/*.astro",
+      "languageSettings": [
+        {
+          "languageId": "astro",
+          "ignoreRegExpList": ["/^---[\\s\\S]*?^---/m"]
+        }
+      ]
+    },
+    {
+      "filename": "src/pages/de/**/*.astro",
       "language": "de,en"
     }
   ]
