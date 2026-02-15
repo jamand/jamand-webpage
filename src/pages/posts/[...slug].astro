@@ -5,6 +5,7 @@ import MarkdownPostLayout from '../../layouts/MarkdownPostLayout.astro';
 import {
 	getAllPostSlugsForLang,
 	getPostWithTranslation,
+	getAdjacentPosts,
 } from '../../i18n/blog-utils';
 
 const lang = 'en';
@@ -20,6 +21,7 @@ export async function getStaticPaths() {
 const { post, isFallback } = Astro.props;
 const { Content, remarkPluginFrontmatter } = await render(post);
 const { translation } = await getPostWithTranslation(post);
+const { prev, next } = await getAdjacentPosts(post, lang);
 ---
 
 <MarkdownPostLayout
@@ -28,6 +30,8 @@ const { translation } = await getPostWithTranslation(post);
 	isFallback={isFallback}
 	pageLang={lang}
 	readingTime={remarkPluginFrontmatter.readingTime}
+	prevPost={prev}
+	nextPost={next}
 >
 	<Content />
 </MarkdownPostLayout>

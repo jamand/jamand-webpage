@@ -1,0 +1,77 @@
+---
+import { Check, Link, Share2 } from '@lucide/astro';
+import type { Lang } from '../i18n/translations';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+	url: string;
+	title: string;
+	lang: Lang;
+}
+
+const { url, title, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="not-prose share-link flex gap-2">
+	<button
+		class="btn btn-soft btn-sm copy-link"
+		data-url={url}
+		aria-label={t('blog.copyLink')}
+	>
+		<span class="copy-icon"><Link size={16} /></span>
+		<span class="check-icon hidden"><Check size={16} /></span>
+		<span class="copy-label">{t('blog.copyLink')}</span>
+	</button>
+	<button
+		class="btn btn-soft btn-sm native-share hidden"
+		data-url={url}
+		data-title={title}
+		aria-label={t('blog.share')}
+	>
+		<Share2 size={16} />
+		{t('blog.share')}
+	</button>
+</div>
+
+<noscript>
+	<style>
+		.share-link {
+			display: none;
+		}
+	</style>
+</noscript>
+
+<script>
+	document.querySelectorAll('.share-link').forEach((container) => {
+		const copyBtn = container.querySelector('.copy-link') as HTMLButtonElement;
+		const shareBtn = container.querySelector(
+			'.native-share',
+		) as HTMLButtonElement;
+		const copyIcon = copyBtn.querySelector('.copy-icon') as HTMLElement;
+		const checkIcon = copyBtn.querySelector('.check-icon') as HTMLElement;
+
+		if ('share' in navigator) {
+			shareBtn.classList.remove('hidden');
+		}
+
+		copyBtn.addEventListener('click', async () => {
+			await navigator.clipboard.writeText(copyBtn.dataset.url!);
+			copyIcon.classList.add('hidden');
+			checkIcon.classList.remove('hidden');
+			setTimeout(() => {
+				copyIcon.classList.remove('hidden');
+				checkIcon.classList.add('hidden');
+			}, 2000);
+		});
+
+		shareBtn.addEventListener('click', () => {
+			navigator
+				.share({
+					title: shareBtn.dataset.title,
+					url: shareBtn.dataset.url,
+				})
+				.catch(() => {});
+		});
+	});
+</script>
