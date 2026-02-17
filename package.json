@@ -21,7 +21,7 @@
     "@astrojs/sitemap": "^3.7.0",
     "@fontsource-variable/plus-jakarta-sans": "^5.2.8",
     "@fontsource/geist-sans": "^5.2.5",
-    "@lucide/astro": "^0.564.0",
+    "@lucide/astro": "^0.574.0",
     "@tailwindcss/vite": "^4.1.18",
     "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
