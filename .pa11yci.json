@@ -4,9 +4,9 @@
     "runners": ["axe", "htmlcs"],
     "timeout": 30000,
     "chromeLaunchConfig": {
-      "args": ["--no-sandbox", "--disable-setuid-sandbox"]
+      "args": ["--no-sandbox", "--disable-setuid-sandbox", "--force-prefers-reduced-motion"]
     },
-    "ignore": ["region", "color-contrast"]
+    "ignore": []
   },
   "urls": []
 }
