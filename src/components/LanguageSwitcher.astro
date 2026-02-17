@@ -20,7 +20,10 @@ const languages = supportedLangs.map((l) => ({
 ---
 
 <details class="dropdown dropdown-end">
-	<summary class="btn btn-ghost btn-sm gap-1" aria-label={t('lang.switch')}>
+	<summary
+		class="hover:bg-base-content/10 text-base-content inline-flex cursor-pointer items-center gap-1 rounded-full p-2"
+		aria-label={t('lang.switch')}
+	>
 		<Languages class="h-5 w-5" />
 		<span class="hidden sm:inline">{lang.toUpperCase()}</span>
 	</summary>

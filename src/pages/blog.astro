@@ -51,7 +51,12 @@ const sortedTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
 								class="badge badge-outline gap-1 no-underline"
 							>
 								{tag}
-								<span class="badge badge-sm">{count}</span>
+								<span
+									class="badge badge-sm text-base-content"
+									aria-label={`${count} ${count === 1 ? 'post' : 'posts'}`}
+								>
+									{count}
+								</span>
 							</a>
 						))}
 					</div>
