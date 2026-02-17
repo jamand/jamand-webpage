@@ -24,6 +24,7 @@ const blogBaseFields = {
 	title: z.string(),
 	slug: z.string(), // URL-friendly slug for the post
 	pubDate: z.date(),
+	updatedAt: z.date().optional(),
 	description: z.string(),
 	author: z.string(),
 	tags: z.array(z.string()),
