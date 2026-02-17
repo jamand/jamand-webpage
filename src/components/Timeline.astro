@@ -22,7 +22,7 @@ const { entries } = Astro.props;
 				{i > 0 && <hr />}
 				{item.type === 'work' ? (
 					<>
-						<div class="timeline-start text-end text-sm opacity-60">
+						<div class="timeline-start text-end text-sm opacity-75">
 							{item.period}
 						</div>
 						<div class="timeline-middle">
@@ -30,19 +30,19 @@ const { entries } = Astro.props;
 						</div>
 						<div class="timeline-end timeline-box">
 							<p class="font-semibold">{item.title}</p>
-							<p class="text-sm opacity-70">{item.org}</p>
+							<p class="text-sm opacity-80">{item.org}</p>
 						</div>
 					</>
 				) : (
 					<>
 						<div class="timeline-start timeline-box text-end">
 							<p class="font-semibold">{item.title}</p>
-							<p class="text-sm opacity-70">{item.org}</p>
+							<p class="text-sm opacity-80">{item.org}</p>
 						</div>
 						<div class="timeline-middle">
 							<GraduationCap size={16} />
 						</div>
-						<div class="timeline-end text-sm opacity-60">{item.period}</div>
+						<div class="timeline-end text-sm opacity-75">{item.period}</div>
 					</>
 				)}
 				{i < entries.length - 1 && <hr />}

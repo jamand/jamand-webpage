@@ -15,7 +15,7 @@ const t = useTranslations(lang);
 
 <div class="not-prose share-link flex gap-2">
 	<button
-		class="btn btn-soft btn-sm copy-link"
+		class="btn btn-outline btn-sm copy-link"
 		data-url={url}
 		aria-label={t('blog.copyLink')}
 	>
@@ -24,7 +24,7 @@ const t = useTranslations(lang);
 		<span class="copy-label">{t('blog.copyLink')}</span>
 	</button>
 	<button
-		class="btn btn-soft btn-sm native-share hidden"
+		class="btn btn-outline btn-sm native-share hidden"
 		data-url={url}
 		data-title={title}
 		aria-label={t('blog.share')}

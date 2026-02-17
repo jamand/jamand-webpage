@@ -21,7 +21,7 @@ const latestDate = latestPost?.post.data.pubDate.toLocaleDateString(
 
 {
 	latestPost && (
-		<p class="not-prose mb-6 text-sm opacity-60">
+		<p class="not-prose mb-6 text-sm opacity-80">
 			{articleCount === 1
 				? t('blog.articleCountSingular')
 				: t('blog.articleCount').replace('{count}', String(articleCount))}

@@ -61,7 +61,7 @@ const t = useTranslations(lang);
 				<h1 class="m-0 text-3xl font-bold sm:text-4xl">{frontmatter.title}</h1>
 				{
 					readingTime && (
-						<p class="mt-2 text-sm opacity-60">
+						<p class="mt-2 text-sm opacity-75">
 							{t('blog.minRead').replace('{min}', String(readingTime))}
 						</p>
 					)
@@ -80,6 +80,25 @@ const t = useTranslations(lang);
 								})
 							}
 						</time>
+						{
+							frontmatter.updatedAt && (
+								<span class="block text-xs font-normal opacity-75">
+									{t('blog.updatedAt')}{' '}
+									<time
+										datetime={frontmatter.updatedAt.toISOString().split('T')[0]}
+									>
+										{frontmatter.updatedAt.toLocaleDateString(
+											getDateLocale(lang),
+											{
+												day: 'numeric',
+												month: 'short',
+												year: 'numeric',
+											},
+										)}
+									</time>
+								</span>
+							)
+						}
 					</dd>
 				</div>
 				{
