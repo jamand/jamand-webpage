@@ -1,11 +1,24 @@
 ---
 // Theme toggle web component (scoped) - cycles through system/light/dark themes with localStorage persistence
 import { Sun, Moon, SunMoon } from '@lucide/astro';
+import { useTranslations } from '../i18n/utils';
+import { defaultLang, type Lang } from '../i18n/translations';
+
+interface Props {
+	lang?: Lang;
+}
+
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
-<theme-toggle>
+<theme-toggle
+	data-label-system={t('theme.auto')}
+	data-label-light={t('theme.light')}
+	data-label-dark={t('theme.dark')}
+>
 	<button
-		aria-label="Toggle theme"
+		aria-label={t('theme.auto')}
 		class="hover:bg-base-content/10 cursor-pointer rounded-full p-2"
 	>
 		<SunMoon data-icon="system" class="h-5 w-5" />
@@ -25,6 +38,12 @@ import { Sun, Moon, SunMoon } from '@lucide/astro';
 			const iconLight = this.querySelector('[data-icon="light"]')!;
 			const iconDark = this.querySelector('[data-icon="dark"]')!;
 
+			const labels: Record<Theme, string> = {
+				system: this.dataset.labelSystem || 'Theme: auto',
+				light: this.dataset.labelLight || 'Theme: light',
+				dark: this.dataset.labelDark || 'Theme: dark',
+			};
+
 			const getSystemTheme = (): 'light' | 'dark' =>
 				window.matchMedia('(prefers-color-scheme: dark)').matches
 					? 'dark'
@@ -37,6 +56,8 @@ import { Sun, Moon, SunMoon } from '@lucide/astro';
 				iconSystem.classList.toggle('hidden', theme !== 'system');
 				iconLight.classList.toggle('hidden', theme !== 'light');
 				iconDark.classList.toggle('hidden', theme !== 'dark');
+
+				button.setAttribute('aria-label', labels[theme]);
 			};
 
 			// Initialize from localStorage

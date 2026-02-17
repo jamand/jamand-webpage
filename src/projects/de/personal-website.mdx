@@ -23,14 +23,19 @@ import darkScreenshot from '../../assets/screenshots/website-dark.webp';
 	class="diff aspect-4/3 overflow-hidden rounded-lg shadow-xl"
 	tabindex="0"
 >
-	<div class="diff-item-1" role="img" tabindex="0">
+	<div
+		class="diff-item-1"
+		role="img"
+		aria-label="Webseite in hellem Design"
+		tabindex="0"
+	>
 		<Image
 			alt="Webseite in hellem Design"
 			loading="eager"
 			src={lightScreenshot}
 		/>
 	</div>
-	<div class="diff-item-2" role="img">
+	<div class="diff-item-2" role="img" aria-label="Webseite in dunklem Design">
 		<Image
 			alt="Webseite in dunklem Design"
 			loading="eager"
@@ -71,7 +76,7 @@ Englisch als Fallback.
 Ich habe mich hier von [Starlight](https://starlight.astro.build) inspirieren
 lassen, einem Template für Dokumentationsseiten für Astro.
 
-### `Noscript` Fallback für Navigationselemente
+### `Noscript` Fallback bei Navigation ohne JavaScript
 
 Es gibt valide Gründe Javascript auszuschalten und eine Webseite sollte auch
 so funktionieren, außer es ist unbedingt nötig Javascript für den Inhalt zu

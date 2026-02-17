@@ -60,6 +60,7 @@ export const translations = {
 		// Blog
 		'blog.title': 'Blog',
 		'blog.publishedOn': 'Published',
+		'blog.updatedAt': 'Updated',
 		'blog.author': 'Author',
 		'blog.availableIn': 'Translation',
 		'blog.postsTaggedWith': 'Posts tagged with',
@@ -98,6 +99,11 @@ export const translations = {
 		// Fallback notice
 		'fallback.notice': 'This content is not yet available in {lang}.',
 		'fallback.viewingIn': 'You are viewing the {lang} version.',
+
+		// Theme toggle
+		'theme.auto': 'Theme: auto (switch to light)',
+		'theme.light': 'Theme: light (switch to dark)',
+		'theme.dark': 'Theme: dark (switch to auto)',
 
 		// Imprint (legal requirement)
 		'imprint.title': 'Imprint',
@@ -150,6 +156,7 @@ export const translations = {
 		// Blog
 		'blog.title': 'Blog',
 		'blog.publishedOn': 'Veröffentlicht',
+		'blog.updatedAt': 'Aktualisiert',
 		'blog.author': 'Autor',
 		'blog.availableIn': 'Übersetzung',
 		'blog.postsTaggedWith': 'Beiträge mit Tag',
@@ -188,6 +195,11 @@ export const translations = {
 		// Fallback notice
 		'fallback.notice': 'Dieser Inhalt ist noch nicht auf {lang} verfügbar.',
 		'fallback.viewingIn': 'Sie sehen die Version auf {lang}.',
+
+		// Theme toggle
+		'theme.auto': 'Design: automatisch (zu hell wechseln)',
+		'theme.light': 'Design: hell (zu dunkel wechseln)',
+		'theme.dark': 'Design: dunkel (zu automatisch wechseln)',
 
 		// Imprint (legal requirement)
 		'imprint.title': 'Impressum',

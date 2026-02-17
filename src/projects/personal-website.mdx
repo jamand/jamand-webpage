@@ -23,10 +23,15 @@ import darkScreenshot from '../assets/screenshots/website-dark.webp';
 	class="diff aspect-4/3 overflow-hidden rounded-lg shadow-xl"
 	tabindex="0"
 >
-	<div class="diff-item-1" role="img" tabindex="0">
+	<div
+		class="diff-item-1"
+		role="img"
+		aria-label="Website in light theme"
+		tabindex="0"
+	>
 		<Image alt="Website in light theme" loading="eager" src={lightScreenshot} />
 	</div>
-	<div class="diff-item-2" role="img">
+	<div class="diff-item-2" role="img" aria-label="Website in dark theme">
 		<Image alt="Website in dark theme" loading="eager" src={darkScreenshot} />
 	</div>
 	<div class="diff-resizer"></div>
