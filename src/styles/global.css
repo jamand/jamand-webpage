@@ -2,10 +2,35 @@
 @import '@fontsource-variable/plus-jakarta-sans';
 @import 'tailwindcss';
 /* Design and component library */
-@plugin 'daisyui' {
-	themes:
-		light --default,
-		dark --prefersdark;
+@plugin 'daisyui';
+/*
+ * Custom light theme with improved contrast for WCAG AA compliance.
+ * Default DaisyUI light theme colors fail axe/pa11y contrast checks on certain
+ * components (btn-primary, badge-success). Values darkened from defaults using
+ * the approach described in:
+ * https://chrisvaillancourt.io/posts/customizing-daisyui-themes-for-accessible-color-contrast/
+ */
+@plugin 'daisyui/theme' {
+	name: 'light';
+	default: true;
+	color-scheme: light;
+	--color-primary: oklch(40% 0.24 277);
+	--color-primary-content: oklch(96% 0.018 272);
+	--color-success: oklch(45% 0.16 163);
+	--color-success-content: oklch(96% 0.02 163);
+	--color-warning: oklch(52% 0.14 72);
+	--color-warning-content: oklch(98% 0.02 84);
+	--depth: 1;
+	--noise: 0;
+}
+@plugin 'daisyui/theme' {
+	name: 'dark';
+	prefersdark: true;
+	color-scheme: dark;
+	--color-primary: oklch(68% 0.18 277);
+	--color-primary-content: oklch(16% 0.04 277);
+	--depth: 1;
+	--noise: 0;
 }
 /* Avoid tailwind stripping style to HTML generated from e.g. Markdown (MDX) */
 @plugin '@tailwindcss/typography';
@@ -22,6 +47,16 @@ h4,
 h5,
 h6 {
 	font-family: var(--font-heading);
+}
+
+/*
+ * DaisyUI v5 applies a noise texture SVG as background-image on .btn.
+ * Even with --noise:0, the url() remains (at background-size:0%), which prevents
+ * axe-core from computing the background color (reports "incomplete" instead of pass).
+ */
+.btn,
+.badge {
+	background-image: none;
 }
 
 /* Accessible focus indicators */
