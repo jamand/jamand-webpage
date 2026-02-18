@@ -9,14 +9,10 @@
 
 import { createRequire } from 'node:module';
 import { mkdirSync } from 'node:fs';
+import pa11y from 'pa11y';
 
 const require = createRequire(import.meta.url);
-const pa11y: (
-	url: string,
-	options: Record<string, unknown>,
-) => Promise<{
-	issues: Array<{ runner: string; message: string; context?: string }>;
-}> = require('pa11y');
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const puppeteer: any = require(
 	require.resolve('puppeteer', { paths: [require.resolve('pa11y')] }),
@@ -61,7 +57,20 @@ async function getPageUrls(): Promise<string[]> {
 	return fetchSitemapUrls();
 }
 
+async function checkServer(): Promise<void> {
+	try {
+		await fetch(BASE_URL);
+	} catch {
+		console.error(
+			`\nError: No server running at ${BASE_URL}\n` +
+				`Start one first with: pnpm preview (or pnpm dev)\n`,
+		);
+		process.exit(1);
+	}
+}
+
 async function runTests(): Promise<void> {
+	await checkServer();
 	const pagesToTest = await getPageUrls();
 	console.log(`Found ${pagesToTest.length} URLs to test\n`);
 
@@ -110,7 +119,9 @@ async function runTests(): Promise<void> {
 					console.log(` ✗ ${url} - ${results.issues.length} errors`);
 					totalErrors += results.issues.length;
 					for (const issue of results.issues) {
-						console.log(`   • [${issue.runner}] ${issue.message}`);
+						const runner =
+							(issue as unknown as Record<string, unknown>).runner ?? 'unknown';
+						console.log(`   • [${runner}] ${issue.message}`);
 						if (issue.context) {
 							console.log(`     ${issue.context.substring(0, 100)}`);
 						}
