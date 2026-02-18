@@ -12,37 +12,37 @@ const imprintCity = import.meta.env.IMPRINT_CITY;
 const imprintEmail = import.meta.env.IMPRINT_EMAIL;
 
 const isConfigured = imprintName && imprintAddress && imprintCity;
+
+if (!isConfigured) {
+	return Astro.rewrite('/404');
+}
 ---
 
 <Layout lang={lang} description={t('meta.imprint')}>
 	<h1>{t('imprint.title')}</h1>
 
-	{
-		isConfigured ? (
-			<div class="space-y-6">
-				<section>
-					<h2>{t('imprint.responsible')}</h2>
-					<address class="not-italic">
-						<div>{imprintName}</div>
-						<div>{imprintAddress}</div>
-						<div>{imprintCity}</div>
-					</address>
-				</section>
+	<div class="space-y-6">
+		<section>
+			<h2>{t('imprint.responsible')}</h2>
+			<address class="not-italic">
+				<div>{imprintName}</div>
+				<div>{imprintAddress}</div>
+				<div>{imprintCity}</div>
+			</address>
+		</section>
 
-				{imprintEmail && (
-					<section>
-						<h2>{t('imprint.contact')}</h2>
-						<div>
-							E-Mail:{' '}
-							<a href={`mailto:${imprintEmail}`} class="link">
-								{imprintEmail}
-							</a>
-						</div>
-					</section>
-				)}
-			</div>
-		) : (
-			<p class="text-warning">{t('imprint.notConfigured')}</p>
-		)
-	}
+		{
+			imprintEmail && (
+				<section>
+					<h2>{t('imprint.contact')}</h2>
+					<div>
+						E-Mail:{' '}
+						<a href={`mailto:${imprintEmail}`} class="link">
+							{imprintEmail}
+						</a>
+					</div>
+				</section>
+			)
+		}
+	</div>
 </Layout>

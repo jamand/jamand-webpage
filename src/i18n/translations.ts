@@ -109,8 +109,6 @@ export const translations = {
 		'imprint.title': 'Imprint',
 		'imprint.responsible': 'Responsible for content',
 		'imprint.contact': 'Contact',
-		'imprint.notConfigured':
-			'Imprint information is not configured for this environment.',
 	},
 	de: {
 		// Navigation
@@ -205,8 +203,6 @@ export const translations = {
 		'imprint.title': 'Impressum',
 		'imprint.responsible': 'Verantwortlich für den Inhalt',
 		'imprint.contact': 'Kontakt',
-		'imprint.notConfigured':
-			'Impressumsinformationen sind für diese Umgebung nicht konfiguriert.',
 	},
 } as const;
 
