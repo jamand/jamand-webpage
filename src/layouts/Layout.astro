@@ -18,7 +18,7 @@ interface Props {
 }
 
 const {
-	title = 'Jérémy Amand',
+	title = 'Jérémy Amand - Personal web page',
 	description,
 	lang = defaultLang,
 	ogImage,
@@ -32,7 +32,7 @@ const themeColorDark = '#191E24';
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={lang} class="bg-base-200">
 	<head>
 		<meta charset="UTF-8" />
 		<meta
@@ -112,7 +112,7 @@ const themeColorDark = '#191E24';
 	</head>
 	<body id="top" class="flex min-h-screen flex-col">
 		<Header lang={lang} />
-		<main id="main-content" class="flex-1 py-8">
+		<main id="main-content" class="bg-base-100 flex-1 py-8">
 			<ContentWidth>
 				<Prose>
 					<slot />
