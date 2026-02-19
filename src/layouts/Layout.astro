@@ -13,17 +13,39 @@ interface Props {
 	title?: string;
 	description?: string;
 	lang?: Lang;
+	ogImage?: string;
+	ogType?: string;
 }
 
-const { title = 'Jérémy Amand', description, lang = defaultLang } = Astro.props;
+const {
+	title = 'Jérémy Amand',
+	description,
+	lang = defaultLang,
+	ogImage,
+	ogType = 'website',
+} = Astro.props;
 const currentUrl = Astro.url;
+
+// Theme color hex values for mobile browser chrome — must match bg-base-200 from DaisyUI theme
+const themeColorLight = '#F2F2F2';
+const themeColorDark = '#191E24';
 ---
 
 <!doctype html>
 <html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
-		<script is:inline>
+		<meta
+			name="theme-color"
+			content={themeColorLight}
+			media="(prefers-color-scheme: light)"
+		/>
+		<meta
+			name="theme-color"
+			content={themeColorDark}
+			media="(prefers-color-scheme: dark)"
+		/>
+		<script is:inline define:vars={{ themeColorLight, themeColorDark }}>
 			const stored = localStorage.getItem('theme');
 			const theme =
 				stored === 'light' || stored === 'dark'
@@ -32,9 +54,17 @@ const currentUrl = Astro.url;
 						? 'dark'
 						: 'light';
 			document.documentElement.setAttribute('data-theme', theme);
+			document
+				.querySelectorAll('meta[name="theme-color"]')
+				.forEach((el) => el.remove());
+			const meta = document.createElement('meta');
+			meta.name = 'theme-color';
+			meta.content = theme === 'dark' ? themeColorDark : themeColorLight;
+			document.head.appendChild(meta);
 		</script>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/JA-logo.svg" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		{
 			supportedLangs.map((l) => (
@@ -62,6 +92,15 @@ const currentUrl = Astro.url;
 		/>
 		<meta name="generator" content={Astro.generator} />
 		{description && <meta name="description" content={description} />}
+		<meta property="og:title" content={title} />
+		{description && <meta property="og:description" content={description} />}
+		<meta property="og:url" content={Astro.url.href} />
+		<meta property="og:type" content={ogType} />
+		{
+			ogImage && (
+				<meta property="og:image" content={new URL(ogImage, Astro.site).href} />
+			)
+		}
 		<noscript>
 			<style>
 				theme-toggle {

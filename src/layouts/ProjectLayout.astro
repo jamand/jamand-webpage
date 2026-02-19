@@ -32,6 +32,8 @@ const statusStyles: Record<string, string> = {
 	title={frontmatter.title}
 	description={frontmatter.description}
 	lang={lang}
+	ogImage={frontmatter.image.src?.src ?? frontmatter.image.url}
+	ogType="article"
 >
 	<article>
 		{
