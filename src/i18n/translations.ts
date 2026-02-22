@@ -29,11 +29,11 @@ export const translations = {
 
 		// Meta descriptions
 		'meta.home':
-			'Personal website of Jérémy Amand - software developer sharing thoughts and projects.',
+			'Jérémy Amand - Cloud Engineer building Kubernetes infrastructure for a European sovereign cloud. Blog posts, projects, and learnings from cloud native development.',
 		'meta.about':
-			'Learn more about Jérémy Amand, his background, and interests.',
+			'Cloud Engineer with a bioinformatics background, building Kubernetes infrastructure for European digital sovereignty. Based in Germany, from Luxemburg. European.',
 		'meta.blog':
-			'Articles and thoughts on software development and technology.',
+			'Articles on cloud native development, Kubernetes, digital sovereignty, and lessons learned.',
 		'meta.tags': 'Browse blog posts by topic and category.',
 		'meta.imprint': 'Legal information and contact details.',
 
@@ -41,7 +41,7 @@ export const translations = {
 		'home.greeting': "👋 Hi, I'm Jérémy.",
 		'home.tagline': 'Software Developer & Cloud Enthusiast',
 		'home.intro':
-			'I build cloud native software, all things Kubernetes, and digital sovereignty. Bioinformatics background. Welcome to my corner of the web where I share projects, ideas, and things I learn along the way.',
+			'Cloud Engineer building Kubernetes for a European sovereign cloud. Coming from a bioinformatics background, I share what I learn about cloud native development and my journey towards more open source adoption.',
 		'home.aboutMe': 'About me',
 		'home.projects': 'Projects',
 		'home.recentPosts': 'Recent Posts',
@@ -49,7 +49,7 @@ export const translations = {
 		'home.noPosts': 'No posts yet — stay tuned!',
 		'home.techStack': 'Tech Stack',
 		'home.techStack.languages': 'Languages',
-		'home.techStack.infrastructure': 'Infrastructure',
+		'home.techStack.infrastructure': 'Infrastructure & Tools',
 		'home.techStack.tools': 'Tools',
 		'home.techStack.certifications': 'Certifications',
 
@@ -124,10 +124,12 @@ export const translations = {
 
 		// Meta descriptions
 		'meta.home':
-			'Persönliche Webseite von Jérémy Amand - Softwareentwickler mit Gedanken und Projekten.',
+			'Jérémy Amand - Cloud Engineer, der an Kubernetes für eine souveräne europäische Cloud arbeitet. Blog, Projekte und Lektionen über Cloud-native Entwicklung.',
 		'meta.about':
-			'Erfahren Sie mehr über Jérémy Amand, seinen Hintergrund und seine Interessen.',
-		'meta.blog': 'Artikel und Gedanken zu Softwareentwicklung und Technologie.',
+			'Cloud Engineer mit einem Bioinformatik-Hintergrund, baut Kubernetes für europäische digitale Souveränität. Wohnt ihn Deutschland, aus Luxemburg. Europäer.',
+		'meta.blog':
+			'Artikel über Cloud-native Entwicklung, Kubernetes, digitale Souveränität und Lektionen auf dem Weg dahin.',
+
 		'meta.tags': 'Blogbeiträge nach Thema und Kategorie durchsuchen.',
 		'meta.imprint': 'Rechtliche Informationen und Kontaktdaten.',
 
@@ -135,7 +137,8 @@ export const translations = {
 		'home.greeting': '👋 Hallo, ich bin Jérémy.',
 		'home.tagline': 'Softwareentwickler & Cloud-Enthusiast',
 		'home.intro':
-			'Ich entwickle Cloud-native Software, alles rund um Kubernetes und digitaler Souveränität. Hintergrund in Bioinformatik. Willkommen auf meiner Webseite, auf der ich Projekte, Ideen und Gelerntes teile.',
+			'Cloud Engineer mit Fokus auf Kubernetes für eine europäische souveräne Cloud. Mit meinem Hintergrund in Bioinformatik teile ich hier, was ich über Cloud-native Entwicklung lerne und über meinen Weg zu mehr Open Source-Beteiligung.',
+
 		'home.aboutMe': 'Über mich',
 		'home.projects': 'Projekte',
 		'home.recentPosts': 'Neueste Beiträge',
@@ -143,7 +146,7 @@ export const translations = {
 		'home.noPosts': 'Noch keine Beiträge — bald mehr!',
 		'home.techStack': 'Technologien',
 		'home.techStack.languages': 'Sprachen',
-		'home.techStack.infrastructure': 'Infrastruktur',
+		'home.techStack.infrastructure': 'Infrastruktur & Tools',
 		'home.techStack.tools': 'Tools',
 		'home.techStack.certifications': 'Zertifizierungen',
 

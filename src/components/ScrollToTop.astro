@@ -16,6 +16,7 @@ import { ArrowUp } from '@lucide/astro';
 	let lastY = window.scrollY;
 	let visible = false;
 	let hideTimer: ReturnType<typeof setTimeout>;
+	let scrollingToTop = false;
 
 	function show() {
 		if (!visible) {
@@ -37,6 +38,11 @@ import { ArrowUp } from '@lucide/astro';
 
 	function update() {
 		const y = window.scrollY;
+		if (scrollingToTop) {
+			if (y === 0) scrollingToTop = false;
+			lastY = y;
+			return;
+		}
 		if (y < lastY && y > 300) {
 			show();
 		} else if (y > lastY) {
@@ -52,6 +58,7 @@ import { ArrowUp } from '@lucide/astro';
 	window.addEventListener('scroll', update, { passive: true });
 	btn.addEventListener('click', (e) => {
 		e.preventDefault();
+		scrollingToTop = true;
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 		clearTimeout(hideTimer);
 		hide();

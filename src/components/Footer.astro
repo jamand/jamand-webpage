@@ -1,11 +1,10 @@
 ---
 // Footer component - displays site footer with social links
-import githubIcon from '../assets/github.svg?raw';
-import astroIcon from '../assets/astro.svg?raw';
 import { getLocalizedPath, useTranslations } from '../i18n/utils';
 import type { Lang } from '../i18n/translations';
 import ContentWidth from './ContentWidth.astro';
 import ExternalLink from './ExternalLink.astro';
+import { siGithub, siAstro } from 'simple-icons';
 
 interface Props {
 	lang?: Lang;
@@ -33,7 +32,10 @@ const isImprintConfigured =
 				class="link flex items-center gap-1"
 				showArrow={false}
 			>
-				<span class="inline-block h-5 w-5 fill-current" set:html={githubIcon} />
+				<span
+					class="inline-block h-5 w-5 fill-current"
+					set:html={siGithub.svg}
+				/>
 				GitHub
 			</ExternalLink>
 			<ExternalLink
@@ -58,7 +60,7 @@ const isImprintConfigured =
 				Built from scratch with
 				<span
 					class="inline-block h-3.5 w-3.5 fill-current"
-					set:html={astroIcon}
+					set:html={siAstro.svg}
 				/>
 				<ExternalLink href="https://astro.build" class="link" showArrow={false}
 					>Astro</ExternalLink

@@ -1,6 +1,7 @@
 ---
 // Homepage (German)
 import ContentImage from '../../components/ContentImage.astro';
+import TechIcon from '../../components/TechIcon.astro';
 import Layout from '../../layouts/Layout.astro';
 import BlogPostLink from '../../components/BlogPostLink.astro';
 import { getPostsWithFallback, getPostUrlForLang } from '../../i18n/blog-utils';
@@ -25,9 +26,8 @@ const techStack = [
 	},
 	{
 		category: t('home.techStack.infrastructure'),
-		items: ['Kubernetes', 'Docker', 'Terraform', 'Linux'],
+		items: ['Kubernetes', 'Docker', 'Terraform', 'Linux', 'Git'],
 	},
-	{ category: t('home.techStack.tools'), items: ['Git'] },
 	{ category: t('home.techStack.certifications'), items: ['CKA', 'CKAD'] },
 ];
 ---
@@ -40,14 +40,14 @@ const techStack = [
 			<p class="mt-3 text-2xl opacity-80">{t('home.tagline')}</p>
 			<p class="mt-6 max-w-2xl text-lg">{t('home.intro')}</p>
 			<div class="mt-8 flex gap-3">
-				<a href={getLocalizedPath('/about/', lang)} class="btn btn-primary">
-					{t('home.aboutMe')}
+				<a href={getLocalizedPath('/blog/', lang)} class="btn btn-primary">
+					{t('nav.blog')}
 				</a>
 				<a
-					href={getLocalizedPath('/blog/', lang)}
+					href={getLocalizedPath('/about/', lang)}
 					class="btn btn-outline btn-primary"
 				>
-					{t('nav.blog')}
+					{t('home.aboutMe')}
 				</a>
 			</div>
 		</section>
@@ -129,7 +129,10 @@ const techStack = [
 							</h3>
 							<div class="flex flex-wrap gap-2">
 								{group.items.map((tech) => (
-									<span class="badge badge-soft badge-lg">{tech}</span>
+									<span class="badge badge-soft badge-lg gap-1.5">
+										<TechIcon name={tech} />
+										{tech}
+									</span>
 								))}
 							</div>
 						</div>
