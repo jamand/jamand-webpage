@@ -3,6 +3,11 @@
   extends: ["config:recommended"],
   packageRules: [
     {
+      description: "Ignore @astrojs/rss 4.0.15 (incompatible Zod changes with Astro v6 beta)",
+      matchPackageNames: ["@astrojs/rss"],
+      allowedVersions: "!=4.0.15",
+    },
+    {
       description: "Group Astro ecosystem updates",
       groupName: "Astro",
       matchPackageNames: ["/^astro/", "/^@astrojs//"],
