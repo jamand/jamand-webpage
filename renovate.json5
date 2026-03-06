@@ -34,6 +34,11 @@
       ],
     },
     {
+      description: "Group GitHub Actions updates",
+      groupName: "GitHub Actions",
+      matchManagers: ["github-actions"],
+    },
+    {
       description: "Group TypeScript and build tools",
       groupName: "Build tools",
       matchPackageNames: ["typescript", "vite"],
