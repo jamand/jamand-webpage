@@ -57,4 +57,8 @@ On commit, Lefthook automatically runs:
 
 ## License
 
-This project is open source under the [MIT License](LICENSE).
+The source code is licensed under the [MIT License](LICENSE).
+
+Blog posts are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+Profile photographs, CV data, and other personal content are © Jérémy Amand. All rights reserved.

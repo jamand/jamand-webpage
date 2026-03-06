@@ -4,7 +4,7 @@ import { getLocalizedPath, useTranslations } from '../i18n/utils';
 import type { Lang } from '../i18n/translations';
 import ContentWidth from './ContentWidth.astro';
 import ExternalLink from './ExternalLink.astro';
-import { siGithub, siAstro } from 'simple-icons';
+import { siGithub, siAstro, siCreativecommons } from 'simple-icons';
 
 interface Props {
 	lang?: Lang;
@@ -66,7 +66,18 @@ const isImprintConfigured =
 					>Astro</ExternalLink
 				>
 			</aside>
-			<span>© {year} Jérémy Amand</span>
+			<span class="inline-flex items-center gap-1">
+				© {year} Jérémy Amand · Blog:
+				<span
+					class="inline-block h-3.5 w-3.5 fill-current"
+					set:html={siCreativecommons.svg}
+				/>
+				<ExternalLink
+					href="https://creativecommons.org/licenses/by/4.0/"
+					class="link"
+					showArrow={false}>CC BY 4.0</ExternalLink
+				>
+			</span>
 		</div>
 	</ContentWidth>
 	<div class="rainbow-strip" aria-hidden="true">
