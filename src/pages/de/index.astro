@@ -10,6 +10,8 @@ import {
 	getProjectUrl,
 } from '../../i18n/project-utils';
 import { getLocalizedPath, useTranslations } from '../../i18n/utils';
+import { Image } from 'astro:assets';
+import profilePhoto from '../../assets/JEA_Profile.jpeg';
 
 const lang = 'de';
 const t = useTranslations(lang);
@@ -36,19 +38,40 @@ const techStack = [
 	<div class="not-prose space-y-16">
 		{/* Hero / Intro */}
 		<section class="animate-fade-in-up py-10">
-			<h1 class="text-5xl font-bold">{t('home.greeting')}</h1>
-			<p class="mt-3 text-2xl opacity-80">{t('home.tagline')}</p>
-			<p class="mt-6 max-w-2xl text-lg">{t('home.intro')}</p>
-			<div class="mt-8 flex gap-3">
-				<a href={getLocalizedPath('/blog/', lang)} class="btn btn-primary">
-					{t('nav.blog')}
-				</a>
-				<a
-					href={getLocalizedPath('/about/', lang)}
-					class="btn btn-outline btn-primary"
-				>
-					{t('home.aboutMe')}
-				</a>
+			<div class="flex flex-col items-center gap-10 sm:flex-row">
+				<div class="avatar">
+					<div
+						class="ring-primary ring-offset-base-100 w-44 rounded-2xl ring-2 ring-offset-2 sm:w-52"
+					>
+						{
+							/* widths/sizes match w-44 (176px) and w-52 (208px) at 1x and 2x */
+						}
+						<Image
+							src={profilePhoto}
+							alt="Jérémy Amand"
+							widths={[176, 208, 352, 416]}
+							sizes="(min-width: 640px) 208px, 176px"
+							class="rounded-2xl"
+							loading="eager"
+						/>
+					</div>
+				</div>
+				<div>
+					<h1 class="text-5xl font-bold">{t('home.greeting')}</h1>
+					<p class="mt-3 text-2xl opacity-80">{t('home.tagline')}</p>
+					<p class="mt-6 max-w-2xl text-lg">{t('home.intro')}</p>
+					<div class="mt-8 flex gap-3">
+						<a href={getLocalizedPath('/blog/', lang)} class="btn btn-primary">
+							{t('nav.blog')}
+						</a>
+						<a
+							href={getLocalizedPath('/about/', lang)}
+							class="btn btn-outline btn-primary"
+						>
+							{t('home.aboutMe')}
+						</a>
+					</div>
+				</div>
 			</div>
 		</section>
 
