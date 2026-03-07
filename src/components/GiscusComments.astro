@@ -1,0 +1,94 @@
+---
+import { type Lang } from '../i18n/translations';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="giscus-container not-prose mt-8 hidden">
+	<p class="mb-6 text-sm opacity-75">
+		{t('blog.commentsNote')}
+	</p>
+	<noscript>
+		<p class="text-sm opacity-75">{t('blog.commentsRequireJs')}</p>
+	</noscript>
+</div>
+
+<script>
+	function getEffectiveTheme(): 'light' | 'dark' {
+		return (
+			(document.documentElement.getAttribute('data-theme') as
+				| 'light'
+				| 'dark') || 'light'
+		);
+	}
+
+	function setGiscusTheme(theme: 'light' | 'dark') {
+		const iframe = document.querySelector<HTMLIFrameElement>(
+			'iframe.giscus-frame',
+		);
+		if (!iframe?.contentWindow) return;
+		iframe.contentWindow.postMessage(
+			{ giscus: { setConfig: { theme } } },
+			'https://giscus.app',
+		);
+	}
+
+	const button = document.querySelector<HTMLButtonElement>(
+		'[data-giscus-toggle]',
+	);
+	const container = document.querySelector<HTMLDivElement>('.giscus-container');
+
+	if (button && container) {
+		const lang = button.dataset.lang || 'en';
+		const term = button.dataset.term || '';
+
+		button.classList.remove('hidden');
+
+		button.addEventListener('click', () => {
+			button.remove();
+			container.classList.remove('hidden');
+
+			const script = document.createElement('script');
+			script.src = 'https://giscus.app/client.js';
+			script.setAttribute('data-repo', 'jamand/jamand-webpage');
+			script.setAttribute('data-repo-id', 'R_kgDORAjfRg');
+			script.setAttribute('data-category', 'Announcements');
+			script.setAttribute('data-category-id', 'DIC_kwDORAjfRs4C34pY');
+			script.setAttribute('data-mapping', 'specific');
+			script.setAttribute('data-term', term);
+			script.setAttribute('data-strict', '1');
+			script.setAttribute('data-reactions-enabled', '0');
+			script.setAttribute('data-emit-metadata', '0');
+			script.setAttribute('data-input-position', 'bottom');
+			script.setAttribute('data-theme', getEffectiveTheme());
+			script.setAttribute('data-lang', lang);
+			script.setAttribute('data-loading', 'lazy');
+			script.crossOrigin = 'anonymous';
+			script.async = true;
+			container.appendChild(script);
+		});
+	}
+
+	// Set correct theme once giscus iframe loads
+	window.addEventListener('message', (event) => {
+		if (event.origin !== 'https://giscus.app') return;
+		if (typeof event.data === 'object' && event.data.giscus) {
+			setGiscusTheme(getEffectiveTheme());
+		}
+	});
+
+	// Watch for theme changes on <html> element
+	const observer = new MutationObserver(() => {
+		setGiscusTheme(getEffectiveTheme());
+	});
+	observer.observe(document.documentElement, {
+		attributes: true,
+		attributeFilter: ['data-theme'],
+	});
+</script>

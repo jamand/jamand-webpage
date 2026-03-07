@@ -1,0 +1,24 @@
+---
+import { MessageCircle } from '@lucide/astro';
+import { type Lang } from '../i18n/translations';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+	lang: Lang;
+	title: string;
+}
+
+const { lang, title } = Astro.props;
+const t = useTranslations(lang);
+const discussionTerm = `${lang}: ${title}`;
+---
+
+<button
+	class="btn btn-outline btn-sm hidden"
+	data-giscus-toggle
+	data-lang={lang}
+	data-term={discussionTerm}
+>
+	<MessageCircle class="h-4 w-4" />
+	{t('blog.loadComments')}
+</button>

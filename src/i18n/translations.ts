@@ -74,6 +74,9 @@ export const translations = {
 		'blog.share': 'Share',
 		'blog.previousPost': 'Previous',
 		'blog.nextPost': 'Next',
+		'blog.commentsNote': 'Please be respectful and constructive.',
+		'blog.loadComments': 'Load comments',
+		'blog.commentsRequireJs': 'Comments require JavaScript to be enabled.',
 
 		// Projects
 		'project.viewOnGitHub': 'View on GitHub',
@@ -171,6 +174,9 @@ export const translations = {
 		'blog.share': 'Teilen',
 		'blog.previousPost': 'Zurück',
 		'blog.nextPost': 'Weiter',
+		'blog.commentsNote': 'Bitte sei respektvoll und konstruktiv.',
+		'blog.loadComments': 'Kommentare laden',
+		'blog.commentsRequireJs': 'Kommentare erfordern aktiviertes JavaScript.',
 
 		// Projects
 		'project.viewOnGitHub': 'Auf GitHub ansehen',

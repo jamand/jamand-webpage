@@ -16,6 +16,8 @@ import {
 import ContentImage from '../components/ContentImage.astro';
 import FallbackNotice from '../components/FallbackNotice.astro';
 import ShareLink from '../components/ShareLink.astro';
+import GiscusButton from '../components/GiscusButton.astro';
+import GiscusComments from '../components/GiscusComments.astro';
 
 interface Props {
 	frontmatter: BlogPost['data'];
@@ -139,7 +141,10 @@ const t = useTranslations(lang);
 		<footer
 			class="not-prose mt-6 flex flex-wrap items-center justify-between gap-4 pt-6"
 		>
-			<ShareLink url={Astro.url.href} title={frontmatter.title} lang={lang} />
+			<div class="flex gap-2">
+				<ShareLink url={Astro.url.href} title={frontmatter.title} lang={lang} />
+				<GiscusButton lang={lang} title={frontmatter.title} />
+			</div>
 
 			{
 				(prevPost || nextPost) && (
@@ -147,7 +152,7 @@ const t = useTranslations(lang);
 						{prevPost && (
 							<a
 								href={getPostUrlForLang(prevPost, lang)}
-								class="btn btn-soft btn-sm"
+								class="btn btn-outline btn-sm"
 							>
 								&larr; {t('blog.previousPost')}
 							</a>
@@ -155,7 +160,7 @@ const t = useTranslations(lang);
 						{nextPost && (
 							<a
 								href={getPostUrlForLang(nextPost, lang)}
-								class="btn btn-soft btn-sm"
+								class="btn btn-outline btn-sm"
 							>
 								{t('blog.nextPost')} &rarr;
 							</a>
@@ -164,5 +169,6 @@ const t = useTranslations(lang);
 				)
 			}
 		</footer>
+		<GiscusComments lang={lang} />
 	</article>
 </Layout>
