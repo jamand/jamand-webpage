@@ -75,7 +75,7 @@ export const translations = {
 		'blog.previousPost': 'Previous',
 		'blog.nextPost': 'Next',
 		'blog.commentsNote': 'Please be respectful and constructive.',
-		'blog.loadComments': 'Load comments',
+		'blog.loadComments': 'Comments',
 		'blog.commentsRequireJs': 'Comments require JavaScript to be enabled.',
 
 		// Projects
@@ -175,7 +175,7 @@ export const translations = {
 		'blog.previousPost': 'Zurück',
 		'blog.nextPost': 'Weiter',
 		'blog.commentsNote': 'Bitte sei respektvoll und konstruktiv.',
-		'blog.loadComments': 'Kommentare laden',
+		'blog.loadComments': 'Kommentare',
 		'blog.commentsRequireJs': 'Kommentare erfordern aktiviertes JavaScript.',
 
 		// Projects

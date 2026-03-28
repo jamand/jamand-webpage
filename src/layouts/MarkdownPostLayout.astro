@@ -141,7 +141,7 @@ const t = useTranslations(lang);
 		<footer
 			class="not-prose mt-6 flex flex-wrap items-center justify-between gap-4 pt-6"
 		>
-			<div class="flex gap-2">
+			<div class="flex flex-wrap gap-2">
 				<ShareLink url={Astro.url.href} title={frontmatter.title} lang={lang} />
 				<GiscusButton lang={lang} title={frontmatter.title} />
 			</div>
