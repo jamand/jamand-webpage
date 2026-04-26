@@ -8,4 +8,13 @@ type Props = astroHTML.JSX.AnchorHTMLAttributes & {
 const { showArrow = true, ...attrs } = Astro.props;
 ---
 
-<a {...attrs}><slot />{showArrow && ' ↗'}</a>
+<a {...attrs}
+	><slot />{
+		showArrow && (
+			<>
+				{' '}
+				<span aria-hidden="true">↗</span>
+			</>
+		)
+	}</a
+>

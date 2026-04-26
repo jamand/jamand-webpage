@@ -1,14 +1,52 @@
 ---
-// 404 Not Found page
+// 404 Not Found page — multilingual because GitHub Pages serves a single
+// /404.html as the fallback for every missing route. The inline script
+// keeps only the section matching the requested URL's locale; without
+// JS, all sections remain visible as a graceful fallback.
+// See https://github.com/withastro/astro/issues/12175
 import Layout from '../layouts/Layout.astro';
-import { useTranslations } from '../i18n/utils';
+import { useTranslations, getLocalizedPath } from '../i18n/utils';
+import { defaultLang, supportedLangs } from '../i18n/translations';
 
-const lang = 'en';
-const t = useTranslations(lang);
+const sections = supportedLangs.map((lang) => {
+	const t = useTranslations(lang);
+	return {
+		lang,
+		title: t('404.title'),
+		message: t('404.message'),
+		backLabel: t('common.backToHome'),
+		home: getLocalizedPath('/', lang),
+	};
+});
+
+const title = sections.map((s) => s.title).join(' / ');
+const description = sections.find((s) => s.lang === defaultLang)!.message;
 ---
 
-<Layout lang={lang} title={t('404.title')} description={t('404.message')}>
-	<h1>{t('404.title')}</h1>
-	<p>{t('404.message')}</p>
-	<a href="/">{t('common.backToHome')}</a>
+<Layout lang={defaultLang} title={title} description={description}>
+	{
+		sections.map((s, i) => (
+			<>
+				{i > 0 && <hr data-404-divider />}
+				<section data-404-lang={s.lang} lang={s.lang}>
+					<h1>{s.title}</h1>
+					<p>{s.message}</p>
+					<a href={s.home}>{s.backLabel}</a>
+				</section>
+			</>
+		))
+	}
+	<script is:inline define:vars={{ supportedLangs, defaultLang }}>
+		(() => {
+			const segment = location.pathname.split('/')[1];
+			const lang = supportedLangs.includes(segment) ? segment : defaultLang;
+			document.querySelectorAll('[data-404-lang]').forEach((el) => {
+				el.hidden = el.getAttribute('data-404-lang') !== lang;
+			});
+			document.querySelectorAll('[data-404-divider]').forEach((el) => {
+				el.hidden = true;
+			});
+			document.documentElement.lang = lang;
+		})();
+	</script>
 </Layout>
