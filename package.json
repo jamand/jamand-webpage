@@ -73,7 +73,6 @@
     "onlyBuiltDependencies": [
       "esbuild",
       "lefthook",
-      "puppeteer",
       "sharp"
     ]
   }

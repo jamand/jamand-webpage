@@ -31,6 +31,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Install Puppeteer browser (for a11y tests)
+        run: pnpm rebuild puppeteer
+
       - name: Run unit tests
         run: pnpm test:run
 
