@@ -2,7 +2,9 @@
 FROM node:24-alpine AS build
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+# pnpm-workspace.yaml carries install settings (allowBuilds,
+# minimumReleaseAgeExclude) needed to match local.
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 # Install version of pnpm based on packageManager field in package.json
 RUN corepack enable && corepack install
 RUN pnpm install --frozen-lockfile --ignore-scripts
