@@ -51,7 +51,6 @@
       groupName: "Dependencies (non-major)",
       matchUpdateTypes: ["patch", "minor"],
       matchPackageNames: [
-        "*",
         "!/^astro/",
         "!/^@astrojs//",
         "!/^react/",
