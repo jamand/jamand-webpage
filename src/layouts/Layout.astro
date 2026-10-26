@@ -81,15 +81,6 @@ const themeColorDark = '#191E24';
 			href={new URL(getAlternateLocaleUrl(currentUrl, defaultLang), Astro.site)
 				.href}
 		/>
-		<link
-			rel="alternate"
-			type="application/rss+xml"
-			title="Jérémy Amand | Blog"
-			href={new URL(
-				lang === defaultLang ? '/rss.xml' : `/${lang}/rss.xml`,
-				Astro.site,
-			).href}
-		/>
 		<meta name="generator" content={Astro.generator} />
 		{description && <meta name="description" content={description} />}
 		<meta property="og:title" content={title} />
