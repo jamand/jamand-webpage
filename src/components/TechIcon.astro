@@ -36,14 +36,12 @@ const { name, class: className } = Astro.props;
 const icon = iconMap[name];
 ---
 
-{
-	icon && (
-		<span
-			class:list={['tech-icon inline-block h-4 w-4 shrink-0', className]}
-			set:html={icon.svg}
-		/>
-	)
-}
+{icon && (
+	<span
+		class:list={['tech-icon inline-block h-4 w-4 shrink-0', className]}
+		set:html={icon.svg}
+	/>
+)}
 
 <style>
 	.tech-icon :global(svg) {

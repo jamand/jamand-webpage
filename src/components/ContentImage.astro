@@ -38,32 +38,30 @@ const t = useTranslations(lang);
 const hasCaption = caption || author;
 ---
 
-{
-	hasCaption ? (
-		<figure class={`w-fit ${className ?? ''}`}>
-			{src ? (
-				<Image src={src} alt={alt} class={className} {...attrs} />
-			) : (
-				url && <img src={url} alt={alt} class={className} {...attrs} />
+{hasCaption ? (
+	<figure class={`w-fit ${className ?? ''}`}>
+		{src ? (
+			<Image src={src} alt={alt} class={className} {...attrs} />
+		) : (
+			url && <img src={url} alt={alt} class={className} {...attrs} />
+		)}
+		<figcaption class="text-base-content/70 text-sm">
+			{caption}
+			{caption && author && ' · '}
+			{author && (
+				<span>
+					{t('image.photoBy')}{' '}
+					{authorUrl ? (
+						<ExternalLink href={authorUrl}>{author}</ExternalLink>
+					) : (
+						author
+					)}
+				</span>
 			)}
-			<figcaption class="text-base-content/70 text-sm">
-				{caption}
-				{caption && author && ' · '}
-				{author && (
-					<span>
-						{t('image.photoBy')}{' '}
-						{authorUrl ? (
-							<ExternalLink href={authorUrl}>{author}</ExternalLink>
-						) : (
-							author
-						)}
-					</span>
-				)}
-			</figcaption>
-		</figure>
-	) : src ? (
-		<Image src={src} alt={alt} class={className} {...attrs} />
-	) : (
-		url && <img src={url} alt={alt} class={className} {...attrs} />
-	)
-}
+		</figcaption>
+	</figure>
+) : src ? (
+	<Image src={src} alt={alt} class={className} {...attrs} />
+) : (
+	url && <img src={url} alt={alt} class={className} {...attrs} />
+)}

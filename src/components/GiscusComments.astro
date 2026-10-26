@@ -11,9 +11,7 @@ const t = useTranslations(lang);
 ---
 
 <div class="giscus-container not-prose mt-8 hidden">
-	<p class="mb-6 text-sm opacity-75">
-		{t('blog.commentsNote')}
-	</p>
+	<p class="mb-6 text-sm opacity-75">{t('blog.commentsNote')}</p>
 	<noscript>
 		<p class="text-sm opacity-75">{t('blog.commentsRequireJs')}</p>
 	</noscript>
@@ -23,8 +21,7 @@ const t = useTranslations(lang);
 	function getEffectiveTheme(): 'light' | 'dark' {
 		return (
 			(document.documentElement.getAttribute('data-theme') as
-				| 'light'
-				| 'dark') || 'light'
+				'light' | 'dark') || 'light'
 		);
 	}
 

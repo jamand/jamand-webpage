@@ -93,9 +93,7 @@ describe('Blog Post Page', () => {
   it('should render blog post', async () => {
     const container = await AstroContainer.create();
     const result = await container.renderToString(BlogPost, {
-      props: {
-        /* ... */
-      },
+      props: {/* ... */},
     });
     expect(result).toContain('Expected Content');
   });

@@ -36,56 +36,46 @@ const statusStyles: Record<string, string> = {
 	ogType="article"
 >
 	<article>
-		{
-			isFallback && pageLang && (
-				<FallbackNotice
-					pageLang={pageLang}
-					contentLang={frontmatter.lang as Lang}
-				/>
-			)
-		}
+		{isFallback && pageLang && (
+			<FallbackNotice
+				pageLang={pageLang}
+				contentLang={frontmatter.lang as Lang}
+			/>
+		)}
 		<header class="not-prose mb-8">
 			<div class="flex items-center gap-3">
 				<h1 class="text-3xl font-bold sm:text-4xl">{frontmatter.title}</h1>
 				<span class={`badge ${statusStyles[frontmatter.status]}`}>
-					{
-						t(
-							`project.status.${frontmatter.status}` as `project.status.${typeof frontmatter.status}`,
-						)
-					}
+					{t(
+						`project.status.${frontmatter.status}` as `project.status.${typeof frontmatter.status}`,
+					)}
 				</span>
 			</div>
 			<p class="mt-2 opacity-80">{frontmatter.description}</p>
 			<div class="mt-4 flex flex-wrap gap-2">
-				{
-					frontmatter.tags.map((tag) => (
-						<span class="badge badge-outline">{tag}</span>
-					))
-				}
+				{frontmatter.tags.map((tag) => (
+					<span class="badge badge-outline">{tag}</span>
+				))}
 			</div>
-			{
-				frontmatter.url && (
-					<ExternalLink href={frontmatter.url} class="link mt-4 inline-block">
-						{t('project.viewOnGitHub')}
-					</ExternalLink>
-				)
-			}
+			{frontmatter.url && (
+				<ExternalLink href={frontmatter.url} class="link mt-4 inline-block">
+					{t('project.viewOnGitHub')}
+				</ExternalLink>
+			)}
 		</header>
 
-		{
-			!frontmatter.hideImage && (
-				<ContentImage
-					src={frontmatter.image.src}
-					url={frontmatter.image.url}
-					alt={frontmatter.image.alt}
-					caption={frontmatter.image.caption}
-					author={frontmatter.image.author}
-					authorUrl={frontmatter.image.authorUrl}
-					lang={lang}
-					class="mb-8 rounded-lg"
-				/>
-			)
-		}
+		{!frontmatter.hideImage && (
+			<ContentImage
+				src={frontmatter.image.src}
+				url={frontmatter.image.url}
+				alt={frontmatter.image.alt}
+				caption={frontmatter.image.caption}
+				author={frontmatter.image.author}
+				authorUrl={frontmatter.image.authorUrl}
+				lang={lang}
+				class="mb-8 rounded-lg"
+			/>
+		)}
 		<slot />
 	</article>
 </Layout>

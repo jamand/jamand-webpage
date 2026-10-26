@@ -66,20 +66,19 @@ const themeColorDark = '#191E24';
 		<link rel="icon" type="image/svg+xml" href="/JA-logo.svg" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
-		{
-			supportedLangs.map((l) => (
-				<link
-					rel="alternate"
-					hreflang={l}
-					href={new URL(getAlternateLocaleUrl(currentUrl, l), Astro.site).href}
-				/>
-			))
-		}
+		{supportedLangs.map((l) => (
+			<link
+				rel="alternate"
+				hreflang={l}
+				href={new URL(getAlternateLocaleUrl(currentUrl, l), Astro.site).href}
+			/>
+		))}
 		<link
 			rel="alternate"
 			hreflang="x-default"
-			href={new URL(getAlternateLocaleUrl(currentUrl, defaultLang), Astro.site)
-				.href}
+			href={
+				new URL(getAlternateLocaleUrl(currentUrl, defaultLang), Astro.site).href
+			}
 		/>
 		<meta name="generator" content={Astro.generator} />
 		{description && <meta name="description" content={description} />}
@@ -87,11 +86,9 @@ const themeColorDark = '#191E24';
 		{description && <meta property="og:description" content={description} />}
 		<meta property="og:url" content={Astro.url.href} />
 		<meta property="og:type" content={ogType} />
-		{
-			ogImage && (
-				<meta property="og:image" content={new URL(ogImage, Astro.site).href} />
-			)
-		}
+		{ogImage && (
+			<meta property="og:image" content={new URL(ogImage, Astro.site).href} />
+		)}
 		<noscript>
 			<style>
 				theme-toggle {

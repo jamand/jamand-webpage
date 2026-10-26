@@ -31,18 +31,16 @@ if (!isConfigured) {
 			</address>
 		</section>
 
-		{
-			imprintEmail && (
-				<section>
-					<h2>{t('imprint.contact')}</h2>
-					<div>
-						E-Mail:{' '}
-						<a href={`mailto:${imprintEmail}`} class="link">
-							{imprintEmail}
-						</a>
-					</div>
-				</section>
-			)
-		}
+		{imprintEmail && (
+			<section>
+				<h2>{t('imprint.contact')}</h2>
+				<div>
+					E-Mail:{' '}
+					<a href={`mailto:${imprintEmail}`} class="link">
+						{imprintEmail}
+					</a>
+				</div>
+			</section>
+		)}
 	</div>
 </Layout>

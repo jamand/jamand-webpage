@@ -12,17 +12,15 @@ const tags = [...new Set(allPosts.flatMap((item) => item.post.data.tags))];
 
 <Layout lang={lang} description={t('meta.tags')}>
 	<h1>{t('blog.tags')}</h1>
-	{
-		tags.length > 0 ? (
-			<ul>
-				{tags.map((tag) => (
-					<li>
-						<a href={getLocalizedPath(`/tags/${tag}/`, lang)}>{tag}</a>
-					</li>
-				))}
-			</ul>
-		) : (
-			<p>{t('blog.noTags')}</p>
-		)
-	}
+	{tags.length > 0 ? (
+		<ul>
+			{tags.map((tag) => (
+				<li>
+					<a href={getLocalizedPath(`/tags/${tag}/`, lang)}>{tag}</a>
+				</li>
+			))}
+		</ul>
+	) : (
+		<p>{t('blog.noTags')}</p>
+	)}
 </Layout>

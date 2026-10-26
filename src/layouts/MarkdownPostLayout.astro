@@ -50,78 +50,66 @@ const t = useTranslations(lang);
 	ogType="article"
 >
 	<article>
-		{
-			isFallback && pageLang && (
-				<FallbackNotice
-					pageLang={pageLang}
-					contentLang={frontmatter.lang as Lang}
-				/>
-			)
-		}
-		<header
-			class="not-prose mb-8 flex flex-wrap items-start justify-between gap-4"
-		>
+		{isFallback && pageLang && (
+			<FallbackNotice
+				pageLang={pageLang}
+				contentLang={frontmatter.lang as Lang}
+			/>
+		)}
+		<header class="not-prose mb-8 flex flex-wrap items-start justify-between gap-4">
 			<div class="min-w-0">
 				<h1 class="m-0 text-3xl font-bold sm:text-4xl">{frontmatter.title}</h1>
-				{
-					readingTime && (
-						<p class="mt-2 text-sm opacity-75">
-							{t('blog.minRead').replace('{min}', String(readingTime))}
-						</p>
-					)
-				}
+				{readingTime && (
+					<p class="mt-2 text-sm opacity-75">
+						{t('blog.minRead').replace('{min}', String(readingTime))}
+					</p>
+				)}
 			</div>
 			<dl class="stats stats-horizontal shadow">
 				<div class="stat px-4 py-2">
 					<dt class="stat-title">{t('blog.publishedOn')}</dt>
 					<dd class="stat-value text-base">
 						<time datetime={frontmatter.pubDate.toISOString().split('T')[0]}>
-							{
-								frontmatter.pubDate.toLocaleDateString(getDateLocale(lang), {
-									day: 'numeric',
-									month: 'short',
-									year: 'numeric',
-								})
-							}
+							{frontmatter.pubDate.toLocaleDateString(getDateLocale(lang), {
+								day: 'numeric',
+								month: 'short',
+								year: 'numeric',
+							})}
 						</time>
-						{
-							frontmatter.updatedAt && (
-								<span class="block text-xs font-normal opacity-75">
-									{t('blog.updatedAt')}{' '}
-									<time
-										datetime={frontmatter.updatedAt.toISOString().split('T')[0]}
-									>
-										{frontmatter.updatedAt.toLocaleDateString(
-											getDateLocale(lang),
-											{
-												day: 'numeric',
-												month: 'short',
-												year: 'numeric',
-											},
-										)}
-									</time>
-								</span>
-							)
-						}
+						{frontmatter.updatedAt && (
+							<span class="block text-xs font-normal opacity-75">
+								{t('blog.updatedAt')}{' '}
+								<time
+									datetime={frontmatter.updatedAt.toISOString().split('T')[0]}
+								>
+									{frontmatter.updatedAt.toLocaleDateString(
+										getDateLocale(lang),
+										{
+											day: 'numeric',
+											month: 'short',
+											year: 'numeric',
+										},
+									)}
+								</time>
+							</span>
+						)}
 					</dd>
 				</div>
-				{
-					translation && (
-						<div class="stat px-4 py-2">
-							<dt class="stat-title">{t('blog.availableIn')}</dt>
-							<dd class="stat-value text-base">
-								<a
-									href={getPostUrl(translation)}
-									class="text-2xl no-underline opacity-90 transition-opacity hover:opacity-100"
-									title={getLangName(translation.data.lang as Lang)}
-									aria-label={getLangName(translation.data.lang as Lang)}
-								>
-									{getLangFlag(translation.data.lang as Lang)}
-								</a>
-							</dd>
-						</div>
-					)
-				}
+				{translation && (
+					<div class="stat px-4 py-2">
+						<dt class="stat-title">{t('blog.availableIn')}</dt>
+						<dd class="stat-value text-base">
+							<a
+								href={getPostUrl(translation)}
+								class="text-2xl no-underline opacity-90 transition-opacity hover:opacity-100"
+								title={getLangName(translation.data.lang as Lang)}
+								aria-label={getLangName(translation.data.lang as Lang)}
+							>
+								{getLangFlag(translation.data.lang as Lang)}
+							</a>
+						</dd>
+					</div>
+				)}
 			</dl>
 		</header>
 
@@ -138,36 +126,32 @@ const t = useTranslations(lang);
 		/>
 		<slot />
 
-		<footer
-			class="not-prose mt-6 flex flex-wrap items-center justify-between gap-4 pt-6"
-		>
+		<footer class="not-prose mt-6 flex flex-wrap items-center justify-between gap-4 pt-6">
 			<div class="flex flex-wrap gap-2">
 				<ShareLink url={Astro.url.href} title={frontmatter.title} lang={lang} />
 				<GiscusButton lang={lang} title={frontmatter.title} />
 			</div>
 
-			{
-				(prevPost || nextPost) && (
-					<nav class="flex gap-2" aria-label="Post navigation">
-						{prevPost && (
-							<a
-								href={getPostUrlForLang(prevPost, lang)}
-								class="btn btn-outline btn-sm"
-							>
-								&larr; {t('blog.previousPost')}
-							</a>
-						)}
-						{nextPost && (
-							<a
-								href={getPostUrlForLang(nextPost, lang)}
-								class="btn btn-outline btn-sm"
-							>
-								{t('blog.nextPost')} &rarr;
-							</a>
-						)}
-					</nav>
-				)
-			}
+			{(prevPost || nextPost) && (
+				<nav class="flex gap-2" aria-label="Post navigation">
+					{prevPost && (
+						<a
+							href={getPostUrlForLang(prevPost, lang)}
+							class="btn btn-outline btn-sm"
+						>
+							&larr; {t('blog.previousPost')}
+						</a>
+					)}
+					{nextPost && (
+						<a
+							href={getPostUrlForLang(nextPost, lang)}
+							class="btn btn-outline btn-sm"
+						>
+							{t('blog.nextPost')} &rarr;
+						</a>
+					)}
+				</nav>
+			)}
 		</footer>
 		<GiscusComments lang={lang} />
 	</article>
