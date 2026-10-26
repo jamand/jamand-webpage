@@ -15,7 +15,6 @@ const t = useTranslations(lang);
 
 const navLinks = [
 	{ href: getLocalizedPath('/about/', lang), label: t('nav.about') },
-	{ href: getLocalizedPath('/blog/', lang), label: t('nav.blog') },
 ];
 ---
 
@@ -29,7 +28,7 @@ const navLinks = [
 				>
 					{t('common.skipToContent')}
 				</a>
-				<a href={getLocalizedPath('/', lang)} class="text-lg">Jérémy Amand</a>
+				<a href={getLocalizedPath('/', lang)} class="text-lg"> Jérémy Amand </a>
 			</div>
 			<ul class="menu menu-horizontal gap-1 px-1 text-base">
 				{

@@ -1,20 +1,20 @@
 ---
-// Dynamic tag page - shows all posts with a specific tag (English, with fallback)
-import Layout from '../../layouts/Layout.astro';
-import BlogPostLink from '../../components/BlogPostLink.astro';
-import BlogStats from '../../components/BlogStats.astro';
+// Dynamic tag page - shows all posts with a specific tag (German, with fallback)
+import Layout from '../../../layouts/Layout.astro';
+import BlogPostLink from '../../../components/BlogPostLink.astro';
+import BlogStats from '../../../components/BlogStats.astro';
 import {
 	getPostUrlForLang,
 	type PostWithFallbackInfo,
-} from '../../i18n/blog-utils';
-import { useTranslations } from '../../i18n/utils';
+} from '../../../i18n/blog-utils';
+import { useTranslations } from '../../../i18n/utils';
 
-const lang = 'en';
+const lang = 'de';
 const t = useTranslations(lang);
 
 export async function getStaticPaths() {
-	const { getPostsWithFallback } = await import('../../i18n/blog-utils');
-	const allPosts = await getPostsWithFallback('en');
+	const { getPostsWithFallback } = await import('../../../i18n/blog-utils');
+	const allPosts = await getPostsWithFallback('de');
 	const uniqueTags = [
 		...new Set(allPosts.flatMap((item) => item.post.data.tags)),
 	];
@@ -32,7 +32,9 @@ const { posts } = Astro.props as { posts: PostWithFallbackInfo[] };
 ---
 
 <Layout lang={lang} description={`${t('blog.postsTaggedWith')} #${tag}`}>
-	<h1>{t('blog.postsTaggedWith')} #{tag}</h1>
+	<h1>
+		{t('blog.postsTaggedWith')} #{tag}
+	</h1>
 	<BlogStats posts={posts} lang={lang} />
 	<ul class="not-prose space-y-1">
 		{

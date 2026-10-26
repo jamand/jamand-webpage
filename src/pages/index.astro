@@ -3,8 +3,6 @@
 import ContentImage from '../components/ContentImage.astro';
 import TechIcon from '../components/TechIcon.astro';
 import Layout from '../layouts/Layout.astro';
-import BlogPostLink from '../components/BlogPostLink.astro';
-import { getPostsWithFallback, getPostUrlForLang } from '../i18n/blog-utils';
 import {
 	getProjectsByLangWithFallback,
 	getProjectUrl,
@@ -15,9 +13,6 @@ import profilePhoto from '../assets/JEA_Profile.jpeg';
 
 const lang = 'en';
 const t = useTranslations(lang);
-
-const allPosts = await getPostsWithFallback(lang);
-const recentPosts = allPosts.slice(0, 3);
 
 const projects = await getProjectsByLangWithFallback(lang);
 
@@ -62,13 +57,12 @@ const techStack = [
 					<p class="mt-3 text-2xl opacity-80">{t('home.tagline')}</p>
 					<p class="mt-6 max-w-2xl text-lg">{t('home.intro')}</p>
 					<div class="mt-8 flex gap-3">
-						<a href={getLocalizedPath('/blog/', lang)} class="btn btn-primary"
-							>{t('nav.blog')}</a
-						>
 						<a
 							href={getLocalizedPath('/about/', lang)}
-							class="btn btn-outline btn-primary">{t('home.aboutMe')}</a
+							class="btn btn-outline btn-primary"
 						>
+							{t('home.aboutMe')}
+						</a>
 					</div>
 				</div>
 			</div>
@@ -106,37 +100,6 @@ const techStack = [
 					))
 				}
 			</div>
-		</section>
-
-		{/* Recent Blog Posts */}
-		<section class="animate-fade-in-up" style="animation-delay: 0.2s">
-			<h2 class="mb-6 text-2xl font-bold">{t('home.recentPosts')}</h2>
-			{
-				recentPosts.length > 0 ? (
-					<>
-						<ul class="space-y-1">
-							{recentPosts.map((item) => (
-								<BlogPostLink
-									url={getPostUrlForLang(item.post, lang)}
-									title={item.post.data.title}
-									pubDate={item.post.data.pubDate}
-									lang={lang}
-									availableLanguages={item.availableLanguages}
-									isFallback={item.isFallback}
-								/>
-							))}
-						</ul>
-						<a
-							href={getLocalizedPath('/blog/', lang)}
-							class="link mt-4 inline-block"
-						>
-							{t('home.viewAllPosts')}
-						</a>
-					</>
-				) : (
-					<p class="opacity-80">{t('home.noPosts')}</p>
-				)
-			}
 		</section>
 
 		{/* Tech Stack */}
