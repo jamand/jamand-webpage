@@ -19,8 +19,12 @@ const t = useTranslations(lang);
 		data-url={url}
 		aria-label={t('blog.copyLink')}
 	>
-		<span class="copy-icon"><Link size={16} /></span>
-		<span class="check-icon hidden"><Check size={16} /></span>
+		<span class="copy-icon">
+			<Link size={16} />
+		</span>
+		<span class="check-icon hidden">
+			<Check size={16} />
+		</span>
 		<span class="copy-label">{t('blog.copyLink')}</span>
 	</button>
 	<button

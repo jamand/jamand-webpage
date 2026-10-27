@@ -20,12 +20,8 @@ const isImprintConfigured =
 	import.meta.env.IMPRINT_CITY;
 ---
 
-<footer
-	class="border-base-300 bg-base-200 text-base-content relative border-t p-6 text-base"
->
-	<ContentWidth
-		extraClasses="flex flex-col items-center gap-4 sm:flex-row sm:justify-between"
-	>
+<footer class="border-base-300 bg-base-200 text-base-content relative border-t p-6 text-base">
+	<ContentWidth extraClasses="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
 		<nav class="flex items-center gap-6">
 			<ExternalLink
 				href="https://github.com/jamand"
@@ -41,30 +37,28 @@ const isImprintConfigured =
 			<ExternalLink
 				href="https://linkedin.com/in/jer-amand"
 				class="link"
-				showArrow={false}>LinkedIn</ExternalLink
+				showArrow={false}
 			>
-			{
-				isImprintConfigured ? (
-					<a href={getLocalizedPath('/impressum/', lang)} class="link">
-						{t('imprint.title')}
-					</a>
-				) : (
-					false
-				)
-			}
+				LinkedIn
+			</ExternalLink>
+			{isImprintConfigured ? (
+				<a href={getLocalizedPath('/impressum/', lang)} class="link">
+					{t('imprint.title')}
+				</a>
+			) : (
+				false
+			)}
 		</nav>
-		<div
-			class="flex flex-col items-center gap-1 text-sm opacity-70 sm:items-end"
-		>
+		<div class="flex flex-col items-center gap-1 text-sm opacity-70 sm:items-end">
 			<aside class="inline-flex items-center gap-1">
 				Built from scratch with
 				<span
 					class="inline-block h-3.5 w-3.5 fill-current"
 					set:html={siAstro.svg}
 				/>
-				<ExternalLink href="https://astro.build" class="link" showArrow={false}
-					>Astro</ExternalLink
-				>
+				<ExternalLink href="https://astro.build" class="link" showArrow={false}>
+					Astro
+				</ExternalLink>
 			</aside>
 			<span class="inline-flex items-center gap-1">
 				© {year} Jérémy Amand · Blog:
@@ -75,8 +69,10 @@ const isImprintConfigured =
 				<ExternalLink
 					href="https://creativecommons.org/licenses/by/4.0/"
 					class="link"
-					showArrow={false}>CC BY 4.0</ExternalLink
+					showArrow={false}
 				>
+					CC BY 4.0
+				</ExternalLink>
 			</span>
 		</div>
 	</ContentWidth>

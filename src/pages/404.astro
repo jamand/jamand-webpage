@@ -24,18 +24,16 @@ const description = sections.find((s) => s.lang === defaultLang)!.message;
 ---
 
 <Layout lang={defaultLang} title={title} description={description}>
-	{
-		sections.map((s, i) => (
-			<>
-				{i > 0 && <hr data-404-divider />}
-				<section data-404-lang={s.lang} lang={s.lang}>
-					<h1>{s.title}</h1>
-					<p>{s.message}</p>
-					<a href={s.home}>{s.backLabel}</a>
-				</section>
-			</>
-		))
-	}
+	{sections.map((s, i) => (
+		<>
+			{i > 0 && <hr data-404-divider />}
+			<section data-404-lang={s.lang} lang={s.lang}>
+				<h1>{s.title}</h1>
+				<p>{s.message}</p>
+				<a href={s.home}>{s.backLabel}</a>
+			</section>
+		</>
+	))}
 	<script is:inline define:vars={{ supportedLangs, defaultLang }}>
 		(() => {
 			const segment = location.pathname.split('/')[1];

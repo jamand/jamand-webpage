@@ -37,17 +37,15 @@ const { posts } = Astro.props as { posts: PostWithFallbackInfo[] };
 	</h1>
 	<BlogStats posts={posts} lang={lang} />
 	<ul class="not-prose space-y-1">
-		{
-			posts.map((item) => (
-				<BlogPostLink
-					url={getPostUrlForLang(item.post, lang)}
-					title={item.post.data.title}
-					pubDate={item.post.data.pubDate}
-					lang={lang}
-					availableLanguages={item.availableLanguages}
-					isFallback={item.isFallback}
-				/>
-			))
-		}
+		{posts.map((item) => (
+			<BlogPostLink
+				url={getPostUrlForLang(item.post, lang)}
+				title={item.post.data.title}
+				pubDate={item.post.data.pubDate}
+				lang={lang}
+				availableLanguages={item.availableLanguages}
+				isFallback={item.isFallback}
+			/>
+		))}
 	</ul>
 </Layout>

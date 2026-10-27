@@ -42,21 +42,19 @@ const formattedDate = pubDate.toLocaleDateString(getDateLocale(lang), {
 		>
 			{formattedDate}
 		</time>
-		<a href={url} class="flex-1 font-medium no-underline hover:underline"
-			>{title}</a
-		>
+		<a href={url} class="flex-1 font-medium no-underline hover:underline">
+			{title}
+		</a>
 		<span class="flex shrink-0 gap-1">
-			{
-				availableLanguages.map(({ lang: langCode, url: langUrl }) => (
-					<a
-						href={langUrl}
-						aria-label={getLangName(langCode)}
-						class="badge badge-outline badge-sm no-underline"
-					>
-						{langCode.toUpperCase()}
-					</a>
-				))
-			}
+			{availableLanguages.map(({ lang: langCode, url: langUrl }) => (
+				<a
+					href={langUrl}
+					aria-label={getLangName(langCode)}
+					class="badge badge-outline badge-sm no-underline"
+				>
+					{langCode.toUpperCase()}
+				</a>
+			))}
 		</span>
 	</div>
 </li>

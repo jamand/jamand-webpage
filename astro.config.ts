@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import { unified } from '@astrojs/markdown-remark';
 
 import react from '@astrojs/react';
 
@@ -59,31 +60,33 @@ export default defineConfig({
 	},
 
 	markdown: {
-		remarkPlugins: [
-			remarkReadingTime,
-			[remarkToc, { heading: 'Table of Contents|Inhaltsverzeichnis' }],
-		],
-		rehypePlugins: [
-			[
-				rehypeExternalLinks,
-				{
-					content: { type: 'text', value: ' ↗' },
-				},
+		processor: unified({
+			remarkPlugins: [
+				remarkReadingTime,
+				[remarkToc, { heading: 'Table of Contents|Inhaltsverzeichnis' }],
 			],
-			rehypeSlug,
-			[
-				rehypeAutolinkHeadings,
-				{
-					behavior: 'prepend',
-					properties: (heading: HastNodes) => ({
-						className: ['heading-anchor'],
-						tabIndex: -1,
-						ariaLabel: `Link to section: ${hastToString(heading)}`,
-					}),
-					content: [],
-				},
+			rehypePlugins: [
+				[
+					rehypeExternalLinks,
+					{
+						content: { type: 'text', value: ' ↗' },
+					},
+				],
+				rehypeSlug,
+				[
+					rehypeAutolinkHeadings,
+					{
+						behavior: 'prepend',
+						properties: (heading: HastNodes) => ({
+							className: ['heading-anchor'],
+							tabIndex: -1,
+							ariaLabel: `Link to section: ${hastToString(heading)}`,
+						}),
+						content: [],
+					},
+				],
 			],
-		],
+		}),
 	},
 
 	prefetch: {

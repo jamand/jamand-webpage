@@ -35,12 +35,8 @@ const techStack = [
 		<section class="animate-fade-in-up py-8">
 			<div class="flex flex-col items-center gap-8 sm:flex-row">
 				<div class="avatar">
-					<div
-						class="ring-primary ring-offset-base-100 w-44 rounded-2xl ring-2 ring-offset-2 sm:w-52"
-					>
-						{
-							/* widths/sizes match w-44 (176px) and w-52 (208px) at 1x and 2x */
-						}
+					<div class="ring-primary ring-offset-base-100 w-44 rounded-2xl ring-2 ring-offset-2 sm:w-52">
+						{/* widths/sizes match w-44 (176px) and w-52 (208px) at 1x and 2x */}
 						<Image
 							src={profilePhoto}
 							alt="Jérémy Amand"
@@ -72,33 +68,31 @@ const techStack = [
 		<section class="animate-fade-in-up" style="animation-delay: 0.1s">
 			<h2 class="mb-6 text-2xl font-bold">{t('home.projects')}</h2>
 			<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-				{
-					projects.map(({ project }) => (
-						<a
-							href={getProjectUrl(project, lang)}
-							class="card border-base-300 bg-base-100 border no-underline shadow-sm transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
-						>
-							<figure class="h-48 overflow-hidden">
-								<ContentImage
-									src={project.data.image.src}
-									url={project.data.image.url}
-									alt={project.data.image.alt}
-									class="h-full w-full object-cover"
-									loading="eager"
-								/>
-							</figure>
-							<div class="card-body">
-								<h3 class="card-title text-lg">{project.data.title}</h3>
-								<p class="text-sm opacity-90">{project.data.description}</p>
-								<div class="card-actions mt-2 justify-end">
-									{project.data.tags.map((tag) => (
-										<span class="badge badge-outline badge-sm">{tag}</span>
-									))}
-								</div>
+				{projects.map(({ project }) => (
+					<a
+						href={getProjectUrl(project, lang)}
+						class="card border-base-300 bg-base-100 border no-underline shadow-sm transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
+					>
+						<figure class="h-48 overflow-hidden">
+							<ContentImage
+								src={project.data.image.src}
+								url={project.data.image.url}
+								alt={project.data.image.alt}
+								class="h-full w-full object-cover"
+								loading="eager"
+							/>
+						</figure>
+						<div class="card-body">
+							<h3 class="card-title text-lg">{project.data.title}</h3>
+							<p class="text-sm opacity-90">{project.data.description}</p>
+							<div class="card-actions mt-2 justify-end">
+								{project.data.tags.map((tag) => (
+									<span class="badge badge-outline badge-sm">{tag}</span>
+								))}
 							</div>
-						</a>
-					))
-				}
+						</div>
+					</a>
+				))}
 			</div>
 		</section>
 
@@ -106,23 +100,21 @@ const techStack = [
 		<section class="animate-fade-in-up" style="animation-delay: 0.3s">
 			<h2 class="mb-6 text-2xl font-bold">{t('home.techStack')}</h2>
 			<div class="flex flex-col gap-4">
-				{
-					techStack.map((group) => (
-						<div>
-							<h3 class="mb-2 text-sm font-semibold tracking-wide uppercase opacity-80">
-								{group.category}
-							</h3>
-							<div class="flex flex-wrap gap-2">
-								{group.items.map((tech) => (
-									<span class="badge badge-soft badge-lg gap-1.5">
-										<TechIcon name={tech} />
-										{tech}
-									</span>
-								))}
-							</div>
+				{techStack.map((group) => (
+					<div>
+						<h3 class="mb-2 text-sm font-semibold tracking-wide uppercase opacity-80">
+							{group.category}
+						</h3>
+						<div class="flex flex-wrap gap-2">
+							{group.items.map((tech) => (
+								<span class="badge badge-soft badge-lg gap-1.5">
+									<TechIcon name={tech} />
+									{tech}
+								</span>
+							))}
 						</div>
-					))
-				}
+					</div>
+				))}
 			</div>
 		</section>
 	</div>

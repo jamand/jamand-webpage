@@ -28,16 +28,16 @@ const navLinks = [
 				>
 					{t('common.skipToContent')}
 				</a>
-				<a href={getLocalizedPath('/', lang)} class="text-lg"> Jérémy Amand </a>
+				<a href={getLocalizedPath('/', lang)} class="text-lg">
+					Jérémy Amand
+				</a>
 			</div>
 			<ul class="menu menu-horizontal gap-1 px-1 text-base">
-				{
-					navLinks.map((link) => (
-						<li>
-							<a href={link.href}>{link.label}</a>
-						</li>
-					))
-				}
+				{navLinks.map((link) => (
+					<li>
+						<a href={link.href}>{link.label}</a>
+					</li>
+				))}
 			</ul>
 			<div class="ml-1 flex items-center gap-1">
 				<LanguageSwitcher lang={lang} />
